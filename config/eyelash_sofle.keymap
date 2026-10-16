@@ -64,6 +64,27 @@
 
             label = "SHIFT_MCLK";
         };
+
+        // desk-switch (~/projects/tools/desk-switch): the Mac that has the keyboard
+        // catches the hotkey and moves the monitor and mouse; the wait gives the key
+        // release time to reach that Mac before the keyboard changes Bluetooth profile.
+        to_personal: to_personal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            display-name = "To Personal Mac";
+            tap-ms = <40>;
+            wait-ms = <150>;
+            bindings = <&macro_tap &kp F18>, <&macro_tap &bt BT_SEL 1>;
+        };
+
+        to_work: to_work {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            display-name = "To Work Mac";
+            tap-ms = <40>;
+            wait-ms = <150>;
+            bindings = <&macro_tap &kp F19>, <&macro_tap &bt BT_SEL 2>;
+        };
     };
 
     keymap {
