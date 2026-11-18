@@ -1,0 +1,1985 @@
+{
+  "device": "Eyelash Sofle",
+  "layers": [
+    {
+      "id": 0,
+      "name": "LAYER0",
+      "bindings": [
+        {
+          "behavior": "Key Press",
+          "param1": 458793,
+          "param2": 0,
+          "keymap": "&kp ESC"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458782,
+          "param2": 0,
+          "keymap": "&kp N1"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458783,
+          "param2": 0,
+          "keymap": "&kp N2"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458784,
+          "param2": 0,
+          "keymap": "&kp N3"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458785,
+          "param2": 0,
+          "keymap": "&kp N4"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458786,
+          "param2": 0,
+          "keymap": "&kp N5"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458834,
+          "param2": 0,
+          "keymap": "&kp UP_ARROW"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458787,
+          "param2": 0,
+          "keymap": "&kp N6"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458788,
+          "param2": 0,
+          "keymap": "&kp N7"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458789,
+          "param2": 0,
+          "keymap": "&kp N8"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458790,
+          "param2": 0,
+          "keymap": "&kp N9"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458791,
+          "param2": 0,
+          "keymap": "&kp N0"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458794,
+          "param2": 0,
+          "keymap": "&kp BACKSPACE"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458795,
+          "param2": 0,
+          "keymap": "&kp TAB"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458772,
+          "param2": 0,
+          "keymap": "&kp Q"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458778,
+          "param2": 0,
+          "keymap": "&kp W"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458760,
+          "param2": 0,
+          "keymap": "&kp E"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458773,
+          "param2": 0,
+          "keymap": "&kp R"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458775,
+          "param2": 0,
+          "keymap": "&kp T"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458833,
+          "param2": 0,
+          "keymap": "&kp DOWN_ARROW"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458780,
+          "param2": 0,
+          "keymap": "&kp Y"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458776,
+          "param2": 0,
+          "keymap": "&kp U"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458764,
+          "param2": 0,
+          "keymap": "&kp I"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458770,
+          "param2": 0,
+          "keymap": "&kp O"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458771,
+          "param2": 0,
+          "keymap": "&kp P"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458801,
+          "param2": 0,
+          "keymap": "&kp BSLH"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458792,
+          "param2": 0,
+          "keymap": "&kp ENTER"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458756,
+          "param2": 0,
+          "keymap": "&kp A"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458774,
+          "param2": 0,
+          "keymap": "&kp S"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458759,
+          "param2": 0,
+          "keymap": "&kp D"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458761,
+          "param2": 0,
+          "keymap": "&kp F"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458762,
+          "param2": 0,
+          "keymap": "&kp G"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458832,
+          "param2": 0,
+          "keymap": "&kp LEFT_ARROW"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458763,
+          "param2": 0,
+          "keymap": "&kp H"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458765,
+          "param2": 0,
+          "keymap": "&kp J"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458766,
+          "param2": 0,
+          "keymap": "&kp K"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458767,
+          "param2": 0,
+          "keymap": "&kp L"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458803,
+          "param2": 0,
+          "keymap": "&kp SEMI"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458804,
+          "param2": 0,
+          "keymap": "&kp APOS"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458977,
+          "param2": 0,
+          "keymap": "&kp LSHFT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458781,
+          "param2": 0,
+          "keymap": "&kp Z"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458779,
+          "param2": 0,
+          "keymap": "&kp X"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458758,
+          "param2": 0,
+          "keymap": "&kp C"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458777,
+          "param2": 0,
+          "keymap": "&kp V"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458757,
+          "param2": 0,
+          "keymap": "&kp B"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458831,
+          "param2": 0,
+          "keymap": "&kp RIGHT_ARROW"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458769,
+          "param2": 0,
+          "keymap": "&kp N"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458768,
+          "param2": 0,
+          "keymap": "&kp M"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458806,
+          "param2": 0,
+          "keymap": "&kp COMMA"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458807,
+          "param2": 0,
+          "keymap": "&kp DOT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458808,
+          "param2": 0,
+          "keymap": "&kp FSLH"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458981,
+          "param2": 0,
+          "keymap": "&kp RIGHT_SHIFT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786658,
+          "param2": 0,
+          "keymap": "&kp C_MUTE"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458976,
+          "param2": 0,
+          "keymap": "&kp LCTRL"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458978,
+          "param2": 0,
+          "keymap": "&kp LEFT_ALT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458979,
+          "param2": 0,
+          "keymap": "&kp LEFT_GUI"
+        },
+        {
+          "behavior": "Momentary Layer",
+          "param1": 1,
+          "param2": 0,
+          "keymap": "&mo 1"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458796,
+          "param2": 0,
+          "keymap": "&kp SPACE"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458792,
+          "param2": 0,
+          "keymap": "&kp ENTER"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458796,
+          "param2": 0,
+          "keymap": "&kp SPACE"
+        },
+        {
+          "behavior": "Momentary Layer",
+          "param1": 1,
+          "param2": 0,
+          "keymap": "&mo 1"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458983,
+          "param2": 0,
+          "keymap": "&kp RGUI"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458982,
+          "param2": 0,
+          "keymap": "&kp RALT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458980,
+          "param2": 0,
+          "keymap": "&kp RCTL"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "layer1",
+      "bindings": [
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786544,
+          "param2": 0,
+          "keymap": "&kp C_BRI_DN"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786543,
+          "param2": 0,
+          "keymap": "&kp C_BRI_UP"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 787103,
+          "param2": 0,
+          "keymap": "&kp C_AC_DESKTOP_SHOW_ALL_WINDOWS"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 787106,
+          "param2": 0,
+          "keymap": "&kp C_AC_DESKTOP_SHOW_ALL_APPLICATIONS"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786977,
+          "param2": 0,
+          "keymap": "&kp C_AC_SEARCH"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 64336,
+          "param2": 0,
+          "keymap": "&mmv MOVE_UP"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786614,
+          "param2": 0,
+          "keymap": "&kp C_PREV"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786637,
+          "param2": 0,
+          "keymap": "&kp C_PP"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786613,
+          "param2": 0,
+          "keymap": "&kp C_NEXT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786658,
+          "param2": 0,
+          "keymap": "&kp C_MUTE"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786666,
+          "param2": 0,
+          "keymap": "&kp C_VOL_DN"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786665,
+          "param2": 0,
+          "keymap": "&kp C_VOLUME_UP"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458809,
+          "param2": 0,
+          "keymap": "&kp CAPS"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458805,
+          "param2": 0,
+          "keymap": "&kp GRAVE"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 1200,
+          "param2": 0,
+          "keymap": "&mmv MOVE_DOWN"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458827,
+          "param2": 0,
+          "keymap": "&kp PG_UP"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458826,
+          "param2": 0,
+          "keymap": "&kp HOME"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458834,
+          "param2": 0,
+          "keymap": "&kp UP"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458829,
+          "param2": 0,
+          "keymap": "&kp END"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458797,
+          "param2": 0,
+          "keymap": "&kp MINUS"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458798,
+          "param2": 0,
+          "keymap": "&kp EQUAL"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Momentary Layer",
+          "param1": 2,
+          "param2": 0,
+          "keymap": "&mo 2"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 4216324096,
+          "param2": 0,
+          "keymap": "&mmv MOVE_LEFT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458830,
+          "param2": 0,
+          "keymap": "&kp PG_DN"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458832,
+          "param2": 0,
+          "keymap": "&kp LEFT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458833,
+          "param2": 0,
+          "keymap": "&kp DOWN"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458831,
+          "param2": 0,
+          "keymap": "&kp RIGHT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458799,
+          "param2": 0,
+          "keymap": "&kp LEFT_BRACKET"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458800,
+          "param2": 0,
+          "keymap": "&kp RIGHT_BRACKET"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458810,
+          "param2": 0,
+          "keymap": "&kp F1"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458811,
+          "param2": 0,
+          "keymap": "&kp F2"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458812,
+          "param2": 0,
+          "keymap": "&kp F3"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458813,
+          "param2": 0,
+          "keymap": "&kp F4"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458814,
+          "param2": 0,
+          "keymap": "&kp F5"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 78643200,
+          "param2": 0,
+          "keymap": "&mmv MOVE_RIGHT"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458815,
+          "param2": 0,
+          "keymap": "&kp F6"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458816,
+          "param2": 0,
+          "keymap": "&kp F7"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458817,
+          "param2": 0,
+          "keymap": "&kp F8"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458818,
+          "param2": 0,
+          "keymap": "&kp F9"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 458819,
+          "param2": 0,
+          "keymap": "&kp F10"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Key Press",
+          "param1": 786658,
+          "param2": 0,
+          "keymap": "&kp C_MUTE"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Mouse Key Press",
+          "param1": 1,
+          "param2": 0,
+          "keymap": "&mkp LCLK"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Momentary Layer",
+          "param1": 2,
+          "param2": 0,
+          "keymap": "&mo 2"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "layer2",
+      "bindings": [
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 0,
+          "keymap": "&bt BT_SEL 0"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 1,
+          "keymap": "&bt BT_SEL 1"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 2,
+          "keymap": "&bt BT_SEL 2"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 3,
+          "keymap": "&bt BT_SEL 3"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 4,
+          "keymap": "&bt BT_SEL 4"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 64336,
+          "param2": 0,
+          "keymap": "&mmv MOVE_UP"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 0,
+          "keymap": "&bt BT_SEL 0"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 1,
+          "keymap": "&bt BT_SEL 1"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 2,
+          "keymap": "&bt BT_SEL 2"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 3,
+          "keymap": "&bt BT_SEL 3"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 3,
+          "param2": 4,
+          "keymap": "&bt BT_SEL 4"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 0,
+          "keymap": "&bt BT_DISC 0"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 1,
+          "keymap": "&bt BT_DISC 1"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 2,
+          "keymap": "&bt BT_DISC 2"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 3,
+          "keymap": "&bt BT_DISC 3"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 4,
+          "keymap": "&bt BT_DISC 4"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 1200,
+          "param2": 0,
+          "keymap": "&mmv MOVE_DOWN"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 0,
+          "keymap": "&bt BT_DISC 0"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 1,
+          "keymap": "&bt BT_DISC 1"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 2,
+          "keymap": "&bt BT_DISC 2"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 3,
+          "keymap": "&bt BT_DISC 3"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 5,
+          "param2": 4,
+          "keymap": "&bt BT_DISC 4"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&bt BT_CLR"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 4,
+          "param2": 0,
+          "keymap": "&bt BT_CLR_ALL"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 4216324096,
+          "param2": 0,
+          "keymap": "&mmv MOVE_LEFT"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&bt BT_CLR"
+        },
+        {
+          "behavior": "Bluetooth",
+          "param1": 4,
+          "param2": 0,
+          "keymap": "&bt BT_CLR_ALL"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Reset",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&sys_reset"
+        },
+        {
+          "behavior": "z_so_off",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&soft_off"
+        },
+        {
+          "behavior": "Output Selection",
+          "param1": 1,
+          "param2": 0,
+          "keymap": "&out OUT_USB"
+        },
+        {
+          "behavior": "Output Selection",
+          "param1": 2,
+          "param2": 0,
+          "keymap": "&out OUT_BLE"
+        },
+        {
+          "behavior": "Bootloader",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&bootloader"
+        },
+        {
+          "behavior": "mouse_move",
+          "param1": 78643200,
+          "param2": 0,
+          "keymap": "&mmv MOVE_RIGHT"
+        },
+        {
+          "behavior": "Reset",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&sys_reset"
+        },
+        {
+          "behavior": "z_so_off",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&soft_off"
+        },
+        {
+          "behavior": "Output Selection",
+          "param1": 1,
+          "param2": 0,
+          "keymap": "&out OUT_USB"
+        },
+        {
+          "behavior": "Output Selection",
+          "param1": 2,
+          "param2": 0,
+          "keymap": "&out OUT_BLE"
+        },
+        {
+          "behavior": "Bootloader",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&bootloader"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Mouse Key Press",
+          "param1": 1,
+          "param2": 0,
+          "keymap": "&mkp LCLK"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "layer3",
+      "bindings": [
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "layer4",
+      "bindings": [
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        }
+      ]
+    }
+  ],
+  "behaviors": {
+    "1": "Mouse Key Press",
+    "2": "mouse_move",
+    "3": "mouse_scroll",
+    "4": "None",
+    "5": "Backlight",
+    "6": "Caps Word",
+    "7": "External Power",
+    "8": "Key Press",
+    "9": "Grave/Escape",
+    "10": "Key Repeat",
+    "11": "Key Toggle",
+    "12": "Momentary Layer",
+    "13": "Layer-Tap",
+    "14": "Mod-Tap",
+    "15": "Sticky Key",
+    "16": "Sticky Layer",
+    "17": "Studio Unlock",
+    "18": "To Layer",
+    "19": "Toggle Layer",
+    "20": "z_so_off",
+    "21": "enc_key_press",
+    "22": "scroll_encoder",
+    "23": "Underglow",
+    "24": "Transparent",
+    "25": "Bluetooth",
+    "26": "Bootloader",
+    "27": "Output Selection",
+    "28": "Reset"
+  }
+}
