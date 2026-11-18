@@ -31,6 +31,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import serial
+from google.protobuf.message import DecodeError
 from serial.tools import list_ports
 
 HERE = Path(__file__).resolve().parent
@@ -119,13 +120,30 @@ class Studio:
         return None
 
 
-def find_port() -> str:
-    ports = [p.device for p in list_ports.comports() if p.vid == ZMK_USB_VENDOR_ID and p.device.startswith("/dev/cu.")]
+def connect(port: str | None) -> Studio:
+    """Opens the given port, or finds the one that answers Studio requests.
+
+    The Studio firmware exposes two USB serial ports (the board's own one and the
+    one the studio-rpc-usb-uart snippet adds), so each candidate is probed in turn.
+    """
+    if port:
+        return Studio(port)
+    ports = sorted(p.device for p in list_ports.comports()
+                   if p.vid == ZMK_USB_VENDOR_ID and p.device.startswith("/dev/cu."))
     if not ports:
         sys.exit("No ZMK keyboard on USB. Plug the left half into this Mac (or pass --port).")
-    if len(ports) > 1:
-        sys.exit(f"Several ZMK serial ports: {', '.join(ports)}. Pick one with --port.")
-    return ports[0]
+    for candidate in reversed(ports):  # the snippet's port comes last
+        try:
+            studio = Studio(candidate)
+        except serial.SerialException:
+            continue
+        try:
+            studio.call(timeout=1.0, core=core_pb2.Request(get_device_info=True))
+            return studio
+        except (TimeoutError, DecodeError):
+            studio.serial.close()
+    sys.exit(f"No Studio reply on {', '.join(ports)}. Is the left half running the Studio firmware "
+             "and using USB output? (press &out OUT_USB on layer 2, and OUT_BLE afterwards)")
 
 
 # --- C preprocessor #defines from ZMK's dt-bindings headers, evaluated as Python ---
@@ -454,7 +472,7 @@ def main() -> None:
     parser.add_argument("--check", action="store_true", help="only compare; exit 1 if the files are out of date")
     args = parser.parse_args()
 
-    studio = Studio(args.port or find_port())
+    studio = connect(args.port)
     device = studio.call(core=core_pb2.Request(get_device_info=True)).core.get_device_info
     print(f"Connected to {device.name}")
     unsaved = studio.call(keymap=keymap_pb2.Request(check_unsaved_changes=True)).keymap.check_unsaved_changes
