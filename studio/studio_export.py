@@ -16,13 +16,17 @@ config/eyelash_sofle.keymap. This script reads them over the Studio RPC protocol
 Usage:
     studio/studio_export.py            export and rewrite the files
     studio/studio_export.py --check    exit 1 (and show a diff) if the files differ from the keyboard
+    studio/studio_export.py --reset    drop the keymap edits Studio saved on the keyboard, so it
+                                       follows the flashed file again (pairings stay), then --check
     studio/studio_export.py --port /dev/cu.usbmodem1101
 """
 
 from __future__ import annotations
 
 import argparse
+import contextlib
 import difflib
+import io
 import json
 import re
 import sys
@@ -464,17 +468,51 @@ def set_layer(layer_text: str, bindings: str, display_name: str) -> str:
     return layer_text
 
 
+def reset_settings(studio: Studio, port: str | None) -> Studio:
+    """Restores stock settings and returns a fresh connection once the keyboard answers again.
+
+    The keyboard erases each saved key from flash one by one, which takes ~20 s
+    during which it doesn't answer, so the reply may never come on this connection.
+    """
+    print("Restoring stock settings (takes up to a minute)...")
+    try:
+        if not studio.call(timeout=60.0, core=core_pb2.Request(reset_settings=True)).core.reset_settings:
+            sys.exit("The keyboard refused to restore stock settings.")
+    except (TimeoutError, serial.SerialException):
+        pass  # busy or restarted; reconnect below and let the comparison show the result
+    studio.serial.close()
+    deadline = time.monotonic() + 60
+    while True:
+        try:
+            with contextlib.redirect_stderr(io.StringIO()):
+                studio = connect(port)
+            studio.call(core=core_pb2.Request(get_device_info=True))
+            break
+        except (SystemExit, TimeoutError, serial.SerialException):
+            if time.monotonic() > deadline:
+                sys.exit("The keyboard stopped answering after the reset. Unplug and replug the left half, "
+                         "then run --check.")
+            time.sleep(3)
+    print("Restored stock settings: the keyboard now uses the keymap it was flashed with.")
+    return studio
+
+
 # --- Main ---
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--port", help="serial port of the left half (default: auto-detect)")
     parser.add_argument("--check", action="store_true", help="only compare; exit 1 if the files are out of date")
+    parser.add_argument("--reset", action="store_true",
+                        help="restore stock settings (drop Studio's saved keymap edits; pairings stay), then --check")
     args = parser.parse_args()
+    args.check = args.check or args.reset
 
     studio = connect(args.port)
     device = studio.call(core=core_pb2.Request(get_device_info=True)).core.get_device_info
     print(f"Connected to {device.name}")
+    if args.reset:
+        studio = reset_settings(studio, args.port)
     unsaved = studio.call(keymap=keymap_pb2.Request(check_unsaved_changes=True)).keymap.check_unsaved_changes
     if unsaved:
         warn("Studio has unsaved changes; exporting the live keymap, which is lost on power-off unless saved")
@@ -564,6 +602,9 @@ def main() -> None:
 
     if args.check:
         print("Up to date." if not changes else f"Out of date: {', '.join(str(p.relative_to(REPO)) for p in changes)}")
+        if changes and args.reset:
+            print("If the flashed firmware was built from this file, restart the left half "
+                  "(reset button, or unplug and replug) and run --check again.")
         sys.exit(1 if changes else 0)
     print("Updated: " + ", ".join(str(p.relative_to(REPO)) for p in changes) if changes else "No changes.")
     if warnings:

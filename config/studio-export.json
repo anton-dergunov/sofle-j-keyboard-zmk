@@ -3,7 +3,7 @@
   "layers": [
     {
       "id": 0,
-      "name": "LAYER0",
+      "name": "Base",
       "bindings": [
         {
           "behavior": "Key Press",
@@ -393,7 +393,7 @@
     },
     {
       "id": 1,
-      "name": "layer1",
+      "name": "Nav",
       "bindings": [
         {
           "behavior": "Transparent",
@@ -783,13 +783,13 @@
     },
     {
       "id": 2,
-      "name": "layer2",
+      "name": "System",
       "bindings": [
         {
-          "behavior": "Transparent",
+          "behavior": "Bluetooth",
           "param1": 0,
           "param2": 0,
-          "keymap": "&trans"
+          "keymap": "&bt BT_CLR"
         },
         {
           "behavior": "Bluetooth",
@@ -858,16 +858,16 @@
           "keymap": "&bt BT_SEL 4"
         },
         {
-          "behavior": "Transparent",
+          "behavior": "Bluetooth",
           "param1": 0,
           "param2": 0,
-          "keymap": "&trans"
+          "keymap": "&bt BT_CLR"
         },
         {
-          "behavior": "Transparent",
-          "param1": 0,
+          "behavior": "Bluetooth",
+          "param1": 4,
           "param2": 0,
-          "keymap": "&trans"
+          "keymap": "&bt BT_CLR_ALL"
         },
         {
           "behavior": "Bluetooth",
@@ -936,24 +936,6 @@
           "keymap": "&bt BT_DISC 4"
         },
         {
-          "behavior": "Transparent",
-          "param1": 0,
-          "param2": 0,
-          "keymap": "&trans"
-        },
-        {
-          "behavior": "Transparent",
-          "param1": 0,
-          "param2": 0,
-          "keymap": "&trans"
-        },
-        {
-          "behavior": "Bluetooth",
-          "param1": 0,
-          "param2": 0,
-          "keymap": "&bt BT_CLR"
-        },
-        {
           "behavior": "Bluetooth",
           "param1": 4,
           "param2": 0,
@@ -970,6 +952,24 @@
           "param1": 0,
           "param2": 0,
           "keymap": "&trans"
+        },
+        {
+          "behavior": "Transparent",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&trans"
+        },
+        {
+          "behavior": "To Personal Mac",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&to_personal"
+        },
+        {
+          "behavior": "To Work Mac",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&to_work"
         },
         {
           "behavior": "Transparent",
@@ -984,18 +984,6 @@
           "keymap": "&mmv MOVE_LEFT"
         },
         {
-          "behavior": "Bluetooth",
-          "param1": 0,
-          "param2": 0,
-          "keymap": "&bt BT_CLR"
-        },
-        {
-          "behavior": "Bluetooth",
-          "param1": 4,
-          "param2": 0,
-          "keymap": "&bt BT_CLR_ALL"
-        },
-        {
           "behavior": "Transparent",
           "param1": 0,
           "param2": 0,
@@ -1006,6 +994,18 @@
           "param1": 0,
           "param2": 0,
           "keymap": "&trans"
+        },
+        {
+          "behavior": "To Personal Mac",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&to_personal"
+        },
+        {
+          "behavior": "To Work Mac",
+          "param1": 0,
+          "param2": 0,
+          "keymap": "&to_work"
         },
         {
           "behavior": "Transparent",
@@ -1173,7 +1173,7 @@
     },
     {
       "id": 3,
-      "name": "layer3",
+      "name": "Spare 3",
       "bindings": [
         {
           "behavior": "Transparent",
@@ -1563,7 +1563,7 @@
     },
     {
       "id": 4,
-      "name": "layer4",
+      "name": "Spare 4",
       "bindings": [
         {
           "behavior": "Transparent",
@@ -1980,6 +1980,9 @@
     "25": "Bluetooth",
     "26": "Bootloader",
     "27": "Output Selection",
-    "28": "Reset"
+    "28": "Reset",
+    "29": "To Personal Mac",
+    "30": "To Work Mac",
+    "31": "SHIFT_MCLK"
   }
 }

@@ -9,6 +9,7 @@ them back so the repo always holds the real layout.
 ```
 studio/studio_export.py           # export: rewrites the layer bindings and config/studio-export.json
 studio/studio_export.py --check   # only compare; exit 1 and show a diff if the repo is out of date
+studio/studio_export.py --reset   # drop Studio's saved edits so the keyboard follows the flashed file
 ```
 
 - **Connect:** plug the **left** half into the Mac with a USB cable. Studio
@@ -37,9 +38,10 @@ are how you read it.
 2. Run `keymap-drawer/draw.py` and look at the pictures (see below).
 3. Commit and push. CI builds the firmware; flash `eyelash_sofle_studio_left`
    to the left half (the keymap lives there; the right half needs no flash).
-4. If Studio edits were ever saved on the keyboard, they override the file:
-   press **Restore Stock Settings** in Studio once after flashing. It resets
-   only the keymap, not Bluetooth pairings.
+4. If Studio edits were ever saved on the keyboard, they override the file,
+   key by key: run `studio/studio_export.py --reset` once after flashing (the
+   same as **Restore Stock Settings** in Studio). It drops only the saved
+   keymap, not Bluetooth pairings, and then compares the keyboard with the file.
 5. `studio/studio_export.py --check` should now say "Up to date."
 
 ## keymap-drawer/draw.py: one picture per layer
