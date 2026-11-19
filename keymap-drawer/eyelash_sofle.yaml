@@ -1,103 +1,97 @@
 layout: {zmk_keyboard: eyelash_sofle}
 layers:
   Base:
-  - $$mdi:keyboard-esc$$
+  - esc
   - {t: '1', s: '!'}
   - {t: '2', s: '@'}
   - {t: '3', s: '#'}
   - {t: '4', s: $}
   - {t: '5', s: '%'}
-  - $$mdi:arrow-up-bold$$
+  - $$tabler:arrow-up$$
   - {t: '6', s: ^}
   - {t: '7', s: '&'}
   - {t: '8', s: '*'}
   - {t: '9', s: (}
   - {t: '0', s: )}
-  - $$mdi:backspace-outline$$
-  - $$mdi:keyboard-tab$$
+  - ⌫
+  - ⇥
   - Q
   - W
   - E
   - R
   - T
-  - $$mdi:arrow-down-bold$$
+  - $$tabler:arrow-down$$
   - Y
   - U
   - I
   - O
   - P
   - {t: \, s: '|'}
-  - $$mdi:keyboard-return$$
+  - ↩
   - A
   - S
   - D
   - F
   - G
-  - $$mdi:arrow-left-bold$$
+  - $$tabler:arrow-left$$
   - H
   - J
   - K
   - L
   - {t: ;, s: ':'}
   - {t: '''', s: '"'}
-  - $$mdi:apple-keyboard-shift$$
+  - ⇧
   - Z
   - X
   - C
   - V
   - B
-  - $$mdi:arrow-right-bold$$
+  - $$tabler:arrow-right$$
   - N
   - M
   - {t: ',', s: <}
   - {t: ., s: '>'}
   - {t: /, s: '?'}
-  - $$mdi:apple-keyboard-shift$$
-  - $$mdi:volume-off$$
-  - $$mdi:apple-keyboard-control$$
-  - $$mdi:apple-keyboard-option$$
-  - $$mdi:apple-keyboard-command$$
+  - ⇧
+  - $$tabler:volume-3$$
+  - ⌃
+  - ⌥
+  - ⌘
   - M1
-  - $$mdi:keyboard-space$$
-  - $$mdi:keyboard-return$$
-  - $$mdi:keyboard-space$$
+  - $$tabler:space$$
+  - ↩
+  - $$tabler:space$$
   - M1
-  - $$mdi:apple-keyboard-command$$
-  - $$mdi:apple-keyboard-option$$
-  - $$mdi:apple-keyboard-control$$
+  - ⌘
+  - ⌥
+  - ⌃
   Nav:
   - {type: trans}
-  - {t: '$$mdi:brightness-5$$', h: dimmer}
-  - {t: '$$mdi:brightness-7$$', h: brighter}
-  - 'Mission
-
-    control'
-  - 'Launch-
-
-    pad'
-  - 'Spot-
-
-    light'
-  - {t: '$$mdi:arrow-up-thin$$', s: '$$mdi:mouse$$'}
-  - $$mdi:skip-previous$$
-  - $$mdi:play-pause$$
-  - $$mdi:skip-next$$
-  - $$mdi:volume-off$$
-  - $$mdi:volume-minus$$
-  - $$mdi:volume-plus$$
-  - $$mdi:apple-keyboard-caps$$
+  - $$tabler:brightness-down$$
+  - $$tabler:brightness-up$$
+  - $$tabler:app-window$$
+  - $$tabler:layout-grid$$
+  - $$tabler:search$$
+  - {t: '$$tabler:arrow-up$$', h: mouse}
+  - $$tabler:player-track-prev$$
+  - $$play-pause$$
+  - $$tabler:player-track-next$$
+  - $$tabler:volume-3$$
+  - $$tabler:volume-2$$
+  - $$tabler:volume$$
+  - ⇪
   - {t: '`', s: '~'}
   - {type: trans}
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - {t: '$$mdi:arrow-down-thin$$', s: '$$mdi:mouse$$'}
-  - 'Page
+  - {t: '$$tabler:arrow-down$$', h: mouse}
+  - 'page
 
     up'
-  - Home
-  - $$mdi:arrow-up-bold$$
-  - End
+  - home
+  - $$tabler:arrow-up$$
+  - end
   - {t: '-', s: _}
   - {t: '=', s: +}
   - {type: trans}
@@ -106,13 +100,13 @@ layers:
   - {type: trans}
   - {type: trans}
   - M2
-  - {t: '$$mdi:arrow-left-thin$$', s: '$$mdi:mouse$$'}
-  - 'Page
+  - {t: '$$tabler:arrow-left$$', h: mouse}
+  - 'page
 
     down'
-  - $$mdi:arrow-left-bold$$
-  - $$mdi:arrow-down-bold$$
-  - $$mdi:arrow-right-bold$$
+  - $$tabler:arrow-left$$
+  - $$tabler:arrow-down$$
+  - $$tabler:arrow-right$$
   - {t: '[', s: '{'}
   - {t: ']', s: '}'}
   - {type: trans}
@@ -121,89 +115,77 @@ layers:
   - F3
   - F4
   - F5
-  - {t: '$$mdi:arrow-right-thin$$', s: '$$mdi:mouse$$'}
+  - {t: '$$tabler:arrow-right$$', h: mouse}
   - F6
   - F7
   - F8
   - F9
   - F10
   - {type: trans}
-  - $$mdi:volume-off$$
+  - $$tabler:volume-3$$
   - {type: trans}
   - {type: trans}
   - {type: trans}
   - {type: held}
   - {type: trans}
-  - {t: '$$mdi:mouse-left-click-outline$$', h: click}
+  - click
   - {type: trans}
   - {type: held alternate}
   - {type: trans}
   - M2
   - {type: trans}
   System:
-  - {t: 'Clear
-
-      BT', h: profile, type: danger}
-  - {t: BT  0, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  1, h: personal, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  2, h: work, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  3, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  4, s: '$$mdi:bluetooth-connect$$'}
-  - {t: '$$mdi:arrow-up-thin$$', s: '$$mdi:mouse$$'}
-  - {t: BT  0, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  1, h: personal, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  2, h: work, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  3, s: '$$mdi:bluetooth-connect$$'}
-  - {t: BT  4, s: '$$mdi:bluetooth-connect$$'}
-  - {t: 'Clear
-
-      BT', h: profile, type: danger}
-  - {t: 'Clear
-
-      all BT', type: danger}
-  - {t: BT  0, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  1, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  2, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  3, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  4, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: '$$mdi:arrow-down-thin$$', s: '$$mdi:mouse$$'}
-  - {t: BT  0, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  1, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  2, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  3, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: BT  4, h: 'off', s: '$$mdi:link-variant-off$$'}
-  - {t: 'Clear
-
-      all BT', type: danger}
+  - {t: '$$tabler:trash$$', h: clear, type: danger}
+  - {t: '1', s: '$$tabler:bluetooth$$'}
+  - {t: '2', h: personal, s: '$$tabler:bluetooth$$'}
+  - {t: '3', h: work, s: '$$tabler:bluetooth$$'}
+  - {t: '4', s: '$$tabler:bluetooth$$'}
+  - {t: '5', s: '$$tabler:bluetooth$$'}
+  - {t: '$$tabler:arrow-up$$', h: mouse}
+  - {t: '1', s: '$$tabler:bluetooth$$'}
+  - {t: '2', h: personal, s: '$$tabler:bluetooth$$'}
+  - {t: '3', h: work, s: '$$tabler:bluetooth$$'}
+  - {t: '4', s: '$$tabler:bluetooth$$'}
+  - {t: '5', s: '$$tabler:bluetooth$$'}
+  - {t: '$$tabler:trash$$', h: clear, type: danger}
+  - {t: '$$tabler:trash$$', h: clear all, type: danger}
+  - {t: '1', s: '$$tabler:unlink$$', type: muted}
+  - {t: '2', s: '$$tabler:unlink$$', type: muted}
+  - {t: '3', s: '$$tabler:unlink$$', type: muted}
+  - {t: '4', s: '$$tabler:unlink$$', type: muted}
+  - {t: '5', s: '$$tabler:unlink$$', type: muted}
+  - {t: '$$tabler:arrow-down$$', h: mouse}
+  - {t: '1', s: '$$tabler:unlink$$', type: muted}
+  - {t: '2', s: '$$tabler:unlink$$', type: muted}
+  - {t: '3', s: '$$tabler:unlink$$', type: muted}
+  - {t: '4', s: '$$tabler:unlink$$', type: muted}
+  - {t: '5', s: '$$tabler:unlink$$', type: muted}
+  - {t: '$$tabler:trash$$', h: clear all, type: danger}
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - {t: Personal, h: desk, s: '$$mdi:laptop$$', type: desk}
-  - {t: Work, h: desk, s: '$$mdi:laptop$$', type: desk}
+  - {t: '$$tabler:device-laptop$$', h: Personal, type: desk}
+  - {t: '$$tabler:device-laptop$$', h: Work, type: desk}
   - {type: held}
-  - {t: '$$mdi:arrow-left-thin$$', s: '$$mdi:mouse$$'}
+  - {t: '$$tabler:arrow-left$$', h: mouse}
   - {type: trans}
   - {type: trans}
-  - {t: Personal, h: desk, s: '$$mdi:laptop$$', type: desk}
-  - {t: Work, h: desk, s: '$$mdi:laptop$$', type: desk}
+  - {t: '$$tabler:device-laptop$$', h: Personal, type: desk}
+  - {t: '$$tabler:device-laptop$$', h: Work, type: desk}
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - {t: Reset, s: '$$mdi:restart$$'}
-  - {t: 'Off', h: hold 2 s, s: '$$mdi:power$$'}
-  - {t: USB, h: output, s: '$$mdi:usb$$'}
-  - {t: BLE, h: output, s: '$$mdi:bluetooth$$'}
-  - {t: 'Boot-
-
-      loader', s: '$$mdi:download$$'}
-  - {t: '$$mdi:arrow-right-thin$$', s: '$$mdi:mouse$$'}
-  - {t: Reset, s: '$$mdi:restart$$'}
-  - {t: 'Off', h: hold 2 s, s: '$$mdi:power$$'}
-  - {t: USB, h: output, s: '$$mdi:usb$$'}
-  - {t: BLE, h: output, s: '$$mdi:bluetooth$$'}
-  - {t: 'Boot-
-
-      loader', s: '$$mdi:download$$'}
+  - {t: '$$tabler:refresh$$', h: reset}
+  - {t: '$$tabler:power$$', h: 'off'}
+  - {t: '$$tabler:usb$$', h: USB out}
+  - {t: '$$tabler:bluetooth$$', h: BT out}
+  - {t: '$$tabler:download$$', h: flash}
+  - {t: '$$tabler:arrow-right$$', h: mouse}
+  - {t: '$$tabler:refresh$$', h: reset}
+  - {t: '$$tabler:power$$', h: 'off'}
+  - {t: '$$tabler:usb$$', h: USB out}
+  - {t: '$$tabler:bluetooth$$', h: BT out}
+  - {t: '$$tabler:download$$', h: flash}
   - {type: trans}
   - {type: trans}
   - {type: trans}
@@ -211,7 +193,7 @@ layers:
   - {type: trans}
   - {type: held}
   - {type: trans}
-  - {t: '$$mdi:mouse-left-click-outline$$', h: click}
+  - click
   - {type: trans}
   - {type: held}
   - {type: trans}
@@ -349,5 +331,5 @@ layers:
   - {type: trans}
 combos:
 - p: [14, 28, 40]
-  k: $$mdi:power$$
-  l: [Base]
+  k: {t: '$$tabler:power$$', h: 'off'}
+  hidden: true
