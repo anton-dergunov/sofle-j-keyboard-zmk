@@ -114,16 +114,22 @@ draw_config:
   glyph_tap_size: 18
   glyph_hold_size: 15
   glyph_shifted_size: 15
-  glyphs: {}
+  # Icons not in Tabler, drawn in its style. keymap-drawer/draw.py reads these too.
+  glyphs:
+    play-pause: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6v12l8 -6z"/><path d="M15 6v12"/><path d="M20 6v12"/></svg>'
   glyph_urls:
-    tabler: https://unpkg.com/@tabler/icons/icons/outline/{}.svg
-    tablerf: https://unpkg.com/@tabler/icons/icons/filled/{}.svg
+    # pinned to the release vendored in keymap-drawer/icons/
+    tabler: https://unpkg.com/@tabler/icons@3.50.0/icons/outline/{}.svg
+    tablerf: https://unpkg.com/@tabler/icons@3.50.0/icons/filled/{}.svg
     mdi: https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/master/svg/{}.svg
     mdil: https://raw.githubusercontent.com/Pictogrammers/MaterialDesignLight/master/svg/{}.svg
     material: https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/{}/default/48px.svg
   use_local_cache: true
 
 parse_config:
+  # Legends: t = main, s = small one above it, h = caption below; type = colour class.
+  # Icons are $$tabler:<name>$$ (https://tabler.io/icons), vendored in keymap-drawer/icons/.
+
   # Layer keys show as M1 / M2, the names used for them everywhere else
   layer_legend_map:
     Nav: M1
@@ -136,59 +142,42 @@ parse_config:
 
   raw_binding_map:
     # Desk switch (desk-switch app + macros in the keymap)
-    "&to_personal":
-      t: Personal
-      s: $$mdi:laptop$$
-      h: desk
-      type: desk
-    "&to_work":
-      t: Work
-      s: $$mdi:laptop$$
-      h: desk
-      type: desk
+    "&to_personal": {t: $$tabler:device-laptop$$, h: Personal, type: desk}
+    "&to_work": {t: $$tabler:device-laptop$$, h: Work, type: desk}
 
-    # Bluetooth profiles, numbered like ZMK counts them (BT_SEL 0..4)
-    "&bt BT_SEL 0": {t: "BT  0", s: $$mdi:bluetooth-connect$$}
-    "&bt BT_SEL 1": {t: "BT  1", s: $$mdi:bluetooth-connect$$, h: personal}
-    "&bt BT_SEL 2": {t: "BT  2", s: $$mdi:bluetooth-connect$$, h: work}
-    "&bt BT_SEL 3": {t: "BT  3", s: $$mdi:bluetooth-connect$$}
-    "&bt BT_SEL 4": {t: "BT  4", s: $$mdi:bluetooth-connect$$}
-    "&bt BT_DISC 0": {t: "BT  0", s: $$mdi:link-variant-off$$, h: "off"}
-    "&bt BT_DISC 1": {t: "BT  1", s: $$mdi:link-variant-off$$, h: "off"}
-    "&bt BT_DISC 2": {t: "BT  2", s: $$mdi:link-variant-off$$, h: "off"}
-    "&bt BT_DISC 3": {t: "BT  3", s: $$mdi:link-variant-off$$, h: "off"}
-    "&bt BT_DISC 4": {t: "BT  4", s: $$mdi:link-variant-off$$, h: "off"}
-    "&bt BT_CLR":
-      t: "Clear\nBT"
-      h: profile
-      type: danger
-    "&bt BT_CLR_ALL":
-      t: "Clear\nall BT"
-      type: danger
-    "&bt BT_NXT": {t: "BT  next", s: $$mdi:bluetooth-connect$$}
-    "&bt BT_PRV": {t: "BT  prev", s: $$mdi:bluetooth-connect$$}
+    # Bluetooth profiles, numbered from 1 like the keyboard's display (BT_SEL 0 is profile 1)
+    "&bt BT_SEL 0": {t: '1', s: $$tabler:bluetooth$$}
+    "&bt BT_SEL 1": {t: '2', s: $$tabler:bluetooth$$, h: personal}
+    "&bt BT_SEL 2": {t: '3', s: $$tabler:bluetooth$$, h: work}
+    "&bt BT_SEL 3": {t: '4', s: $$tabler:bluetooth$$}
+    "&bt BT_SEL 4": {t: '5', s: $$tabler:bluetooth$$}
+    "&bt BT_DISC 0": {t: '1', s: $$tabler:unlink$$, type: muted}
+    "&bt BT_DISC 1": {t: '2', s: $$tabler:unlink$$, type: muted}
+    "&bt BT_DISC 2": {t: '3', s: $$tabler:unlink$$, type: muted}
+    "&bt BT_DISC 3": {t: '4', s: $$tabler:unlink$$, type: muted}
+    "&bt BT_DISC 4": {t: '5', s: $$tabler:unlink$$, type: muted}
+    "&bt BT_CLR": {t: $$tabler:trash$$, h: clear, type: danger}
+    "&bt BT_CLR_ALL": {t: $$tabler:trash$$, h: clear all, type: danger}
+    "&bt BT_NXT": {t: $$tabler:bluetooth$$, h: next}
+    "&bt BT_PRV": {t: $$tabler:bluetooth$$, h: previous}
 
     # Output and power
-    "&out OUT_USB": {t: USB, s: $$mdi:usb$$, h: output}
-    "&out OUT_BLE": {t: BLE, s: $$mdi:bluetooth$$, h: output}
-    "&out OUT_TOG": {t: USB/BLE, h: output}
-    "&soft_off": {t: "Off", s: $$mdi:power$$, h: hold 2 s}
-    "&sys_reset": {t: Reset, s: $$mdi:restart$$}
-    "&bootloader": {t: "Boot-\nloader", s: $$mdi:download$$}
+    "&out OUT_USB": {t: $$tabler:usb$$, h: USB out}
+    "&out OUT_BLE": {t: $$tabler:bluetooth$$, h: BT out}
+    "&out OUT_TOG": {t: $$tabler:usb$$, h: USB/BT}
+    "&soft_off": {t: $$tabler:power$$, h: 'off'}
+    "&sys_reset": {t: $$tabler:refresh$$, h: reset}
+    "&bootloader": {t: $$tabler:download$$, h: flash}
 
-    # Mouse
-    "&mmv MOVE_UP": {t: $$mdi:arrow-up-thin$$, s: $$mdi:mouse$$}
-    "&mmv MOVE_DOWN": {t: $$mdi:arrow-down-thin$$, s: $$mdi:mouse$$}
-    "&mmv MOVE_LEFT": {t: $$mdi:arrow-left-thin$$, s: $$mdi:mouse$$}
-    "&mmv MOVE_RIGHT": {t: $$mdi:arrow-right-thin$$, s: $$mdi:mouse$$}
-    "&mkp LCLK": {t: $$mdi:mouse-left-click-outline$$, h: click}
-    "&mkp RCLK": {t: $$mdi:mouse-right-click-outline$$, h: right}
-    "&mkp MCLK": {t: $$mdi:mouse-scroll-wheel$$, h: middle}
-    "&msc SCRL_UP": {t: $$mdi:pan-up$$, h: scroll}
-    "&msc SCRL_DOWN": {t: $$mdi:pan-down$$, h: scroll}
+    # Mouse (on the joystick, which the pictures leave out)
+    "&mmv MOVE_UP": {t: $$tabler:arrow-up$$, h: mouse}
+    "&mmv MOVE_DOWN": {t: $$tabler:arrow-down$$, h: mouse}
+    "&mmv MOVE_LEFT": {t: $$tabler:arrow-left$$, h: mouse}
+    "&mmv MOVE_RIGHT": {t: $$tabler:arrow-right$$, h: mouse}
+    "&mkp LCLK": {t: click}
 
     "&none": {t: '', type: none}
-    "&caps_word": {t: Caps word}
+    "&caps_word": {t: "caps\nword"}
 
   zmk_keycode_map:
     # Numbers with their shifted symbols
@@ -224,78 +213,75 @@ parse_config:
     SLASH: {t: /, s: '?'}
     FSLH: {t: /, s: '?'}
 
-    # Modifiers, as macOS labels them
-    LCTRL: $$mdi:apple-keyboard-control$$
-    LEFT_CONTROL: $$mdi:apple-keyboard-control$$
-    RCTRL: $$mdi:apple-keyboard-control$$
-    RCTL: $$mdi:apple-keyboard-control$$
-    RIGHT_CONTROL: $$mdi:apple-keyboard-control$$
-    LALT: $$mdi:apple-keyboard-option$$
-    LEFT_ALT: $$mdi:apple-keyboard-option$$
-    RALT: $$mdi:apple-keyboard-option$$
-    RIGHT_ALT: $$mdi:apple-keyboard-option$$
-    LGUI: $$mdi:apple-keyboard-command$$
-    LEFT_GUI: $$mdi:apple-keyboard-command$$
-    LCMD: $$mdi:apple-keyboard-command$$
-    RGUI: $$mdi:apple-keyboard-command$$
-    RIGHT_GUI: $$mdi:apple-keyboard-command$$
-    RCMD: $$mdi:apple-keyboard-command$$
-    LSHFT: $$mdi:apple-keyboard-shift$$
-    LSHIFT: $$mdi:apple-keyboard-shift$$
-    LEFT_SHIFT: $$mdi:apple-keyboard-shift$$
-    RSHFT: $$mdi:apple-keyboard-shift$$
-    RSHIFT: $$mdi:apple-keyboard-shift$$
-    RIGHT_SHIFT: $$mdi:apple-keyboard-shift$$
-    CAPS: $$mdi:apple-keyboard-caps$$
-    CAPSLOCK: $$mdi:apple-keyboard-caps$$
-
-    # Whitespace and editing
-    ESC: $$mdi:keyboard-esc$$
-    ESCAPE: $$mdi:keyboard-esc$$
-    TAB: $$mdi:keyboard-tab$$
-    SPACE: $$mdi:keyboard-space$$
-    ENTER: $$mdi:keyboard-return$$
-    RET: $$mdi:keyboard-return$$
-    BACKSPACE: $$mdi:backspace-outline$$
-    BSPC: $$mdi:backspace-outline$$
-    DELETE: $$mdi:backspace-reverse-outline$$
-    DEL: $$mdi:backspace-reverse-outline$$
+    # Modifiers and editing keys, with the symbols Apple keyboards use
+    LCTRL: ⌃
+    LEFT_CONTROL: ⌃
+    RCTRL: ⌃
+    RCTL: ⌃
+    RIGHT_CONTROL: ⌃
+    LALT: ⌥
+    LEFT_ALT: ⌥
+    RALT: ⌥
+    RIGHT_ALT: ⌥
+    LGUI: ⌘
+    LEFT_GUI: ⌘
+    LCMD: ⌘
+    RGUI: ⌘
+    RIGHT_GUI: ⌘
+    RCMD: ⌘
+    LSHFT: ⇧
+    LSHIFT: ⇧
+    LEFT_SHIFT: ⇧
+    RSHFT: ⇧
+    RSHIFT: ⇧
+    RIGHT_SHIFT: ⇧
+    CAPS: ⇪
+    CAPSLOCK: ⇪
+    ESC: esc
+    ESCAPE: esc
+    TAB: ⇥
+    ENTER: ↩
+    RET: ↩
+    BACKSPACE: ⌫
+    BSPC: ⌫
+    DELETE: ⌦
+    DEL: ⌦
+    SPACE: $$tabler:space$$
 
     # Navigation
-    UP: $$mdi:arrow-up-bold$$
-    UP_ARROW: $$mdi:arrow-up-bold$$
-    DOWN: $$mdi:arrow-down-bold$$
-    DOWN_ARROW: $$mdi:arrow-down-bold$$
-    LEFT: $$mdi:arrow-left-bold$$
-    LEFT_ARROW: $$mdi:arrow-left-bold$$
-    RIGHT: $$mdi:arrow-right-bold$$
-    RIGHT_ARROW: $$mdi:arrow-right-bold$$
-    PG_UP: "Page\nup"
-    PAGE_UP: "Page\nup"
-    PG_DN: "Page\ndown"
-    PAGE_DOWN: "Page\ndown"
-    HOME: Home
-    END: End
+    UP: $$tabler:arrow-up$$
+    UP_ARROW: $$tabler:arrow-up$$
+    DOWN: $$tabler:arrow-down$$
+    DOWN_ARROW: $$tabler:arrow-down$$
+    LEFT: $$tabler:arrow-left$$
+    LEFT_ARROW: $$tabler:arrow-left$$
+    RIGHT: $$tabler:arrow-right$$
+    RIGHT_ARROW: $$tabler:arrow-right$$
+    PG_UP: "page\nup"
+    PAGE_UP: "page\nup"
+    PG_DN: "page\ndown"
+    PAGE_DOWN: "page\ndown"
+    HOME: home
+    END: end
 
-    # Sound and media
-    C_MUTE: $$mdi:volume-off$$
-    C_VOL_UP: $$mdi:volume-plus$$
-    C_VOLUME_UP: $$mdi:volume-plus$$
-    C_VOL_DN: $$mdi:volume-minus$$
-    C_VOLUME_DOWN: $$mdi:volume-minus$$
-    C_PREV: $$mdi:skip-previous$$
-    C_PP: $$mdi:play-pause$$
-    C_NEXT: $$mdi:skip-next$$
+    # Media and volume, as on the Mac's function row
+    C_PREV: $$tabler:player-track-prev$$
+    C_PP: $$play-pause$$
+    C_NEXT: $$tabler:player-track-next$$
+    C_MUTE: $$tabler:volume-3$$
+    C_VOL_DN: $$tabler:volume-2$$
+    C_VOLUME_DOWN: $$tabler:volume-2$$
+    C_VOL_UP: $$tabler:volume$$
+    C_VOLUME_UP: $$tabler:volume$$
 
-    # macOS system keys
-    C_BRI_DN: {t: $$mdi:brightness-5$$, h: dimmer}
-    C_BRI_UP: {t: $$mdi:brightness-7$$, h: brighter}
-    C_AC_DESKTOP_SHOW_ALL_WINDOWS: "Mission\ncontrol"
-    C_AC_DESKTOP_SHOW_ALL_APPLICATIONS: "Launch-\npad"
-    C_AC_SEARCH: "Spot-\nlight"
+    # macOS system keys, as on the Mac's function row
+    C_BRI_DN: $$tabler:brightness-down$$
+    C_BRI_UP: $$tabler:brightness-up$$
+    C_AC_DESKTOP_SHOW_ALL_WINDOWS: $$tabler:app-window$$
+    C_AC_DESKTOP_SHOW_ALL_APPLICATIONS: $$tabler:layout-grid$$
+    C_AC_SEARCH: $$tabler:search$$
 
   zmk_combos:
-    # Q + S + Z held 2 s turns the keyboard off; draw it on the base layer only
+    # Q + S + Z held 2 s turns the keyboard off; the note says so, the pictures don't
     softoff:
-      l: [Base]
-      k: $$mdi:power$$
+      hidden: true

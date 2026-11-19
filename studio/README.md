@@ -51,10 +51,18 @@ keymap-drawer/draw.py              # writes "Sofle layer N.svg" into keymap-draw
 keymap-drawer/draw.py "<folder>"   # or into another folder, e.g. your notes' images
 ```
 
-Labels, colours and icons are set in `keymap_drawer.config.yaml`, which the
-GitHub draw action also uses for `keymap-drawer/eyelash_sofle.svg` (the
-all-layers picture in the README). Layers whose keys are all transparent are
-skipped. The pictures follow the viewer's light or dark theme.
+- **Labels** (text, icons, which key is red or blue) are set in
+  `keymap_drawer.config.yaml`. keymap-drawer parses the keymap with them; the
+  GitHub draw action uses the same file for `keymap-drawer/eyelash_sofle.svg`,
+  the all-layers picture in the README.
+- **Drawing** (key positions, keycap style, colours, light/dark theme) is in
+  `draw.py` itself. It leaves out the 5-way switch and the knob position, which
+  aren't used, and pulls the halves together. Layers whose keys are all
+  transparent are skipped.
+- **Icons** are [Tabler](https://tabler.io/icons) 3.50.0 outline icons (MIT,
+  see `keymap-drawer/icons/LICENSE`), vendored in `keymap-drawer/icons/`. To use
+  a new one, write `$$tabler:<name>$$` in the config and copy `<name>.svg` from
+  `https://unpkg.com/@tabler/icons@3.50.0/icons/outline/` into that folder.
 
 ### Vendored files
 
