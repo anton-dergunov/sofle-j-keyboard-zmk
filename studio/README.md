@@ -27,11 +27,32 @@ studio/studio_export.py --check   # only compare; exit 1 and show a diff if the 
 
 ### Workflow
 
-1. Edit the layout in ZMK Studio and save.
-2. Run `studio/studio_export.py`, review `git diff`, and commit.
+The file `config/eyelash_sofle.keymap` is the source of truth; the pictures
+are how you read it.
 
-To get the file's layout back onto the keyboard (after a settings reset, for
-example), flash the firmware and press **Restore Stock Settings** in Studio.
+1. Change the layout: edit the file (by hand, with a coding agent, or in the
+   web [Keymap Editor](https://nickcoutsos.github.io/keymap-editor/)), or try
+   it in ZMK Studio, save, and run `studio/studio_export.py` to bring it into
+   the file.
+2. Run `keymap-drawer/draw.py` and look at the pictures (see below).
+3. Commit and push. CI builds the firmware; flash `eyelash_sofle_studio_left`
+   to the left half (the keymap lives there; the right half needs no flash).
+4. If Studio edits were ever saved on the keyboard, they override the file:
+   press **Restore Stock Settings** in Studio once after flashing. It resets
+   only the keymap, not Bluetooth pairings.
+5. `studio/studio_export.py --check` should now say "Up to date."
+
+## keymap-drawer/draw.py: one picture per layer
+
+```
+keymap-drawer/draw.py              # writes "Sofle layer N.svg" into keymap-drawer/
+keymap-drawer/draw.py "<folder>"   # or into another folder, e.g. your notes' images
+```
+
+Labels, colours and icons are set in `keymap_drawer.config.yaml`, which the
+GitHub draw action also uses for `keymap-drawer/eyelash_sofle.svg` (the
+all-layers picture in the README). Layers whose keys are all transparent are
+skipped. The pictures follow the viewer's light or dark theme.
 
 ### Vendored files
 
@@ -49,5 +70,13 @@ uv run --no-project --with grpcio-tools python -m grpc_tools.protoc \
 ## desk-switch macros
 
 `to_personal` and `to_work` (in `config/eyelash_sofle.keymap`) tap F18 or F19
-for [desk-switch](../../desk-switch), wait 150 ms, and then select Bluetooth
-profile 1 or 2 (`BT_SEL` counts from 0). Assign them to keys in Studio.
+for [desk-switch](../../desk-switch), wait 150 ms, and then switch output:
+
+- **Personal:** `&out OUT_USB` + Bluetooth profile 1. Over USB when the left
+  half is cabled to the personal Mac; with no host on the cable (a charger, or
+  unplugged), ZMK falls back to Bluetooth profile 1.
+- **Work:** `&out OUT_BLE` + Bluetooth profile 2, even while cabled.
+
+`BT_SEL` counts from 0. The keys sit on layer 2 (M1 + M2), R2 positions 3 and 4
+of each half. If the cable ever goes to the work Mac instead, swap the two
+`&out` lines.

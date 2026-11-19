@@ -67,14 +67,17 @@
 
         // desk-switch (~/projects/tools/desk-switch): the Mac that has the keyboard
         // catches the hotkey and moves the monitor and mouse; the wait gives the key
-        // release time to reach that Mac before the keyboard changes Bluetooth profile.
+        // release time to reach that Mac before the keyboard changes output.
+        // The personal Mac is reached over USB when the left half is cabled to it
+        // (OUT_USB falls back to Bluetooth profile 1 when no host is on the cable);
+        // the work Mac always over Bluetooth.
         to_personal: to_personal {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             display-name = "To Personal Mac";
             tap-ms = <40>;
             wait-ms = <150>;
-            bindings = <&macro_tap &kp F18>, <&macro_tap &bt BT_SEL 1>;
+            bindings = <&macro_tap &kp F18>, <&macro_tap &out OUT_USB &bt BT_SEL 1>;
         };
 
         to_work: to_work {
@@ -83,7 +86,7 @@
             display-name = "To Work Mac";
             tap-ms = <40>;
             wait-ms = <150>;
-            bindings = <&macro_tap &kp F19>, <&macro_tap &bt BT_SEL 2>;
+            bindings = <&macro_tap &kp F19>, <&macro_tap &out OUT_BLE &bt BT_SEL 2>;
         };
     };
 
@@ -100,7 +103,7 @@
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
-            display-name = "LAYER0";
+            display-name = "Base";
         };
 
         layer_1 {
@@ -112,20 +115,20 @@
 &kp C_MUTE  &trans        &trans        &trans                             &trans                                  &trans             &mkp LCLK        &trans      &trans    &trans      &mo 2       &trans
             >;
 
-            display-name = "layer1";
+            display-name = "Nav";
             sensor-bindings = <&scroll_encoder>;
         };
 
         layer_2 {
             bindings = <
-&trans  &bt BT_SEL 0   &bt BT_SEL 1    &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4     &mmv MOVE_UP     &bt BT_SEL 0   &bt BT_SEL 1    &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &trans
-&trans  &bt BT_DISC 0  &bt BT_DISC 1   &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4    &mmv MOVE_DOWN   &bt BT_DISC 0  &bt BT_DISC 1   &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4  &trans
-&trans  &bt BT_CLR     &bt BT_CLR_ALL  &trans         &trans         &trans           &mmv MOVE_LEFT   &bt BT_CLR     &bt BT_CLR_ALL  &trans         &trans         &trans         &trans
-&trans  &sys_reset     &soft_off       &out OUT_USB   &out OUT_BLE   &bootloader      &mmv MOVE_RIGHT  &sys_reset     &soft_off       &out OUT_USB   &out OUT_BLE   &bootloader    &trans
-&trans  &trans         &trans          &trans         &trans         &trans           &mkp LCLK        &trans         &trans          &trans         &trans         &trans
+&bt BT_CLR      &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4     &mmv MOVE_UP     &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &bt BT_CLR
+&bt BT_CLR_ALL  &bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4    &mmv MOVE_DOWN   &bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4  &bt BT_CLR_ALL
+&trans          &trans         &trans         &to_personal   &to_work       &trans           &mmv MOVE_LEFT   &trans         &trans         &to_personal   &to_work       &trans         &trans
+&trans          &sys_reset     &soft_off      &out OUT_USB   &out OUT_BLE   &bootloader      &mmv MOVE_RIGHT  &sys_reset     &soft_off      &out OUT_USB   &out OUT_BLE   &bootloader    &trans
+&trans          &trans         &trans         &trans         &trans         &trans           &mkp LCLK        &trans         &trans         &trans         &trans         &trans
             >;
 
-            display-name = "layer2";
+            display-name = "System";
             sensor-bindings = <&scroll_encoder>;
         };
 
@@ -138,7 +141,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
             >;
 
-            display-name = "layer3";
+            display-name = "Spare 3";
             sensor-bindings = <&scroll_encoder>;
         };
 
@@ -151,7 +154,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
             >;
 
-            display-name = "layer4";
+            display-name = "Spare 4";
             sensor-bindings = <&scroll_encoder>;
         };
     };
