@@ -81,7 +81,7 @@
   ]
  },
  "clamshell": {
-  "grams": 79.7,
+  "grams": 79.8,
   "parts": [
    {
     "name": "tray (left)",
@@ -118,6 +118,14 @@
    [
     "d5-empty.png",
     "Empty trays: click tabs, magnet pockets and hinge"
+   ],
+   [
+    "d5-tab-3d.png",
+    "A click tab from inside the tray: two slots free a strip of wall, the bead clicks over the rim"
+   ],
+   [
+    "d5-front.png",
+    "Front edge, closed: the click tab and the two thumb lips"
    ],
    [
     "d5-section.png",

@@ -201,6 +201,12 @@ def main():
     f = OUT / "d5-empty.png"
     shot([left] + rotated_open([right]), f, (-0.35, -1.0, 1.1))
     imgs["clamshell"].append((f.name, "Empty trays: click tabs, magnet pockets and hinge"))
+    f = OUT / "d5-tab-3d.png"
+    shot([left], f, (0.25, 1.0, 0.45), focus=(52.0, 16.0, 9.0), span=30)
+    imgs["clamshell"].append((f.name, "A click tab from inside the tray: two slots free a strip of wall, the bead clicks over the rim"))
+    f = OUT / "d5-front.png"
+    shot([left, right], f, (-0.7, -1.0, 0.55), focus=(68.0, 12.0, 19.0), span=55)
+    imgs["clamshell"].append((f.name, "Front edge, closed: the click tab and the two thumb lips"))
     f = OUT / "d5-section.png"
     section(g5 + [left, right], f, "Clamshell: cut through the middle key column (x = 66.7)",
             notes=["keycap tops 2.0 mm apart", "floors 1.4 mm, walls 1.6 mm"])

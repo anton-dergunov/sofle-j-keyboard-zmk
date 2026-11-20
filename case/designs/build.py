@@ -163,7 +163,7 @@ PIN_PRESS, PIN_FREE = 2.05, 2.45  # hole diameters for a 2 mm rod: press fit in 
 MAGNETS_Y = (46.0, 96.0)
 MAGNET_D, MAGNET_H = 8.0, 2.0
 MAGNET_X = PINKY_EDGE_X - (FIT + WALL) - 3.6
-TRAY_TABS = [(PINKY_EDGE_X, 71.0), (70.0, 125.0), (66.0, 10.0)]
+TRAY_TABS = [(PINKY_EDGE_X, 71.0), (70.0, 125.0), (52.0, 10.0)]
 
 
 def _knuckle_cyl(y0, y1, r, x=HINGE_AXIS_X, z=Z_SPLIT):
@@ -220,7 +220,7 @@ def tray_left(parity=0):
     cuts.append(_knuckle_cyl(HINGE_Y[0] - 1, HINGE_Y[1] + 1, (PIN_PRESS if parity == 0 else PIN_FREE) / 2))
 
     # Thumb lips at the front edge to pull the book open (offset left/right per tray).
-    lip_x = 58.0 if parity == 0 else 82.0
+    lip_x = 70.0 if parity == 0 else 84.0  # clear of the front click tab (x 43-61)
     parts.append(local_box((lip_x, 10.0), FIT + WALL - 0.3, FIT + WALL + 2.5, Z_SPLIT - 3.0, Z_SPLIT, -6, 6))
     return difference(union(parts), cuts)
 
@@ -289,17 +289,38 @@ def build():
     print(f"\nkeycap tops {caps.bounds[1][2]:.1f} mm; facing keycap gap ring {2 * (RIM + RING_GAP / 2 - KEY):.1f} mm, "
           f"clamshell {2 * (Z_SPLIT - KEY):.1f} mm; lid underside {KEY + LID_CLEAR:.1f} mm")
 
-    # Export print orientation: everything flat on its largest face.
-    export("1-spacer-ring", r)
-    for nm, m in (("4-lid-left", lid), ("4-lid-right", lid_r)):
-        m2 = m.copy()
-        m2.apply_transform(np.diag([1.0, 1, -1, 1]))  # top face down
-        export(nm, m2)
-    export("5-tray-left", left)
-    rr = right.copy()
-    rr.apply_transform(np.diag([1.0, 1, -1, 1]))
-    export("5-tray-right", rr)
+    # Export each part the way it is used, resting on z = 0. Only rotations and moves: a mirror here
+    # would turn a left part into a right one.
+    open_rot = trimesh.transformations.rotation_matrix(np.pi, [0, 1, 0], point=[HINGE_AXIS_X, 0, Z_SPLIT])
+    right_open = right.copy()
+    right_open.apply_transform(open_rot)  # the right tray as it lies when the book is open, keys up
+    files = [("1-spacer-ring", r, None), ("4-lid-left", lid, "left"), ("4-lid-right", lid_r, "right"),
+             ("5-tray-left", left, "left"), ("5-tray-right", right_open, "right")]
+    print()
+    for name, m, want in files:
+        got = handedness(m)
+        ok = want is None or got == want
+        print(f"  {name:16s} shaped for the {got} half" + ("" if want is None else ("  ok" if ok else "  WRONG")))
+        assert ok, name
+        export(name, placed(m))
     return out, gl
+
+
+def placed(m):
+    """Centre on the origin and rest on z = 0."""
+    m = m.copy()
+    b = m.bounds
+    m.apply_translation([-(b[0][0] + b[1][0]) / 2, -(b[0][1] + b[1][1]) / 2, -b[0][2]])
+    return m
+
+
+def handedness(m):
+    """'left' when the thumb-cluster tip (the outline's lowest point) is on the +x side, as on the left half
+    seen keys up."""
+    v = m.vertices
+    centre = (v[:, 0].min() + v[:, 0].max()) / 2
+    tip = v[v[:, 1] < v[:, 1].min() + 3]
+    return "left" if tip[:, 0].mean() > centre else "right"
 
 
 if __name__ == "__main__":
