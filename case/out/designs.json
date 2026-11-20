@@ -1,0 +1,136 @@
+{
+ "ring": {
+  "grams": 44.5,
+  "parts": [
+   {
+    "name": "spacer ring",
+    "grams": 44.5,
+    "size_mm": [
+     150.5,
+     125.3,
+     24.8
+    ]
+   }
+  ],
+  "images": [
+   [
+    "d1-closed.png",
+    "Closed (straps not shown: 12 mm silicone bands sit between the ridges)"
+   ],
+   [
+    "d1-exploded.png",
+    "Exploded"
+   ],
+   [
+    "d1-ring-alone.png",
+    "The ring alone: the notch on the right steps over the display column"
+   ],
+   [
+    "d1-section-keys.png",
+    "Cross-section through the keys"
+   ],
+   [
+    "d1-section-column.png",
+    "Close-up: stepping over the display column"
+   ]
+  ]
+ },
+ "lids": {
+  "grams": 102.0,
+  "parts": [
+   {
+    "name": "lid (left)",
+    "grams": 51.0,
+    "size_mm": [
+     150.1,
+     124.9,
+     23.1
+    ]
+   },
+   {
+    "name": "lid (right)",
+    "grams": 51.0,
+    "size_mm": [
+     150.1,
+     124.9,
+     23.1
+    ]
+   }
+  ],
+  "images": [
+   [
+    "d4-on.png",
+    "Lid on the left half"
+   ],
+   [
+    "d4-off.png",
+    "Lid lifted off"
+   ],
+   [
+    "d4-underside.png",
+    "Underside: the rim ledge and the four click tabs"
+   ],
+   [
+    "d4-section.png",
+    "Cross-section through two tabs"
+   ],
+   [
+    "d4-bead.png",
+    "Close-up: the bead under the case's bottom chamfer"
+   ]
+  ]
+ },
+ "clamshell": {
+  "grams": 79.7,
+  "parts": [
+   {
+    "name": "tray (left)",
+    "grams": 40.1,
+    "size_mm": [
+     161.8,
+     125.3,
+     23.9
+    ]
+   },
+   {
+    "name": "tray (right)",
+    "grams": 39.6,
+    "size_mm": [
+     161.8,
+     125.3,
+     23.9
+    ]
+   }
+  ],
+  "images": [
+   [
+    "d5-closed.png",
+    "Closed: magnets on the pinky side, thumb lips at the front"
+   ],
+   [
+    "d5-hinge.png",
+    "Closed, from the back: the hinge on the inner edge"
+   ],
+   [
+    "d5-open.png",
+    "Opened flat: both halves keys up, ready to type"
+   ],
+   [
+    "d5-empty.png",
+    "Empty trays: click tabs, magnet pockets and hinge"
+   ],
+   [
+    "d5-section.png",
+    "Cross-section through the keys"
+   ],
+   [
+    "d5-tab.png",
+    "Close-up: tray tab beads over the rims"
+   ],
+   [
+    "d5-hinge-section.png",
+    "Close-up: hinge knuckle and pin hole"
+   ]
+  ]
+ }
+}
