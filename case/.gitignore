@@ -1,2 +1,4 @@
 .venv/
 __pycache__/
+out/renders/
+out/*.pdf

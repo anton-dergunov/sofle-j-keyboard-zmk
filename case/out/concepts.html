@@ -1,0 +1,202 @@
+<title>Sofle Carrying Case Concepts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a comparison table up top, then one section per concept with its renders. */
+:root {
+  --bg: #f6f7f6;
+  --surface: #ffffff;
+  --fg: #1d2423;
+  --muted: #5b6664;
+  --line: #d9dfdd;
+  --pa12: #1f7a71;     /* matches the nylon parts in the renders */
+  --tpu: #c4643a;      /* matches the TPU part */
+  --chip: #e7efed;
+  --display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141918; --surface: #1c2322; --fg: #e6ecea; --muted: #9aa8a5; --line: #2e3836;
+    --pa12: #4fb5aa; --tpu: #e48a62; --chip: #24302e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141918; --surface: #1c2322; --fg: #e6ecea; --muted: #9aa8a5; --line: #2e3836;
+  --pa12: #4fb5aa; --tpu: #e48a62; --chip: #24302e; color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+main { max-width: 1080px; margin: 0 auto; display: grid; gap: 48px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: 2rem; line-height: 1.15; }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1rem; }
+p { margin: 0; max-width: 68ch; }
+.lede { display: grid; gap: 12px; }
+.lede p { color: var(--muted); }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 0.9rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+tr:last-child td { border-bottom: 0; }
+td a { color: var(--fg); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--line); }
+td a:hover, td a:focus-visible { border-bottom-color: var(--pa12); }
+.concept { display: grid; gap: 16px; padding-top: 8px; border-top: 1px solid var(--line); }
+.concept header { display: grid; gap: 8px; }
+.tag { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--chip); border-radius: 999px; padding: 3px 10px; font-size: 0.82rem; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.chip.pa12 { color: var(--pa12); } .chip.tpu { color: var(--tpu); }
+.pc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pc > div { min-width: 0; }
+.pc h3 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; }
+.pc ul { margin: 0; padding-left: 18px; display: grid; gap: 2px; }
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+figure { margin: 0; display: grid; gap: 4px; }
+figure img { width: 100%; height: auto; display: block; background: #ffffff; border-radius: 8px; border: 1px solid var(--line); }
+figcaption { font-size: 0.8rem; color: var(--muted); }
+.wide { grid-column: 1 / -1; }
+.notes { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.notes ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; max-width: 80ch; }
+@media (max-width: 720px) {
+  .shots { grid-template-columns: 1fr; }
+  .pc { grid-template-columns: 1fr; }
+  h1 { font-size: 1.6rem; }
+}
+</style>
+
+<main>
+  <section class="lede">
+    <h1>Sofle carrying case concepts</h1>
+    <p>Five rough designs for carrying both Sofle-J Choc halves without anything pressing the keys. Each is modelled around a stand-in keyboard built from PandaKB's case model and your measurements, so the sizes, weights and clearances below come from the models, not from guesses. Pick 2–3 to develop into print-ready parts.</p>
+    <p>In the renders the light grey parts are the keyboard, teal is printed nylon (MJF PA12), orange is flexible TPU and dark blue is a silicone band.</p>
+  </section>
+
+  <section class="table-wrap" aria-label="Comparison">
+    <table>
+      <thead>
+        <tr><th>Concept</th><th>Printed weight</th><th>Packed size (mm)</th><th>Holds by</th><th>Keys covered</th><th>Main trade-off</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="#ring">1. Spacer ring + straps</a></td><td class="num">39 g</td><td class="num">150 × 125 × 38</td><td>2 silicone straps</td><td>Fully, sides closed</td><td>Case bottoms exposed; straps to fit</td></tr>
+        <tr><td><a href="#bumper">2. TPU bumper</a></td><td class="num">66 g</td><td class="num">153 × 126 × 40</td><td>Stretch fit, corner lips</td><td>Fully, side windows</td><td>Fit depends on the TPU print</td></tr>
+        <tr><td><a href="#clips">3. Corner clips + band</a></td><td class="num">9 g</td><td class="num">150 × 122 × 38</td><td>1 silicone band</td><td>Only at 5 points</td><td>Sides open; small loose parts</td></tr>
+        <tr><td><a href="#lids">4. Snap-on lids</a></td><td class="num">66 g (2 × 33)</td><td class="num">2 × 150 × 125 × 20</td><td>Skirt fit on each half</td><td>Fully, per half</td><td>Two parts; not face to face</td></tr>
+        <tr><td><a href="#clamshell">5. Hinged clamshell</a></td><td class="num">79 g</td><td class="num">159 × 125 × 41</td><td>Hinge + 2 magnet pairs</td><td>Fully, bottoms too</td><td>Largest; hinge needs care</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <article class="concept" id="ring">
+    <header>
+      <span class="tag">Concept 1</span>
+      <h2>Spacer ring + straps</h2>
+      <div class="chips"><span class="chip pa12">PA12 · 39 g</span><span class="chip">150 × 125 × 38 mm</span><span class="chip">1 printed part + 2 straps</span></div>
+      <p>A single nylon ring sits between the two rims and keeps the keycaps 2 mm apart. Short skirts drop 4 mm over each case wall so the halves can't slide. Two silicone straps hold the stack together, and the keyboard's own case bottoms are the outside of the package.</p>
+    </header>
+    <div class="pc">
+      <div><h3>Good</h3><ul><li>Light, with the sides fully closed</li><li>One simple part, cheap to print</li><li>The load runs rim to rim, never through the keys</li></ul></div>
+      <div><h3>Watch</h3><ul><li>The case bottoms take any scuffs</li><li>Two straps to put on and take off</li></ul></div>
+    </div>
+    <div class="shots">
+      <figure><img src="renders/1-ring-1-closed.png" alt="Closed stack with the teal ring between the halves and two dark straps"><figcaption>Closed, front</figcaption></figure>
+      <figure><img src="renders/1-ring-2-closed-back.png" alt="Closed stack seen from the back"><figcaption>Closed, back</figcaption></figure>
+      <figure><img src="renders/1-ring-3-exploded.png" alt="Exploded view: left half, ring, right half face down"><figcaption>Exploded (straps hidden)</figcaption></figure>
+      <figure class="wide"><img src="renders/1-ring-4-section.png" alt="Cross-section showing the ring on both rims and a 2 mm gap between keycap tops"><figcaption>Cross-section through the middle key column</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="concept" id="bumper">
+    <header>
+      <span class="tag">Concept 2</span>
+      <h2>TPU bumper</h2>
+      <div class="chips"><span class="chip tpu">TPU · 66 g</span><span class="chip">153 × 126 × 40 mm</span><span class="chip">1 printed part</span></div>
+      <p>The same idea in flexible TPU, stretched over both halves like a phone bumper. It covers the full height of both case walls, wraps 2 mm under the bottoms at four corners, and has thicker corner guards where backpack knocks land. Side windows save weight.</p>
+    </header>
+    <div class="pc">
+      <div><h3>Good</h3><ul><li>Holds by itself, nothing else to carry</li><li>Absorbs knocks at corners and edges</li><li>Quick on and off</li></ul></div>
+      <div><h3>Watch</h3><ul><li>The fit depends on the TPU print, so a test section first is wise</li><li>The heaviest of the open-bottom options</li></ul></div>
+    </div>
+    <div class="shots">
+      <figure><img src="renders/2-bumper-1-closed.png" alt="Orange bumper around the closed stack"><figcaption>Closed, front</figcaption></figure>
+      <figure><img src="renders/2-bumper-2-closed-back.png" alt="Bumper from the back, window showing keycaps"><figcaption>Closed, back</figcaption></figure>
+      <figure><img src="renders/2-bumper-3-exploded.png" alt="Exploded bumper between the halves"><figcaption>Exploded</figcaption></figure>
+      <figure class="wide"><img src="renders/2-bumper-4-section.png" alt="Cross-section of the bumper over both case walls"><figcaption>Cross-section through the middle key column</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="concept" id="clips">
+    <header>
+      <span class="tag">Concept 3</span>
+      <h2>Corner clips + band</h2>
+      <div class="chips"><span class="chip pa12">PA12 · 9 g</span><span class="chip">150 × 122 × 38 mm</span><span class="chip">5 clips + 1 band</span></div>
+      <p>Five 22 mm sections of the ring sit at the corners, the thumb tip and the front edge. They keep the gap that protects the keys, and one band holds the stack together. This is the lightest option and suits carrying the stack inside your felt sleeve.</p>
+    </header>
+    <div class="pc">
+      <div><h3>Good</h3><ul><li>Under 10 g, almost no added size</li><li>Very cheap to print</li></ul></div>
+      <div><h3>Watch</h3><ul><li>Open sides: a pen or cable can reach the keys</li><li>Five small parts to keep track of</li></ul></div>
+    </div>
+    <div class="shots">
+      <figure><img src="renders/3-clips-1-closed.png" alt="Closed stack with teal clips at the corners and one band"><figcaption>Closed, front</figcaption></figure>
+      <figure><img src="renders/3-clips-2-closed-back.png" alt="Clips seen from the back"><figcaption>Closed, back</figcaption></figure>
+      <figure><img src="renders/3-clips-3-exploded.png" alt="Exploded view of five clips between the halves"><figcaption>Exploded (band hidden)</figcaption></figure>
+      <figure class="wide"><img src="renders/3-clips-4-section.png" alt="Cross-section with clips at both ends and the band around"><figcaption>Cross-section through the middle key column</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="concept" id="lids">
+    <header>
+      <span class="tag">Concept 4</span>
+      <h2>Snap-on lids</h2>
+      <div class="chips"><span class="chip pa12">PA12 · 2 × 33 g</span><span class="chip">each half 150 × 125 × 20 mm</span><span class="chip">2 printed parts</span></div>
+      <p>A thin lid for each half. It rests on the rim, 1 mm above the keycaps, and its skirt grips the case wall. A finger notch at the front lifts it off. The capped halves go side by side in the felt sleeve, as now, or back to back for a smaller footprint.</p>
+    </header>
+    <div class="pc">
+      <div><h3>Good</h3><ul><li>Keeps the thin, side-by-side layout of your sleeve</li><li>Each half is protected on its own and can travel alone</li></ul></div>
+      <div><h3>Watch</h3><ul><li>Two separate parts</li><li>Stacked back to back it is as thick as the face-to-face designs</li></ul></div>
+    </div>
+    <div class="shots">
+      <figure><img src="renders/4-lids-1-side-by-side.png" alt="Both halves with teal lids, side by side"><figcaption>Side by side, as in the sleeve</figcaption></figure>
+      <figure><img src="renders/4-lids-2-back-to-back.png" alt="Two capped halves stacked bottom to bottom"><figcaption>Stacked back to back</figcaption></figure>
+      <figure class="wide"><img src="renders/4-lids-4-section.png" alt="Cross-section of two capped halves back to back"><figcaption>Cross-section, back to back</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="concept" id="clamshell">
+    <header>
+      <span class="tag">Concept 5</span>
+      <h2>Hinged clamshell</h2>
+      <div class="chips"><span class="chip pa12">PA12 · 79 g</span><span class="chip">159 × 125 × 41 mm</span><span class="chip">2 trays + 4 magnets</span></div>
+      <p>Two shallow trays, each holding one half, joined by a hinge along the inner edges. It closes like a book, and two pairs of 8 × 2 mm magnets on the pinky side keep it shut. Opened flat, the halves sit side by side in their trays, so the case can double as the base you type on.</p>
+    </header>
+    <div class="pc">
+      <div><h3>Good</h3><ul><li>Covers everything, including the case bottoms</li><li>One object; opens straight into typing position</li></ul></div>
+      <div><h3>Watch</h3><ul><li>The largest and heaviest, though still well under 200 g</li><li>The hinge and magnets need careful detail design</li></ul></div>
+    </div>
+    <div class="shots">
+      <figure><img src="renders/5-clamshell-1-closed.png" alt="Closed teal clamshell with magnet bosses on the left"><figcaption>Closed, front</figcaption></figure>
+      <figure><img src="renders/5-clamshell-2-closed-back.png" alt="Closed clamshell from the back showing hinge knuckles"><figcaption>Closed, back (hinge side)</figcaption></figure>
+      <figure><img src="renders/5-clamshell-3-open.png" alt="Clamshell opened flat with both halves keys up side by side"><figcaption>Opened flat</figcaption></figure>
+      <figure class="wide"><img src="renders/5-clamshell-4-section.png" alt="Cross-section of the closed clamshell"><figcaption>Cross-section through the middle key column</figcaption></figure>
+    </div>
+  </article>
+
+  <section class="notes">
+    <h2>What the models assume</h2>
+    <ul>
+      <li>The newer PandaKB case (August 2025): 146.3 × 121.2 mm, rim at 10.6 mm, display column at 14.0 mm. The right case is an exact mirror of the left, so the halves line up face to face.</li>
+      <li>Keycap tops at 18 mm, from your measurement. Face to face, the rims sit 16.8 mm apart and the keycap tops 2 mm apart. Every design bears on the rims, never on the keys.</li>
+      <li>Fit 0.35 mm around the case wall and 1.6 mm nylon walls, typical for MJF/SLS print services. Weights use 1.01 g/cm³ for PA12 and 1.20 g/cm³ for TPU.</li>
+      <li>These are concept shapes. Snap fits, the hinge, magnet pockets and strap grooves get designed properly for the 2–3 you shortlist, together with print-service quotes.</li>
+    </ul>
+  </section>
+</main>

@@ -1,0 +1,227 @@
+{
+ "1-ring": {
+  "title": "Spacer ring + straps",
+  "grams": 38.6,
+  "size_mm": [
+   150.2,
+   125.0,
+   38.0
+  ],
+  "size_alt_mm": null,
+  "parts": [
+   {
+    "name": "spacer ring",
+    "material": "PA12",
+    "grams": 38.6
+   },
+   {
+    "name": "silicone strap 1",
+    "material": "silicone",
+    "grams": 0.0
+   },
+   {
+    "name": "silicone strap 2",
+    "material": "silicone",
+    "grams": 0.0
+   }
+  ],
+  "images": [
+   [
+    "1-ring-1-closed.png",
+    "closed"
+   ],
+   [
+    "1-ring-2-closed-back.png",
+    "closed, from the back (inner edge)"
+   ],
+   [
+    "1-ring-3-exploded.png",
+    "exploded"
+   ],
+   [
+    "1-ring-4-section.png",
+    "cross-section"
+   ]
+  ]
+ },
+ "2-bumper": {
+  "title": "TPU bumper",
+  "grams": 65.7,
+  "size_mm": [
+   153.2,
+   125.6,
+   40.4
+  ],
+  "size_alt_mm": null,
+  "parts": [
+   {
+    "name": "TPU bumper",
+    "material": "TPU",
+    "grams": 65.7
+   }
+  ],
+  "images": [
+   [
+    "2-bumper-1-closed.png",
+    "closed"
+   ],
+   [
+    "2-bumper-2-closed-back.png",
+    "closed, from the back (inner edge)"
+   ],
+   [
+    "2-bumper-3-exploded.png",
+    "exploded"
+   ],
+   [
+    "2-bumper-4-section.png",
+    "cross-section"
+   ]
+  ]
+ },
+ "3-clips": {
+  "title": "Corner clips + band",
+  "grams": 9.2,
+  "size_mm": [
+   149.6,
+   121.7,
+   38.0
+  ],
+  "size_alt_mm": null,
+  "parts": [
+   {
+    "name": "clip (top-outer)",
+    "material": "PA12",
+    "grams": 1.9
+   },
+   {
+    "name": "clip (bottom-outer)",
+    "material": "PA12",
+    "grams": 1.9
+   },
+   {
+    "name": "clip (top-inner)",
+    "material": "PA12",
+    "grams": 1.9
+   },
+   {
+    "name": "clip (thumb tip)",
+    "material": "PA12",
+    "grams": 1.8
+   },
+   {
+    "name": "clip (bottom flat)",
+    "material": "PA12",
+    "grams": 1.8
+   },
+   {
+    "name": "silicone band",
+    "material": "silicone",
+    "grams": 0.0
+   }
+  ],
+  "images": [
+   [
+    "3-clips-1-closed.png",
+    "closed"
+   ],
+   [
+    "3-clips-2-closed-back.png",
+    "closed, from the back (inner edge)"
+   ],
+   [
+    "3-clips-3-exploded.png",
+    "exploded"
+   ],
+   [
+    "3-clips-4-section.png",
+    "cross-section"
+   ]
+  ]
+ },
+ "4-lids": {
+  "title": "Snap-on lids",
+  "grams": 65.7,
+  "size_mm": [
+   306.4,
+   125.0,
+   20.4
+  ],
+  "size_alt_mm": [
+   150.2,
+   125.0,
+   40.8
+  ],
+  "parts": [
+   {
+    "name": "lid (left)",
+    "material": "PA12",
+    "grams": 32.9
+   },
+   {
+    "name": "lid (right)",
+    "material": "PA12",
+    "grams": 32.9
+   }
+  ],
+  "images": [
+   [
+    "4-lids-1-side-by-side.png",
+    "side by side"
+   ],
+   [
+    "4-lids-2-back-to-back.png",
+    "back to back"
+   ],
+   [
+    "4-lids-4-section.png",
+    "cross-section"
+   ]
+  ]
+ },
+ "5-clamshell": {
+  "title": "Hinged clamshell",
+  "grams": 79.4,
+  "size_mm": [
+   158.7,
+   125.0,
+   40.8
+  ],
+  "size_alt_mm": null,
+  "parts": [
+   {
+    "name": "tray (left)",
+    "material": "PA12",
+    "grams": 39.9
+   },
+   {
+    "name": "tray (right)",
+    "material": "PA12",
+    "grams": 39.5
+   },
+   {
+    "name": "magnets 8×2 mm",
+    "material": "magnet",
+    "grams": 0.0
+   }
+  ],
+  "images": [
+   [
+    "5-clamshell-1-closed.png",
+    "closed"
+   ],
+   [
+    "5-clamshell-2-closed-back.png",
+    "closed, from the back (inner edge)"
+   ],
+   [
+    "5-clamshell-3-open.png",
+    "open"
+   ],
+   [
+    "5-clamshell-4-section.png",
+    "cross-section"
+   ]
+  ]
+ }
+}
