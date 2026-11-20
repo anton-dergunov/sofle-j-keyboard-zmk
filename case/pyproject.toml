@@ -1,0 +1,16 @@
+[project]
+name = "sofle-case"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "build123d>=0.13.0",
+    "manifold3d>=3.5.5",
+    "matplotlib>=3.11.2",
+    "networkx>=3.7",
+    "numpy>=2.5.5",
+    "ocp-vscode>=4.2.0",
+    "rtree>=1.4.1",
+    "scipy>=1.18.1",
+    "shapely>=2.2.0",
+    "trimesh>=5.2.1",
+]
