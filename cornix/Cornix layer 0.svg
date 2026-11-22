@@ -59,8 +59,8 @@ text { fill: currentColor; text-anchor: middle; dominant-baseline: central; }
 <g class="key" transform="translate(-1.92 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌃</text></g>
 <g class="key" transform="translate(62.08 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌥</text></g>
 <g class="key" transform="translate(126.08 208)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌘</text></g>
-<g class="key" transform="translate(223.36 229.76)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="15">Num</text></g>
-<g class="key" transform="rotate(12 327.68 268.8) translate(295.68 236.8)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="17">M1</text></g>
+<g class="key" transform="translate(223.36 229.76)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="27" class="main" font-size="15">Num</text><text x="32" y="49" class="sub caption" font-size="10.5">2× lock</text></g>
+<g class="key" transform="rotate(12 327.68 268.8) translate(295.68 236.8)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="27" class="main" font-size="17">M1</text><text x="32" y="49" class="sub caption" font-size="10.5">2× lock</text></g>
 <g class="key" transform="rotate(26 394.88 291.2) translate(362.88 259.2)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><use href="#i-tabler-space" x="19.5" y="19.5" width="25" height="25" class="main"/></g>
 <g class="key" transform="translate(862.72 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌫</text></g>
 <g class="key" transform="translate(798.72 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">P</text></g>
@@ -83,7 +83,7 @@ text { fill: currentColor; text-anchor: middle; dominant-baseline: central; }
 <g class="key" transform="translate(862.72 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌃</text></g>
 <g class="key" transform="translate(798.72 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌥</text></g>
 <g class="key" transform="translate(734.72 208)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌘</text></g>
-<g class="key" transform="translate(637.44 229.76)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="15">Num</text></g>
-<g class="key" transform="rotate(-12 597.12 268.8) translate(565.12 236.8)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="17">M1</text></g>
+<g class="key" transform="translate(637.44 229.76)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="27" class="main" font-size="15">Num</text><text x="32" y="49" class="sub caption" font-size="10.5">2× lock</text></g>
+<g class="key" transform="rotate(-12 597.12 268.8) translate(565.12 236.8)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="27" class="main" font-size="17">M1</text><text x="32" y="49" class="sub caption" font-size="10.5">2× lock</text></g>
 <g class="key" transform="rotate(-26 529.92 291.2) translate(497.92 259.2)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><use href="#i-tabler-space" x="19.5" y="19.5" width="25" height="25" class="main"/></g>
 </svg>

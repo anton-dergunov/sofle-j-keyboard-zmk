@@ -23,8 +23,8 @@ layers:
   - name: System
     reach: [1, 2]
     rows:
-      - BT_CLEAR     BT1 BT2 BT3 BT4 BT5 | BT1 BT2 BT3 BT4 BT5 BT_CLEAR
-      - BT_CLEAR_ALL _ _ DESK_PERSONAL DESK_WORK _ | _ _ DESK_PERSONAL DESK_WORK _ BT_CLEAR_ALL
-      - _ REBOOT SOFT_OFF OUT_USB OUT_BT BOOTLOADER | REBOOT SOFT_OFF OUT_USB OUT_BT BOOTLOADER _
+      - QK_KB_5 QK_KB_0 QK_KB_1 QK_KB_2 _ _ | QK_KB_0 QK_KB_1 QK_KB_2 _ _ QK_KB_5
+      - _ _ _ DESK_PERSONAL DESK_WORK _ | _ _ DESK_PERSONAL DESK_WORK _ _
+      - _ QK_REBOOT _ QK_KB_6 _ QK_BOOTLOADER | QK_REBOOT _ QK_KB_6 _ QK_BOOTLOADER _
       - _ _ _ _ _ _ | _ _ _ _ _ _
     knobs: {turn: [_, _], press: _}

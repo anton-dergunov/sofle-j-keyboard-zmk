@@ -95,14 +95,24 @@ QMK_TO_ZMK = {
     "KC_LPAD": "C_AC_DESKTOP_SHOW_ALL_APPLICATIONS", "KC_WSCH": "C_AC_SEARCH",
     "KC_MPRV": "C_PREV", "KC_MPLY": "C_PP", "KC_MNXT": "C_NEXT", "KC_MUTE": "C_MUTE", "KC_VOLD": "C_VOL_DN", "KC_VOLU": "C_VOL_UP",
 }
-# Placeholders for keys whose RMK Vial keycodes are still to be looked up, drawn like the Sofle's ZMK behaviours
-PLACEHOLDER_TO_ZMK = {
-    **{f"BT{i}": f"&bt BT_SEL {i - 1}" for i in range(1, 6)},
-    "BT_CLEAR": "&bt BT_CLR", "BT_CLEAR_ALL": "&bt BT_CLR_ALL", "OUT_USB": "&out OUT_USB", "OUT_BT": "&out OUT_BLE",
-    "SOFT_OFF": "&soft_off", "REBOOT": "&sys_reset", "BOOTLOADER": "&bootloader",
+# The RMK firmware's own keys (Vial "User" keys QK_KB_n, reboot, bootloader) and the desk placeholders,
+# drawn like the Sofle's ZMK behaviours
+RMK_TO_ZMK = {
+    **{f"QK_KB_{i}": f"&bt BT_SEL {i}" for i in range(3)},
+    "QK_KB_5": "&bt BT_CLR", "QK_KB_6": "&out OUT_TOG",
+    "QK_REBOOT": "&sys_reset", "QK_BOOTLOADER": "&bootloader",
     "DESK_PERSONAL": "&to_personal", "DESK_WORK": "&to_work",
 }
 LAYER_KEY = {1: "M1", 2: "M2", 3: "Num"}
+
+
+def held_layer(code: str, tapdances: list[dict]) -> int | None:
+    """The layer a key turns on while held: MO(n), TG(n) (the lock key on its own layer), or a tap dance's hold."""
+    if m := re.fullmatch(r"TD\((\d+)\)", code):
+        code = tapdances[int(m.group(1))]["hold"]
+    if m := re.fullmatch(r"(?:MO|TG)\((\d)\)", code):
+        return int(m.group(1))
+    return None
 
 
 def legend_for(code: str, legends: dict, raw: dict) -> dict:
@@ -110,8 +120,12 @@ def legend_for(code: str, legends: dict, raw: dict) -> dict:
         return {"t": "", "type": "trans"}
     if m := re.fullmatch(r"MO\((\d)\)", code):
         return {"t": LAYER_KEY[int(m.group(1))]}
-    if code in PLACEHOLDER_TO_ZMK:
-        return dict(raw[PLACEHOLDER_TO_ZMK[code]])
+    if m := re.fullmatch(r"TD\((\d+)\)", code):  # Num or M1: hold for the layer, double-tap to lock it
+        return {"t": TAPDANCES[int(m.group(1))]["name"], "h": "2× lock"}
+    if m := re.fullmatch(r"TG\((\d)\)", code):  # on its own layer: held to get here, tapped to unlock
+        return {"t": LAYER_KEY[int(m.group(1))], "s": "$$tabler:lock$$", "h": "tap: unlock", "type": "held"}
+    if code in RMK_TO_ZMK:
+        return dict(raw[RMK_TO_ZMK[code]])
     if m := re.fullmatch(r"KC_([A-Z])", code):
         return {"t": m.group(1)}
     if m := re.fullmatch(r"KC_(\d)", code):
@@ -123,11 +137,15 @@ def legend_for(code: str, legends: dict, raw: dict) -> dict:
     sys.exit(f"No legend for keycode {code}: add it to QMK_TO_ZMK in {Path(__file__).name}")
 
 
-def read_layers(path: Path, legends: dict, raw: dict) -> tuple[list[str], list[list[dict]]]:
-    data = yaml.safe_load(path.read_text())["layers"]
+TAPDANCES: list[dict] = []  # the layout file's `tapdances`, set by read_layers
+
+
+def read_codes(path: Path) -> tuple[dict, list[list[str]]]:
+    """The layout file, and each layer's keycodes in slots() order."""
+    doc = yaml.safe_load(path.read_text())
     order = {s: i for i, s in enumerate(slots())}
     codes = []
-    for layer in data:
+    for layer in doc["layers"]:
         keys = ["_"] * len(order)
         if len(layer["rows"]) != 4:
             sys.exit(f"{layer['name']}: expected 4 rows, found {len(layer['rows'])}")
@@ -139,6 +157,13 @@ def read_layers(path: Path, legends: dict, raw: dict) -> tuple[list[str], list[l
             for slot, code in zip(want, found):
                 keys[order[slot]] = code
         codes.append(keys)
+    return doc, codes
+
+
+def read_layers(path: Path, legends: dict, raw: dict) -> tuple[list[str], list[list[dict]]]:
+    doc, codes = read_codes(path)
+    data = doc["layers"]
+    TAPDANCES[:] = doc.get("tapdances") or []
 
     pictures = []
     for n, (layer, keys) in enumerate(zip(data, codes)):
@@ -147,8 +172,9 @@ def read_layers(path: Path, legends: dict, raw: dict) -> tuple[list[str], list[l
         for i, code in enumerate(keys):
             # a transparent key that is held to reach this layer: show the layer key below it, amber
             below = next((codes[m][i] for m in range(n - 1, -1, -1) if codes[m][i] != "_"), "_")
-            held = code == "_" and (m := re.fullmatch(r"MO\((\d)\)", below)) and int(m.group(1)) in reach
-            specs.append({"t": LAYER_KEY[int(m.group(1))], "type": "held"} if held else legend_for(code, legends, raw))
+            layer_below = held_layer(below, TAPDANCES)
+            held = code == "_" and layer_below in reach
+            specs.append({"t": LAYER_KEY[layer_below], "type": "held"} if held else legend_for(code, legends, raw))
         pictures.append(specs)
     return [layer["name"] for layer in data], pictures
 
