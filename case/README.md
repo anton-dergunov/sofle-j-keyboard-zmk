@@ -6,7 +6,7 @@ Three cases for carrying both halves of the PandaKB Sofle-J Choc keyboard withou
 |---|---|---|---|---|
 | Spacer ring | `1-spacer-ring` | 45 g | 151 × 125 × 38 | 2 flat silicone bands, 12 mm wide |
 | Snap-on lids | `4-lid-left`, `4-lid-right` | 2 × 51 g | 150 × 125 × 23 each half | — |
-| Hinged clamshell | `5-tray-left`, `5-tray-right` | 80 g | 162 × 125 × 41 | 4 magnets, a 2 mm steel rod, glue |
+| Hinged clamshell | `5-tray-left`, `5-tray-right` | 79 g | 162 × 125 × 41 | 4 magnets, a 2 mm steel rod, glue |
 
 The print files are in `out/print/`, as STL and 3MF. The comparison page with renders and cross-sections is `out/concepts.html`.
 

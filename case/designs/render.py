@@ -211,6 +211,14 @@ def main():
     section(g5 + [left, right], f, "Clamshell: cut through the middle key column (x = 66.7)",
             notes=["keycap tops 2.0 mm apart", "floors 1.4 mm, walls 1.6 mm"])
     imgs["clamshell"].append((f.name, "Cross-section through the keys"))
+    f = OUT / "d5-edges.png"
+    section(g5 + [left, right], f, "Rounded edges (pinky edge, y = 60)", axis="y", at=60.0,
+            lim=((-16, 5), (-3, 41)), size=(6.2, 9.0),
+            notes=["bottom edges R 2.5 mm,", "1.07 mm at the thinnest", "seam edges R 1 mm"])
+    imgs["clamshell"].append((f.name, "Close-up: the rounded bottom edges and the groove at the seam"))
+    f = OUT / "d5-corner.png"
+    shot([left, right], f, (-0.9, -0.6, -0.35), focus=(2.0, 30.0, 12.0), span=60)
+    imgs["clamshell"].append((f.name, "Closed, from below the pinky-side front corner: rounded bottom, lip and magnet boss"))
     f = OUT / "d5-tab.png"
     section(g5 + [left, right], f, "Tray tab close-up (pinky edge, y = 71)", axis="y", at=71.0,
             lim=((-5, 6), (4, 30)), size=(5.2, 7.6),

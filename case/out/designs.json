@@ -81,11 +81,11 @@
   ]
  },
  "clamshell": {
-  "grams": 79.8,
+  "grams": 78.8,
   "parts": [
    {
     "name": "tray (left)",
-    "grams": 40.1,
+    "grams": 39.6,
     "size_mm": [
      161.8,
      125.3,
@@ -94,7 +94,7 @@
    },
    {
     "name": "tray (right)",
-    "grams": 39.6,
+    "grams": 39.1,
     "size_mm": [
      161.8,
      125.3,
@@ -130,6 +130,14 @@
    [
     "d5-section.png",
     "Cross-section through the keys"
+   ],
+   [
+    "d5-edges.png",
+    "Close-up: the rounded bottom edges and the groove at the seam"
+   ],
+   [
+    "d5-corner.png",
+    "Closed, from below the pinky-side front corner: rounded bottom, lip and magnet boss"
    ],
    [
     "d5-tab.png",

@@ -8,16 +8,19 @@ the bottom edge a 0.45 mm x 45° chamfer, and the display column on the inner ed
 """
 
 import sys
+from functools import cache
 from pathlib import Path
 
+import build123d as bd
 import numpy as np
 import shapely
 import trimesh
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "concepts"))
 from common import (  # noqa: E402
-    KEY, RIM, ROOT, O, Part, difference, ghost_left, mirror_z, off, prism, union,
+    KEY, RIM, ROOT, O, Part, difference, ghost_left, mirror_z, off, outline_data, prism, union,
 )
+from sofle_geom import NEW_STEP  # noqa: E402
 
 OUT = ROOT / "out" / "print"
 
@@ -32,6 +35,76 @@ COLUMN_TOP = 14.0
 COLUMN_ZONE = shapely.box(118.3, 24.14, 141.07 + 5, 115.18).intersection(off(5))  # column, padded out past O
 INNER_EDGE_X = 141.07  # the straight inner (column) edge
 PINKY_EDGE_X = 0.0
+
+
+# ---------------------------------------------------------------- CAD (OCCT) pieces for rounded edges
+
+
+def occ_mesh(shape, tol=0.02, angular=0.15):
+    """Tessellate a build123d solid into a closed trimesh. The defaults keep facets within 0.01 mm of a
+    2.5 mm round, well under what MJF resolves; OCCT keeps the first tessellation on the shape."""
+    v, f = shape.tessellate(tol, angular)
+    m = trimesh.Trimesh([(p.X, p.Y, p.Z) for p in v], f)
+    m.merge_vertices(digits_vertex=5)  # stitches faces that meet at a pole (revolved domes)
+    m.update_faces(m.nondegenerate_faces())
+    m.remove_unreferenced_vertices()
+    if m.volume < 0:
+        m.invert()
+    assert m.is_watertight, "tessellation is not closed"
+    return m
+
+
+def _merge_collinear(edges):
+    out = []
+    for e in edges:
+        if out and e.geom_type == bd.GeomType.LINE and out[-1].geom_type == bd.GeomType.LINE \
+                and abs(out[-1].tangent_at(0).dot(e.tangent_at(0))) > 1 - 1e-5:
+            out[-1] = bd.Edge.make_line(out[-1].position_at(0), e.position_at(1))
+            continue
+        out.append(e)
+    return out
+
+
+def _drop_micro_arcs(face):
+    """OCCT's offset puts a near-zero arc on every almost-tangent joint; fillets fail on those."""
+    es = list(face.outer_wire().order_edges())
+    keep = [True] * len(es)
+    for i, e in enumerate(es):
+        if e.geom_type == bd.GeomType.CIRCLE and e.length / e.radius < np.radians(0.2):
+            j = (i + 1) % len(es)
+            assert es[j].geom_type == bd.GeomType.LINE, "micro arc before a non-line"
+            es[j] = bd.Edge.make_line(e.position_at(0), es[j].position_at(1))
+            keep[i] = False
+    return bd.Face(bd.Wire([e for e, k in zip(es, keep) if k]))
+
+
+@cache
+def outline_face():
+    """The case's outer outline as the STEP model's own lines and arcs, in the frame of O()."""
+    solid = bd.import_step(str(NEW_STEP)).solids()[0]
+    z = solid.bounding_box().min.Z + 9.0  # the same height O() is cut at
+    cut = max(solid.intersect(bd.Plane.XY.offset(z)).faces(), key=lambda f: f.area)
+    x0, y0 = outline_data()[2]
+    wire = cut.outer_wire().moved(bd.Location((-x0, -y0, -z)))
+    return bd.Face(bd.Wire(_merge_collinear(wire.order_edges())))
+
+
+def offset_face(d, ease=2.0):
+    """Outline grown by d with round corners; inside corners eased to at least `ease` radius, which also
+    rounds the one sharp inside corner (thumb cluster meets the inner edge)."""
+    f = _drop_micro_arcs(bd.offset(outline_face(), d + ease, kind=bd.Kind.ARC).faces()[0])
+    return _drop_micro_arcs(bd.offset(f, -ease, kind=bd.Kind.ARC).faces()[0])
+
+
+def edge_matrix(p):
+    """Local frame at the outline point nearest p: x outward, y up, z along the edge."""
+    q, t, n = edge_frame(p)
+    M = np.eye(4)
+    M[:3, 0] = [n[0], n[1], 0]
+    M[:3, 1] = [0, 0, 1]
+    M[:3, 2] = [t[0], t[1], 0]
+    M[:3, 3] = [q[0], q[1], 0]
+    return M
 
 
 def edge_frame(p):
@@ -50,15 +123,9 @@ def edge_frame(p):
 
 def local_prism(p, poly_vz, length, du=0.0):
     """Extrude a polygon given in (v = outward distance from the outline, z) along the edge at p."""
-    q, t, n = edge_frame(p)
     m = trimesh.creation.extrude_polygon(shapely.Polygon(poly_vz), length)
     m.apply_translation([0, 0, -length / 2 + du])
-    M = np.eye(4)
-    M[:3, 0] = [n[0], n[1], 0]  # local x -> outward normal
-    M[:3, 1] = [0, 0, 1]  # local y -> world z
-    M[:3, 2] = [t[0], t[1], 0]  # local z (extrusion) -> along the edge
-    M[:3, 3] = [q[0], q[1], 0]
-    m.apply_transform(M)
+    m.apply_transform(edge_matrix(p))
     if m.volume < 0:
         m.invert()
     return m
@@ -164,6 +231,9 @@ MAGNETS_Y = (46.0, 96.0)
 MAGNET_D, MAGNET_H = 8.0, 2.0
 MAGNET_X = PINKY_EDGE_X - (FIT + WALL) - 3.6
 TRAY_TABS = [(PINKY_EDGE_X, 71.0), (70.0, 125.0), (52.0, 10.0)]
+BOTTOM_ROUND = 2.5  # outer bottom edge; leaves about 1.1 mm where floor meets wall
+TOP_ROUND = 1.0  # outer edge at the parting plane; the two trays' rounds form a shallow groove at the seam
+LUMP_ROUND = 1.0  # thumb lips, magnet bosses and hinge ends
 
 
 def _knuckle_cyl(y0, y1, r, x=HINGE_AXIS_X, z=Z_SPLIT):
@@ -173,14 +243,62 @@ def _knuckle_cyl(y0, y1, r, x=HINGE_AXIS_X, z=Z_SPLIT):
     return c
 
 
+@cache
+def tray_body():
+    """Floor and wall as one solid, outer bottom and top edges rounded (the cavity is cut later)."""
+    f = offset_face(FIT + WALL).moved(bd.Location((0, 0, -FLOOR)))
+    slab = bd.extrude(f, amount=Z_SPLIT + FLOOR)
+    slab = bd.fillet(slab.faces().sort_by(bd.Axis.Z)[0].edges(), BOTTOM_ROUND)
+    slab = bd.fillet(slab.faces().sort_by(bd.Axis.Z)[-1].edges(), TOP_ROUND)
+    return occ_mesh(slab)
+
+
+@cache
+def magnet_boss(y):
+    """Round boss with a domed underside that runs into the wall; magnet pocket cut later."""
+    r, h, dome = MAGNET_D / 2 + 1.6, 9.0, 5.0
+    with bd.BuildSketch(bd.Plane.XZ) as sk:  # profile in (radius, height), revolved about the axis
+        with bd.BuildLine():
+            bd.Polyline((0, -dome), (0, h), (r, h), (r, 0))
+            bd.EllipticalCenterArc((0, 0), r, dome, start_angle=270, arc_size=90)
+        bd.make_face()
+    boss = bd.revolve(sk.sketch, bd.Axis.Z)
+    boss = bd.fillet(boss.edges().filter_by(bd.GeomType.CIRCLE).sort_by(bd.Axis.Z)[-1], LUMP_ROUND)
+    return occ_mesh(boss.moved(bd.Location((MAGNET_X, y, Z_SPLIT - h))))
+
+
+def thumb_lip(x):
+    """Pull lip on the front wall, rounded on every edge that shows."""
+    v0, v1 = FIT + 0.3, FIT + WALL + 2.5  # starts inside the wall so the top round leaves no notch
+    lip = bd.Box(v1 - v0, 3.0, 12.0, align=(bd.Align.MIN, bd.Align.MIN, bd.Align.CENTER))
+    lip = lip.moved(bd.Location((v0, Z_SPLIT - 3.0, 0)))
+    inner = lip.faces().sort_by(bd.Axis.X)[0]
+    lip = bd.fillet([e for e in lip.edges() if e not in inner.edges()], LUMP_ROUND)
+    m = occ_mesh(lip)
+    m.apply_transform(edge_matrix((x, 10.0)))
+    return m
+
+
+def knuckle(y0, y1, round_ends=()):
+    """One hinge knuckle on its bridge to the wall; `round_ends` lists the free ends ('lo', 'hi') to round."""
+    x_wall = INNER_EDGE_X + FIT + 0.1  # inside the wall, so the top round leaves no notch
+    cyl = bd.Cylinder(HINGE_R, y1 - y0, rotation=(90, 0, 0)).moved(bd.Location((HINGE_AXIS_X, (y0 + y1) / 2, Z_SPLIT)))
+    box = bd.Box(HINGE_AXIS_X - x_wall, y1 - y0, HINGE_R, align=(bd.Align.MIN, bd.Align.MIN, bd.Align.MAX))
+    k = cyl + box.moved(bd.Location((x_wall, y0, Z_SPLIT)))
+    for end in round_ends:
+        face = k.faces().filter_by(bd.Axis.Y).sort_by(bd.Axis.Y)[0 if end == "lo" else -1]
+        # Round the arc and the underside, not the short ledge at the parting plane or the buried edge.
+        edges = [e for e in face.edges() if e.center().X > x_wall + 2.0 and
+                 (e.geom_type == bd.GeomType.CIRCLE or e.center().Z < Z_SPLIT - 0.1)]
+        k = bd.fillet(edges, LUMP_ROUND)
+    return occ_mesh(k)
+
+
 def tray_left(parity=0):
     """Tray for the left half (keys up), walls to the parting plane. parity 1 makes the right tray's
     knuckle set (before mirroring)."""
-    outer = FIT + WALL
-    floor = prism(off(outer), -FLOOR, 0.0)
-    walls = prism(off(outer).difference(off(FIT)), 0.0, Z_SPLIT)
-    parts = [floor, walls]
-    cuts = []
+    body = [tray_body()]
+    beads, cuts = [], []
 
     # Click tabs: bead over the rim's 1 mm chamfer holds the half in its tray.
     tip_v, tip_z = -0.5, 9.95
@@ -189,17 +307,11 @@ def tray_left(parity=0):
     for p in TRAY_TABS:
         c, b = snap_tab(p, z_root=1.0, z_free=Z_SPLIT, bead=bead)
         cuts += c
-        parts.append(b)
+        beads.append(b)
 
     # Magnet bosses on the pinky edge, pockets open at the parting plane.
     for y in MAGNETS_Y:
-        boss = trimesh.creation.cylinder(radius=MAGNET_D / 2 + 1.6, height=9.0, sections=64)
-        boss.apply_translation([MAGNET_X, y, Z_SPLIT - 4.5])
-        cone = trimesh.creation.cone(radius=MAGNET_D / 2 + 1.6, height=5.0, sections=64)
-        cone.apply_transform(trimesh.transformations.rotation_matrix(np.pi, [1, 0, 0]))
-        cone.apply_translation([MAGNET_X, y, Z_SPLIT - 9.0])
-        web = trimesh.creation.box(bounds=[[MAGNET_X, y - 3.0, Z_SPLIT - 9.0], [-FIT - 0.2, y + 3.0, Z_SPLIT]])
-        parts += [boss, cone, web]
+        body.append(magnet_boss(y))
         pocket = trimesh.creation.cylinder(radius=MAGNET_D / 2 + 0.1, height=MAGNET_H + 0.3, sections=64)
         pocket.apply_translation([MAGNET_X, y, Z_SPLIT - (MAGNET_H + 0.3) / 2 + 0.01])
         cuts.append(pocket)
@@ -211,19 +323,18 @@ def tray_left(parity=0):
         y1 = HINGE_Y[0] + seg * (i + 1) - (KNUCKLE_GAP / 2 if i < HINGE_N - 1 else 0)
         mine = (i % 2 == 0) if parity == 0 else (i % 2 == 1)
         if mine:
-            parts.append(_knuckle_cyl(y0, y1, HINGE_R))
-            parts.append(trimesh.creation.box(bounds=[[INNER_EDGE_X + FIT + WALL - 0.5, y0, Z_SPLIT - HINGE_R],
-                                                      [HINGE_AXIS_X, y1, Z_SPLIT]]))
+            ends = (("lo",) if i == 0 else ()) + (("hi",) if i == HINGE_N - 1 else ())
+            body.append(knuckle(y0, y1, ends))
         else:
             # Clearance for the other tray's knuckle as it swings past.
             cuts.append(_knuckle_cyl(y0 - KNUCKLE_GAP / 2, y1 + KNUCKLE_GAP / 2, HINGE_R + 0.5))
     cuts.append(_knuckle_cyl(HINGE_Y[0] - 1, HINGE_Y[1] + 1, (PIN_PRESS if parity == 0 else PIN_FREE) / 2))
 
     # Thumb lips at the front edge to pull the book open (offset left/right per tray).
-    lip_x = 70.0 if parity == 0 else 84.0  # clear of the front click tab (x 43-61)
-    parts.append(local_box((lip_x, 10.0), FIT + WALL - 0.3, FIT + WALL + 2.5, Z_SPLIT - 3.0, Z_SPLIT, -6, 6))
-    return difference(union(parts), cuts)
+    body.append(thumb_lip(70.0 if parity == 0 else 84.0))  # clear of the front click tab (x 43-61)
 
+    shell = difference(union(body), [prism(off(FIT), 0.0, Z_SPLIT + 5.0)])
+    return difference(union([shell, *beads]), cuts)
 
 def clamshell():
     left = tray_left(0)
@@ -283,6 +394,11 @@ def build():
     print(f"  trays together: {sum(p.grams for p in out['clamshell']):.1f} g, "
           f"closed size {np.round(trimesh.util.concatenate([left, right]).extents, 1).tolist()}")
     print(f"  tray-to-tray overlap: {interference(left, right):.2f} mm³")
+    rim = off(FIT).exterior  # inner corner where the floor meets the wall, against the rounded outer edge
+    pts = [[*rim.interpolate(d).coords[0], 0.0] for d in np.linspace(0, rim.length, 800, endpoint=False)]
+    _, dist, _ = trimesh.proximity.closest_point(tray_body(), pts)
+    print(f"  thinnest point at the rounded bottom edge: {dist.min():.2f} mm")
+    assert dist.min() >= 1.0, "bottom round leaves the corner too thin"
 
     # Keycap gap check (same in all face-to-face designs).
     caps = next(p.mesh for p in gl if p.name == "keycaps")
