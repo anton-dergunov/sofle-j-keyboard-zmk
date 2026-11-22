@@ -1,0 +1,30 @@
+# Option B ("digits on Nav"), kept for trying later; not the chosen layout. See ../README.md.
+# Same file format as ../layout.yaml. In this option the Sofle's Nav layer changes too: digits on its
+# Q row, the arrow block one row lower, media on the left hand, F1-F10 on its number row.
+
+layers:
+  - name: Base
+    rows:
+      - KC_TAB  KC_Q KC_W KC_E KC_R KC_T | KC_Y KC_U KC_I    KC_O   KC_P    KC_BSLS
+      - KC_ENT  KC_A KC_S KC_D KC_F KC_G | KC_H KC_J KC_K    KC_L   KC_SCLN KC_QUOT
+      - KC_LSFT KC_Z KC_X KC_C KC_V KC_B | KC_N KC_M KC_COMM KC_DOT KC_SLSH KC_RSFT
+      - KC_LCTL KC_LALT KC_LGUI KC_ESC MO(1) KC_SPC | KC_SPC MO(1) KC_BSPC KC_RGUI KC_RALT KC_RCTL
+    knobs: {turn: [KC_VOLD, KC_VOLU], press: KC_MUTE}
+
+  - name: Nav
+    reach: [1]
+    rows:
+      - KC_GRV  KC_1    KC_2    KC_3    KC_4    KC_5  | KC_6    KC_7    KC_8    KC_9    KC_0    KC_DEL
+      - KC_CAPS KC_BRID KC_BRIU KC_MCTL KC_LPAD MO(2) | KC_PGUP KC_HOME KC_UP   KC_END  KC_MINS KC_EQL
+      - _       KC_WSCH KC_MPRV KC_MPLY KC_MNXT KC_MUTE | KC_PGDN KC_LEFT KC_DOWN KC_RGHT KC_LBRC KC_RBRC
+      - _ _ _ _ _ _ | _ _ _ _ MO(2) _
+    knobs: {turn: [_, _], press: _}
+
+  - name: System
+    reach: [1, 2]
+    rows:
+      - BT_CLEAR     BT1 BT2 BT3 BT4 BT5 | BT1 BT2 BT3 BT4 BT5 BT_CLEAR
+      - BT_CLEAR_ALL _ _ DESK_PERSONAL DESK_WORK _ | _ _ DESK_PERSONAL DESK_WORK _ BT_CLEAR_ALL
+      - _ REBOOT SOFT_OFF OUT_USB OUT_BT BOOTLOADER | REBOOT SOFT_OFF OUT_USB OUT_BT BOOTLOADER _
+      - _ _ _ _ _ _ | _ _ _ _ _ _
+    knobs: {turn: [_, _], press: _}

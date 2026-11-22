@@ -4,3 +4,4 @@ modules/
 tools/
 .west/
 .DS_Store
+__pycache__/

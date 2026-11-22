@@ -1,0 +1,764 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head><body>
+<title>Sofle and Cornix layouts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one wide column; a sticky control bar; each layer is a row of two keyboard pictures (Sofle | Cornix) with numbered notes under it. */
+:root {
+  --bg: #f4f5f8; --panel: #ffffff; --fg: #1b1f26; --muted: #5d6676; --line: #dde1e8; --chip: #eceef3;
+  --accent: #5a4bd1; --on-accent: #ffffff; --diff: #d0336b; --good: #1f7a4d;
+  --font-display: "Space Grotesk", "Inter", -apple-system, "Helvetica Neue", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  /* keycaps: the same colours as keymap-drawer/draw.py */
+  --key-top: #ffffff; --key-bottom: #f0f2f5; --key-border: #c8cdd5; --legend: #1f2328; --sub: #6e7681;
+  --trans-top: #f7f8fa; --trans-bottom: #f3f4f6; --trans-border: #e4e7eb;
+  --held-top: #fff3c4; --held-bottom: #ffe28a; --held-border: #d9b13f; --held-legend: #6b4f00;
+  --desk-top: #eef5ff; --desk-bottom: #d8e9ff; --desk-border: #79a8e6; --desk-legend: #1858a8;
+  --danger-top: #fff2f2; --danger-bottom: #fddcdc; --danger-border: #e59a9a; --danger-legend: #b42318;
+  --layer-top: #f1efff; --layer-bottom: #e2ddff; --layer-border: #9d92e8; --layer-legend: #3f33a8;
+  --shadow: rgba(16, 24, 40, 0.18);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131519; --panel: #1b1e23; --fg: #e7e9ee; --muted: #9aa3b0; --line: #2c3139; --chip: #252930;
+    --accent: #a497ff; --on-accent: #15131f; --diff: #ff7aa6; --good: #6fd39f;
+    --key-top: #3a3d43; --key-bottom: #2e3035; --key-border: #4b4f57; --legend: #eceef1; --sub: #9aa2ad;
+    --trans-top: #26282c; --trans-bottom: #232529; --trans-border: #303338;
+    --held-top: #6a5720; --held-bottom: #574716; --held-border: #9a8133; --held-legend: #ffe7a3;
+    --desk-top: #22446b; --desk-bottom: #1b3757; --desk-border: #4a86cc; --desk-legend: #b5d6ff;
+    --danger-top: #682a2a; --danger-bottom: #552222; --danger-border: #a65151; --danger-legend: #ffc2c2;
+    --layer-top: #3b3566; --layer-bottom: #302a57; --layer-border: #7a6fd0; --layer-legend: #dcd6ff;
+    --shadow: rgba(0, 0, 0, 0.55);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131519; --panel: #1b1e23; --fg: #e7e9ee; --muted: #9aa3b0; --line: #2c3139; --chip: #252930;
+  --accent: #a497ff; --on-accent: #15131f; --diff: #ff7aa6; --good: #6fd39f;
+  --key-top: #3a3d43; --key-bottom: #2e3035; --key-border: #4b4f57; --legend: #eceef1; --sub: #9aa2ad;
+  --trans-top: #26282c; --trans-bottom: #232529; --trans-border: #303338;
+  --held-top: #6a5720; --held-bottom: #574716; --held-border: #9a8133; --held-legend: #ffe7a3;
+  --desk-top: #22446b; --desk-bottom: #1b3757; --desk-border: #4a86cc; --desk-legend: #b5d6ff;
+  --danger-top: #682a2a; --danger-bottom: #552222; --danger-border: #a65151; --danger-legend: #ffc2c2;
+  --layer-top: #3b3566; --layer-bottom: #302a57; --layer-border: #7a6fd0; --layer-legend: #dcd6ff;
+  --shadow: rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}
+
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 1760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 64px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0; }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+.lede { color: var(--muted); max-width: 70ch; margin-top: 6px; }
+.eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+
+/* requirements */
+details.req { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+details.req > summary { cursor: pointer; padding: 14px 18px; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; list-style-position: inside; }
+details.req > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 12px; }
+.req-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 4px 28px; padding: 0 18px 18px; }
+.req-grid ol { margin: 0; padding-left: 1.4em; display: grid; gap: 6px; }
+.req-grid li { max-width: 62ch; }
+.req-hard { padding: 0 18px 18px; color: var(--muted); max-width: 90ch; }
+
+/* control bar */
+.controls { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 12px max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-end; }
+.ctl { display: grid; gap: 4px; min-width: 0; }
+@media (max-width: 700px) { .controls { position: static; } }
+.ctl .eyebrow { font-size: 0.66rem; }
+.seg { display: inline-flex; flex-wrap: wrap; background: var(--chip); border-radius: 9px; padding: 3px; gap: 2px; }
+.seg button { font: inherit; font-size: 0.86rem; border: 0; background: transparent; color: var(--fg); padding: 5px 11px; border-radius: 7px; cursor: pointer; white-space: nowrap; }
+.seg button:hover { background: color-mix(in srgb, var(--panel) 70%, transparent); }
+.seg button[aria-pressed="true"] { background: var(--panel); box-shadow: 0 1px 2px var(--shadow); font-weight: 600; }
+.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.seg button:disabled { opacity: 0.4; cursor: not-allowed; }
+.seg.proposal button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.ctl.off { opacity: 0.45; }
+.ctl.off .seg button { cursor: not-allowed; }
+
+/* proposal summary */
+.summary { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; }
+.summary .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px 28px; }
+.summary ul { margin: 6px 0 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.summary .verdict { color: var(--muted); max-width: 90ch; }
+.tag { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 1px 7px; border-radius: 99px; background: var(--chip); color: var(--muted); vertical-align: 2px; margin-left: 6px; letter-spacing: 0.02em; }
+.tag.rec { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+
+/* legend strip */
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 0.85rem; align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.sw { width: 16px; height: 16px; border-radius: 4px; border: 1px solid var(--key-border); display: inline-block; }
+.sw.held { background: var(--held-bottom); border-color: var(--held-border); }
+.sw.layer { background: var(--layer-bottom); border-color: var(--layer-border); }
+.sw.desk { background: var(--desk-bottom); border-color: var(--desk-border); }
+.sw.danger { background: var(--danger-bottom); border-color: var(--danger-border); }
+.sw.trans { background: var(--trans-bottom); border-color: var(--trans-border); }
+.sw.ring { background: transparent; border: 2.5px solid var(--accent); }
+.sw.ringdiff { background: transparent; border: 2.5px dashed var(--diff); }
+
+/* layers */
+.layers { display: grid; gap: 34px; min-width: 0; }
+.layer { display: grid; gap: 14px; min-width: 0; }
+.layer-head { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.layer-head p { color: var(--muted); }
+.boards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 14px; }
+figure { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px 8px; display: grid; gap: 4px; min-width: 0; }
+figcaption { display: flex; justify-content: space-between; gap: 10px; font-size: 0.82rem; color: var(--muted); }
+figcaption b { color: var(--fg); font-family: var(--font-display); font-size: 0.95rem; }
+figure svg { width: 100%; height: auto; display: block; }
+figure.absent { place-content: center; min-height: 140px; color: var(--muted); text-align: center; font-size: 0.9rem; padding: 18px; }
+.notes { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.notes li { display: grid; grid-template-columns: 24px auto 1fr; gap: 10px; align-items: start; max-width: 110ch; }
+.badge { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-size: 0.75rem; font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.badge.plain { background: var(--chip); color: var(--muted); }
+.who { font-size: 0.72rem; font-weight: 600; color: var(--muted); background: var(--chip); border-radius: 6px; padding: 2px 7px; margin-top: 1px; white-space: nowrap; }
+
+/* svg keys */
+.k text { fill: currentColor; text-anchor: middle; dominant-baseline: central; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Roboto, "Segoe UI", sans-serif; }
+.k { color: var(--legend); }
+.k .cap { fill: url(#g-key); stroke: var(--key-border); stroke-width: 1; filter: url(#shadow); }
+.k.trans .cap { fill: url(#g-trans); stroke: var(--trans-border); filter: none; }
+.k.held .cap { fill: url(#g-held); stroke: var(--held-border); }
+.k.held { color: var(--held-legend); }
+.k.layer .cap { fill: url(#g-layer); stroke: var(--layer-border); }
+.k.layer { color: var(--layer-legend); }
+.k.desk .cap { fill: url(#g-desk); stroke: var(--desk-border); }
+.k.desk { color: var(--desk-legend); }
+.k.danger .cap { fill: url(#g-danger); stroke: var(--danger-border); }
+.k.danger { color: var(--danger-legend); }
+.k.muted { color: var(--sub); }
+.k .main { font-weight: 500; }
+.k .sub { color: var(--sub); }
+.k.muted .sub, .k.held .sub, .k.desk .sub, .k.danger .sub, .k.layer .sub { color: inherit; opacity: 0.8; }
+.k .ring { fill: none; stroke: var(--accent); stroke-width: 3; }
+.k .ring.diff { stroke: var(--diff); stroke-dasharray: 6 4; }
+.k .bdg circle { fill: var(--accent); }
+.k .bdg text { fill: var(--on-accent); font-size: 11px; font-weight: 700; }
+.k.hit { cursor: pointer; }
+.k.hit:focus { outline: none; }
+.k.hit:focus-visible .cap { stroke: var(--accent); stroke-width: 2.5; }
+.knob circle.body { fill: url(#g-trans); stroke: var(--key-border); stroke-width: 1.2; }
+.knob circle.dot { fill: var(--sub); }
+.knob text { fill: var(--sub); font-size: 9.5px; text-anchor: middle; dominant-baseline: central; font-family: var(--font-body); }
+.knob { color: var(--sub); }
+.knob .ring { fill: none; stroke: var(--accent); stroke-width: 3; }
+
+/* tooltip */
+.tip { position: fixed; z-index: 20; max-width: min(340px, calc(100vw - 24px)); background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px var(--shadow); padding: 10px 12px; font-size: 0.86rem; pointer-events: none; display: grid; gap: 5px; }
+.tip .from { color: var(--muted); }
+.tip .arrow { color: var(--accent); font-weight: 700; }
+
+/* decision cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card .opts { display: grid; gap: 8px; }
+.opt { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; }
+.opt .pill { font-size: 0.72rem; font-weight: 700; border-radius: 6px; padding: 2px 7px; background: var(--chip); color: var(--muted); white-space: nowrap; margin-top: 1px; }
+.opt .pill.a { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+.opt p { color: var(--fg); }
+.opt p small { color: var(--muted); font-size: 0.88em; display: block; }
+.card .pick { font-size: 0.88rem; color: var(--good); font-weight: 500; }
+section > h2 { margin-bottom: 12px; }
+@media (prefers-reduced-motion: no-preference) { .k .ring, .k .bdg { transition: opacity 0.15s; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs id="defs"></defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Layout options · decided November 2026: A, ⌃ ⌥ ⌘ outside, Sofle System as today</div>
+    <h1>Sofle and Cornix layouts</h1>
+    <p class="lede">Each proposal below shows every layer twice: the Sofle on the left, the Cornix on the right, drawn as they sit on the desk. Rings mark keys that change from today; tap or hover a ringed key to see what it did before and why it moves. Nothing here is flashed yet.</p>
+  </header>
+
+  <details class="req" id="req">
+    <summary>Your requirements, as I understood them</summary>
+    <div class="req-grid">
+      <ol>
+        <li><b>The two boards should feel the same.</b> The Cornix is "a Sofle without the number row". The Cornix can change freely; the Sofle only a little.</li>
+        <li><b>Stay close to a Mac laptop keyboard.</b> QWERTY, the usual punctuation spots, no Dvorak/Colemak, no home-row mods or other tricks.</li>
+        <li><b>macOS and iPadOS first.</b> ⌃ ⌥ ⌘ in Mac order on both halves; Linux is rare, Windows avoided.</li>
+        <li><b>Thumbs: Space on both, Enter off.</b> Alternating Space cured the thumb pain; Enter moved to the left pinky. Enter on only one side still bothers you.</li>
+        <li><b>Symmetry.</b> Modifiers and Shift on both halves. One half alone must reach every layer, so a dead half never locks you out and you can hold on one side and type on the other.</li>
+        <li><b>System layer is hard to reach on purpose:</b> hold M1, then M2.</li>
+        <li><b>The Nav layer works well.</b> Arrows on a held layer are fine; a little asymmetry is fine.</li>
+      </ol>
+      <ol start="8">
+        <li><b>F1–F10 are almost never used.</b> They can move to another layer or go.</li>
+        <li><b>Esc is rare.</b> A key combination is fine, as long as it fits the number-row logic.</li>
+        <li><b>Daily use:</b> coding, data science, office work, a tablet on the sofa. No gaming.</li>
+        <li><b>Knobs:</b> both Cornix knobs turn volume. Their push-buttons stay as they are; using them for keys is a last resort.</li>
+        <li><b>Desk switch (Personal / Work):</b> plan where it would go on the Cornix, wire it later.</li>
+        <li><b>Pictures</b> in the style of the Sofle note: Mac symbols, light and dark, only the keys that exist.</li>
+      </ol>
+    </div>
+    <p class="req-hard"><b>The hard questions you named:</b> where the digits go on the Cornix; how the Nav layer is organised; how layers are switched; where Esc, Tab, Enter, Shift, ⌫ and \ sit on the base layer; the bottom row; and the System layer.</p>
+  </details>
+
+  <div class="controls" id="controls">
+    <div class="ctl">
+      <span class="eyebrow">Proposal</span>
+      <div class="seg proposal" data-key="prop" role="group" aria-label="Proposal">
+        <button type="button" data-val="today" id="prop-today">Today</button>
+        <button type="button" data-val="A" id="prop-a">A · Num thumb key</button>
+        <button type="button" data-val="B" id="prop-b">B · Digits on Nav</button>
+      </div>
+    </div>
+    <div class="ctl" data-for="AB">
+      <span class="eyebrow">Cornix bottom row</span>
+      <div class="seg" data-key="bottom" role="group" aria-label="Cornix bottom row">
+        <button type="button" data-val="outer" id="bottom-outer">⌃ ⌥ ⌘ outside</button>
+        <button type="button" data-val="thumb" id="bottom-thumb">⌘ on the thumb</button>
+      </div>
+    </div>
+    <div class="ctl" data-for="A">
+      <span class="eyebrow">Esc on M1 + Tab</span>
+      <div class="seg" data-key="escM1" role="group" aria-label="Esc on M1 plus Tab">
+        <button type="button" data-val="no" id="esc-no">No</button>
+        <button type="button" data-val="yes" id="esc-yes">Both boards</button>
+      </div>
+    </div>
+    <div class="ctl" data-for="AB">
+      <span class="eyebrow">System layer</span>
+      <div class="seg" data-key="sys" role="group" aria-label="System layer">
+        <button type="button" data-val="keep" id="sys-keep">Sofle as today</button>
+        <button type="button" data-val="same" id="sys-same">Same rows on both</button>
+      </div>
+    </div>
+    <div class="ctl">
+      <span class="eyebrow">Highlight</span>
+      <div class="seg" data-key="hl" role="group" aria-label="Highlight">
+        <button type="button" data-val="changes" id="hl-changes">Changes vs today</button>
+        <button type="button" data-val="boards" id="hl-boards">Sofle ≠ Cornix</button>
+        <button type="button" data-val="none" id="hl-none">Off</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <div class="legend" id="legend">
+    <span><i class="sw"></i>key</span>
+    <span><i class="sw trans"></i>same as the base layer</span>
+    <span><i class="sw held"></i>held to get here</span>
+    <span><i class="sw desk"></i>desk switch (later)</span>
+    <span><i class="sw danger"></i>forgets pairings</span>
+    <span id="lg-ring"><i class="sw ring"></i>changed from today</span>
+    <span id="lg-diff" hidden><i class="sw ringdiff"></i>differs between the boards</span>
+  </div>
+
+  <div id="layers" class="layers"></div>
+
+  <section>
+    <h2>The questions, one by one</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section>
+    <h2>Still open</h2>
+    <div class="cards" id="open"></div>
+  </section>
+
+  <p class="lede" style="font-size:0.8rem">Key icons: Tabler Icons, MIT licence (the set vendored in the repo's keymap-drawer/icons). Cornix key positions measured from its Vial picture; the Sofle positions come from the repo's drawing script.</p>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const ICONS = {"tabler:app-window": "<path d=\"M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10\" /> <path d=\"M6 8h.01\" /> <path d=\"M9 8h.01\" />", "tabler:arrow-down": "<path d=\"M12 5l0 14\" /> <path d=\"M18 13l-6 6\" /> <path d=\"M6 13l6 6\" />", "tabler:arrow-left": "<path d=\"M5 12l14 0\" /> <path d=\"M5 12l6 6\" /> <path d=\"M5 12l6 -6\" />", "tabler:arrow-right": "<path d=\"M5 12l14 0\" /> <path d=\"M13 18l6 -6\" /> <path d=\"M13 6l6 6\" />", "tabler:arrow-up": "<path d=\"M12 5l0 14\" /> <path d=\"M18 11l-6 -6\" /> <path d=\"M6 11l6 -6\" />", "tabler:bluetooth": "<path d=\"M7 8l10 8l-5 4l0 -16l5 4l-10 8\" />", "tabler:brightness-down": "<path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\" /> <path d=\"M12 5l0 .01\" /> <path d=\"M17 7l0 .01\" /> <path d=\"M19 12l0 .01\" /> <path d=\"M17 17l0 .01\" /> <path d=\"M12 19l0 .01\" /> <path d=\"M7 17l0 .01\" /> <path d=\"M5 12l0 .01\" /> <path d=\"M7 7l0 .01\" />", "tabler:brightness-up": "<path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\" /> <path d=\"M12 5l0 -2\" /> <path d=\"M17 7l1.4 -1.4\" /> <path d=\"M19 12l2 0\" /> <path d=\"M17 17l1.4 1.4\" /> <path d=\"M12 19l0 2\" /> <path d=\"M7 17l-1.4 1.4\" /> <path d=\"M6 12l-2 0\" /> <path d=\"M7 7l-1.4 -1.4\" />", "tabler:device-laptop": "<path d=\"M3 19l18 0\" /> <path d=\"M5 7a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1l0 -8\" />", "tabler:download": "<path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 11l5 5l5 -5\" /> <path d=\"M12 4l0 12\" />", "tabler:layout-grid": "<path d=\"M4 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4\" /> <path d=\"M14 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4\" /> <path d=\"M4 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4\" /> <path d=\"M14 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4\" />", "tabler:player-track-next": "<path d=\"M3 5v14l8 -7l-8 -7\" /> <path d=\"M14 5v14l8 -7l-8 -7\" />", "tabler:player-track-prev": "<path d=\"M21 5v14l-8 -7l8 -7\" /> <path d=\"M10 5v14l-8 -7l8 -7\" />", "tabler:power": "<path d=\"M7 6a7.75 7.75 0 1 0 10 0\" /> <path d=\"M12 4l0 8\" />", "tabler:refresh": "<path d=\"M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4\" /> <path d=\"M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4\" />", "tabler:search": "<path d=\"M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0\" /> <path d=\"M21 21l-6 -6\" />", "tabler:space": "<path d=\"M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3\" />", "tabler:trash": "<path d=\"M4 7l16 0\" /> <path d=\"M10 11l0 6\" /> <path d=\"M14 11l0 6\" /> <path d=\"M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12\" /> <path d=\"M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3\" />", "tabler:unlink": "<path d=\"M17 22v-2\" /> <path d=\"M9 15l6 -6\" /> <path d=\"M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464\" /> <path d=\"M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463\" /> <path d=\"M20 17h2\" /> <path d=\"M2 7h2\" /> <path d=\"M7 2v2\" />", "tabler:usb": "<path d=\"M10 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\" /> <path d=\"M12 17v-11.5\" /> <path d=\"M7 10v3l5 3\" /> <path d=\"M12 14.5l5 -2v-2.5\" /> <path d=\"M16 10h2v-2h-2l0 2\" /> <path d=\"M6 9a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M10 5.5h4l-2 -2.5l-2 2.5\" />", "tabler:volume-2": "<path d=\"M15 8a5 5 0 0 1 0 8\" /> <path d=\"M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5\" />", "tabler:volume-3": "<path d=\"M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5\" /> <path d=\"M16 10l4 4m0 -4l-4 4\" />", "tabler:volume": "<path d=\"M15 8a5 5 0 0 1 0 8\" /> <path d=\"M17.7 5a9 9 0 0 1 0 14\" /> <path d=\"M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5\" />", "play-pause": "<path d=\"M3 6v12l8 -6z\"/><path d=\"M15 6v12\"/><path d=\"M20 6v12\"/>"};
+const SOFLE_GEOM = [{"i": 0, "x": 1.5, "y": 0.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 1, "x": 2.5, "y": 0.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 2, "x": 3.5, "y": 0.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 3, "x": 4.5, "y": 0.125, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 4, "x": 5.5, "y": 0.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 5, "x": 6.5, "y": 0.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 7, "x": 10.7514, "y": 0.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 8, "x": 11.7514, "y": 0.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 9, "x": 12.7514, "y": 0.125, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 10, "x": 13.7514, "y": 0.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 11, "x": 14.7514, "y": 0.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 12, "x": 15.7514, "y": 0.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 13, "x": 1.5, "y": 1.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 14, "x": 2.5, "y": 1.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 15, "x": 3.5, "y": 1.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 16, "x": 4.5, "y": 1.125, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 17, "x": 5.5, "y": 1.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 18, "x": 6.5, "y": 1.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 20, "x": 10.7514, "y": 1.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 21, "x": 11.7514, "y": 1.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 22, "x": 12.7514, "y": 1.125, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 23, "x": 13.7514, "y": 1.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 24, "x": 14.7514, "y": 1.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 25, "x": 15.7514, "y": 1.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 26, "x": 1.5, "y": 2.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 27, "x": 2.5, "y": 2.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 28, "x": 3.5, "y": 2.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 29, "x": 4.5, "y": 2.125, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 30, "x": 5.5, "y": 2.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 31, "x": 6.5, "y": 2.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 33, "x": 10.7514, "y": 2.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 34, "x": 11.7514, "y": 2.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 35, "x": 12.7514, "y": 2.125, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 36, "x": 13.7514, "y": 2.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 37, "x": 14.7514, "y": 2.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 38, "x": 15.7514, "y": 2.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 39, "x": 1.5, "y": 3.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 40, "x": 2.5, "y": 3.63, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 41, "x": 3.5, "y": 3.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 42, "x": 4.5, "y": 3.125, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 43, "x": 5.5, "y": 3.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 44, "x": 6.5, "y": 3.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 46, "x": 10.7514, "y": 3.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 47, "x": 11.7514, "y": 3.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 48, "x": 12.7514, "y": 3.125, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 49, "x": 13.7514, "y": 3.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 50, "x": 14.7514, "y": 3.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 51, "x": 15.7514, "y": 3.63, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 53, "x": 3.5, "y": 4.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 54, "x": 4.5, "y": 4.125, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 55, "x": 5.5, "y": 4.25, "r": 0.0, "rx": 0.0, "ry": 0.0}, {"i": 56, "x": 7.0, "y": 4.25, "r": 30, "rx": 6.5, "ry": 4.25}, {"i": 57, "x": 8.07, "y": 3.75, "r": 30, "rx": 6.5, "ry": 4.25}, {"i": 59, "x": 9.1814, "y": 3.75, "r": -30, "rx": 11.7514, "ry": 4.25}, {"i": 60, "x": 10.2514, "y": 4.25, "r": -30, "rx": 11.7514, "ry": 4.25}, {"i": 61, "x": 11.7514, "y": 4.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 62, "x": 12.7514, "y": 4.125, "r": 0.0, "rx": -1.2486, "ry": 0.0}, {"i": 63, "x": 13.7514, "y": 4.25, "r": 0.0, "rx": -1.2486, "ry": 0.0}];
+const U = 64, INSET = 3, RADIUS = 10;
+
+/* ---------- legends (same as keymap_drawer.config.yaml) ---------- */
+const SPEC = {
+  _: { type: "trans" },
+  grv: { t: "`", s: "~", n: "` (grave)" }, min: { t: "-", s: "_", n: "-" }, eq: { t: "=", s: "+", n: "=" },
+  lbr: { t: "[", s: "{", n: "[" }, rbr: { t: "]", s: "}", n: "]" }, bsl: { t: "\\", s: "|", n: "\\ (backslash)" },
+  semi: { t: ";", s: ":", n: ";" }, apos: { t: "'", s: '"', n: "' (quote)" }, com: { t: ",", s: "<", n: "," },
+  dot: { t: ".", s: ">", n: "." }, sl: { t: "/", s: "?", n: "/" },
+  ctl: { t: "⌃", n: "⌃ Control" }, alt: { t: "⌥", n: "⌥ Option" }, cmd: { t: "⌘", n: "⌘ Command" },
+  sft: { t: "⇧", n: "⇧ Shift" }, caps: { t: "⇪", n: "⇪ Caps Lock" }, esc: { t: "esc", n: "Esc" },
+  tab: { t: "⇥", n: "⇥ Tab" }, ent: { t: "↩", n: "↩ Enter" }, bksp: { t: "⌫", n: "⌫ Backspace" }, del: { t: "⌦", n: "⌦ Delete" },
+  spc: { t: "$$tabler:space$$", n: "Space" },
+  up: { t: "$$tabler:arrow-up$$", n: "↑" }, down: { t: "$$tabler:arrow-down$$", n: "↓" },
+  left: { t: "$$tabler:arrow-left$$", n: "←" }, right: { t: "$$tabler:arrow-right$$", n: "→" },
+  pgup: { t: "page\nup", n: "Page Up" }, pgdn: { t: "page\ndown", n: "Page Down" }, home: { t: "home", n: "Home" }, end: { t: "end", n: "End" },
+  prev: { t: "$$tabler:player-track-prev$$", n: "Previous track" }, pp: { t: "$$play-pause$$", n: "Play / pause" },
+  next: { t: "$$tabler:player-track-next$$", n: "Next track" }, mute: { t: "$$tabler:volume-3$$", n: "Mute" },
+  vold: { t: "$$tabler:volume-2$$", n: "Volume down" }, volu: { t: "$$tabler:volume$$", n: "Volume up" },
+  brid: { t: "$$tabler:brightness-down$$", n: "Brightness down" }, briu: { t: "$$tabler:brightness-up$$", n: "Brightness up" },
+  mc: { t: "$$tabler:app-window$$", n: "Mission Control" }, lp: { t: "$$tabler:layout-grid$$", n: "Launchpad" },
+  spot: { t: "$$tabler:search$$", n: "Spotlight" },
+  M1: { t: "M1", n: "M1 (hold for Nav)" }, M1h: { t: "M1", type: "held", n: "M1, held" },
+  M2: { t: "M2", n: "M2 (hold with M1 for System)" }, M2h: { t: "M2", type: "held", n: "M2, held" },
+  Num: { t: "Num", n: "Num (hold)" }, Numh: { t: "Num", type: "held", n: "Num, held" },
+  clr: { t: "$$tabler:trash$$", h: "clear", type: "danger", n: "Forget this profile's pairing" },
+  clrall: { t: "$$tabler:trash$$", h: "clear all", type: "danger", n: "Forget all pairings" },
+  pers: { t: "$$tabler:device-laptop$$", h: "Personal", type: "desk", n: "Desk switch: Personal" },
+  work: { t: "$$tabler:device-laptop$$", h: "Work", type: "desk", n: "Desk switch: Work" },
+  usb: { t: "$$tabler:usb$$", h: "USB out", n: "Type over USB" }, bto: { t: "$$tabler:bluetooth$$", h: "BT out", n: "Type over Bluetooth" },
+  off: { t: "$$tabler:power$$", h: "off", n: "Soft off" }, reset: { t: "$$tabler:refresh$$", h: "reset", n: "Reset" },
+  flash: { t: "$$tabler:download$$", h: "flash", n: "Bootloader (flash)" },
+};
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(c => SPEC[c] = { t: c, n: c });
+const SHIFTED = { 1: "!", 2: "@", 3: "#", 4: "$", 5: "%", 6: "^", 7: "&", 8: "*", 9: "(", 0: ")" };
+for (const d in SHIFTED) SPEC[d] = { t: d, s: SHIFTED[d], n: d };
+for (let i = 1; i <= 12; i++) SPEC["F" + i] = { t: "F" + i, n: "F" + i };
+for (let i = 1; i <= 5; i++) {
+  SPEC["bt" + i] = { t: String(i), s: "$$tabler:bluetooth$$", n: "Bluetooth profile " + i };
+  SPEC["d" + i] = { t: String(i), s: "$$tabler:unlink$$", type: "muted", n: "Disconnect profile " + i };
+}
+SPEC.bt2.h = "personal"; SPEC.bt3.h = "work";
+const KNOB = { vol: { label: "volume", press: "mute" }, scroll: { label: "scroll", press: "middle click" } };
+function spec(tok) { const s = SPEC[tok]; if (!s) throw new Error("unknown token " + tok); return s; }
+function nameOf(tok) { if (tok === "_" || tok === undefined) return "same as base"; const s = spec(tok); return s.n || s.t; }
+
+/* ---------- geometry ---------- */
+// Slot names: side (L/R) + row (n number, q, a, z, b bottom, t thumb) + column. Columns count from the outer edge (0) to the index finger (5).
+// Bottom keys on both boards are named from the inside out so they line up: t3 innermost thumb, t2, t1, then b2, b1 (b0 on the Cornix only).
+function sofleSlot(i) {
+  const bottom = { 53: "Lb1", 54: "Lb2", 55: "Lt1", 56: "Lt2", 57: "Lt3", 59: "Rt3", 60: "Rt2", 61: "Rt1", 62: "Rb2", 63: "Rb1" };
+  if (bottom[i]) return bottom[i];
+  const rows = ["n", "q", "a", "z"], r = Math.floor(i / 13), c = i % 13;
+  return c < 6 ? "L" + rows[r] + c : "R" + rows[r] + (12 - c);
+}
+function center(k) {
+  const a = (k.r || 0) * Math.PI / 180, px = k.x + 0.5, py = k.y + 0.5;
+  return { cx: k.rx + (px - k.rx) * Math.cos(a) - (py - k.ry) * Math.sin(a), cy: k.ry + (px - k.rx) * Math.sin(a) + (py - k.ry) * Math.cos(a), r: k.r || 0 };
+}
+const SOFLE = SOFLE_GEOM.map(k => ({ slot: sofleSlot(k.i), ...center(k) }));
+
+const CORNIX = (() => {
+  const YOFF = [0.5, 0.5, 0.25, 0, 0.25, 0.5], left = [];
+  ["q", "a", "z"].forEach((row, r) => { for (let c = 0; c < 6; c++) left.push({ slot: "L" + row + c, cx: c + 0.47, cy: YOFF[c] + r + 0.5, r: 0 }); });
+  for (let c = 0; c < 3; c++) left.push({ slot: "Lb" + c, cx: c + 0.47, cy: YOFF[c] + 3.5, r: 0 });
+  left.push({ slot: "Lt1", cx: 3.99, cy: 4.09, r: 0 }, { slot: "Lt2", cx: 5.12, cy: 4.2, r: 12 }, { slot: "Lt3", cx: 6.17, cy: 4.55, r: 26 });
+  const M = 14.45;
+  const right = left.map(k => ({ slot: "R" + k.slot.slice(1), cx: M - k.cx, cy: k.cy, r: -k.r }));
+  return { keys: [...left, ...right], knobs: [{ slot: "LK", cx: 6.47, cy: 2.47 }, { slot: "RK", cx: M - 6.47, cy: 2.47 }] };
+})();
+
+/* ---------- layer authoring ---------- */
+const SOFLE_BOTTOM = { L: ["Lb1", "Lb2", "Lt1", "Lt2", "Lt3"], R: ["Rt3", "Rt2", "Rt1", "Rb2", "Rb1"] };
+const CORNIX_BOTTOM = { L: ["Lb0", "Lb1", "Lb2", "Lt1", "Lt2", "Lt3"], R: ["Rt3", "Rt2", "Rt1", "Rb2", "Rb1", "Rb0"] };
+// A row string lists the keys as you see them, left to right, with "|" between the halves.
+function row(map, rowName, str) {
+  const [l, r] = str.trim().split("|").map(s => s.trim().split(/\s+/));
+  if (l.length !== 6 || r.length !== 6) throw new Error("row " + rowName + ": " + str);
+  l.forEach((t, c) => map["L" + rowName + c] = t);
+  r.forEach((t, c) => map["R" + rowName + (5 - c)] = t);
+}
+function bottom(map, board, str) {
+  const [l, r] = str.trim().split("|").map(s => s.trim().split(/\s+/));
+  const slots = board === "S" ? SOFLE_BOTTOM : CORNIX_BOTTOM;
+  if (l.length !== slots.L.length || r.length !== slots.R.length) throw new Error("bottom: " + str);
+  l.forEach((t, i) => map[slots.L[i]] = t);
+  r.forEach((t, i) => map[slots.R[i]] = t);
+}
+function layer(board, rows, knobs) {
+  const map = {};
+  for (const [name, str] of Object.entries(rows)) name === "b" ? bottom(map, board, str) : row(map, name, str);
+  return { map, knobs };
+}
+const S_ = "_ _ _ _ _ _ | _ _ _ _ _ _";
+
+/* ---------- today ---------- */
+const TODAY = {
+  S: {
+    base: layer("S", {
+      n: "esc 1 2 3 4 5 | 6 7 8 9 0 bksp", q: "tab Q W E R T | Y U I O P bsl",
+      a: "ent A S D F G | H J K L semi apos", z: "sft Z X C V B | N M com dot sl sft",
+      b: "ctl alt cmd M1 spc | spc M1 cmd alt ctl" }),
+    nav: layer("S", {
+      n: "_ brid briu mc lp spot | prev pp next mute vold volu", q: "caps grv _ _ _ _ | pgup home up end min eq",
+      a: "_ _ _ _ _ M2 | pgdn left down right lbr rbr", z: "_ F1 F2 F3 F4 F5 | F6 F7 F8 F9 F10 _",
+      b: "_ _ _ M1h _ | _ M1h _ M2 _" }),
+    sys: layer("S", {
+      n: "clr bt1 bt2 bt3 bt4 bt5 | bt1 bt2 bt3 bt4 bt5 clr", q: "clrall d1 d2 d3 d4 d5 | d1 d2 d3 d4 d5 clrall",
+      a: "_ _ _ pers work M2h | _ _ pers work _ _", z: "_ reset off usb bto flash | reset off usb bto flash _",
+      b: "_ _ _ M1h _ | _ M1h _ M2h _" }),
+  },
+  C: {
+    base: layer("C", {
+      q: "tab Q W E R T | Y U I O P bsl", a: "caps A S D F G | H J K L semi apos", z: "sft Z X C V B | N M com dot sl sft",
+      b: "ctl alt cmd M1 M2 spc | ent bksp M1 cmd alt ctl" }, { LK: "vol", RK: "scroll" }),
+    nav: layer("C", {
+      q: "esc 1 2 3 4 5 | 6 7 8 9 0 del", a: "_ grv _ _ _ _ | pgup home up end min eq", z: "_ _ _ _ _ _ | pgdn left down right lbr rbr",
+      b: "_ _ _ M1h _ _ | _ _ M1h _ _ _" }, { LK: "vol", RK: "scroll" }),
+    sys: layer("C", {
+      q: "_ brid briu _ _ _ | prev pp next mute vold volu", a: "bt1 _ _ _ _ _ | _ _ _ _ _ _", z: "bt2 F1 F2 F3 F4 F5 | F6 F7 F8 F9 F10 _",
+      b: "bt3 _ _ _ M2h _ | _ _ _ _ _ _" }, { LK: "vol", RK: "scroll" }),
+  },
+  spare: { L: "Lt2", R: "Rt2" },
+};
+
+const LAYER_INFO = {
+  base: { n: 0, title: "Base", today: { C: "Layer 0" } },
+  nav: { n: 1, title: "Nav", sub: "hold M1", today: { C: "Layer 1 · hold M1 (digits and arrows)" } },
+  sys: { n: 2, title: "System", sub: "hold M1, then M2", today: { C: "Layer 2 · hold the M2 thumb (F-keys, media, Bluetooth)" } },
+  num: { n: 3, title: "Num", sub: "hold Num, Cornix only" },
+};
+
+/* ---------- proposals ---------- */
+function proposal(p, o) {
+  if (p === "today") return { S: TODAY.S, C: TODAY.C, spare: TODAY.spare, notes: [] };
+  const notes = [];
+  const note = (board, lay, slots, text) => notes.push({ board, layer: lay, slots, text });
+  const outer = o.bottom === "outer";
+  const spareL = outer ? "Lt1" : "Lb2", spareR = outer ? "Rt1" : "Rb2";
+  const knobs = { LK: "vol", RK: "vol" };
+  const cBottom = (l, r) => outer ? `ctl alt cmd ${l} M1 spc | spc M1 ${r} cmd alt ctl` : `ctl alt ${l} cmd M1 spc | spc M1 cmd ${r} alt ctl`;
+  const cBottomHeld = (lt2, rt2, extraL = "_", extraR = "_", rb1 = "_") =>
+    outer ? `_ _ _ ${extraL} ${lt2} _ | _ ${rt2} ${extraR} _ ${rb1} _` : `_ _ ${extraL} _ ${lt2} _ | _ ${rt2} _ ${extraR} ${rb1} _`;
+
+  const S = {}, C = {};
+  S.base = TODAY.S.base;
+
+  // System layer
+  const sysRows = {
+    q: "clr bt1 bt2 bt3 bt4 bt5 | bt1 bt2 bt3 bt4 bt5 clr", a: "clrall _ _ pers work M2h | _ _ pers work _ clrall",
+    z: "_ reset off usb bto flash | reset off usb bto flash _" };
+  C.sys = layer("C", { ...sysRows, b: cBottomHeld("M1h", "M1h", "_", "_", "M2h") }, knobs);
+  S.sys = o.sys === "same"
+    ? layer("S", { n: "_ d1 d2 d3 d4 d5 | d1 d2 d3 d4 d5 _", ...sysRows, b: "_ _ _ M1h _ | _ M1h _ M2h _" })
+    : TODAY.S.sys;
+
+  if (p === "A") {
+    C.base = layer("C", {
+      q: "tab Q W E R T | Y U I O P bksp", a: "ent A S D F G | H J K L semi apos", z: "sft Z X C V B | N M com dot sl sft",
+      b: cBottom("Num", "Num") }, knobs);
+    const esc = o.escM1 === "yes";
+    const navRows = {
+      q: `${esc ? "esc" : "caps"} grv _ _ _ _ | pgup home up end min eq`,
+      a: `${esc ? "caps" : "_"} _ _ _ _ M2 | pgdn left down right lbr rbr`,
+      z: "_ F1 F2 F3 F4 F5 | F6 F7 F8 F9 F10 _" };
+    S.nav = esc ? layer("S", { n: "_ brid briu mc lp spot | prev pp next mute vold volu", ...navRows, b: "_ _ _ M1h _ | _ M1h _ M2 _" }) : TODAY.S.nav;
+    C.nav = layer("C", { ...navRows, b: cBottomHeld("M1h", "M1h", "_", "_", "M2") }, knobs);
+    C.num = layer("C", {
+      q: "esc 1 2 3 4 5 | 6 7 8 9 0 bsl", a: "_ brid briu mc lp spot | prev pp next mute vold volu", z: S_,
+      b: cBottomHeld("_", "_", "Numh", "Numh") }, knobs);
+
+    note("C", "base", ["Rq0"], "⌫ takes the top-right corner. On the Sofle ⌫ is also the right pinky reaching up and out to the corner, one row higher. \\ moves to Num + this key.");
+    note("C", "base", ["La0"], "↩ on the Caps Lock key, as on the Sofle. Caps Lock moves to M1 + Tab, as on the Sofle.");
+    note("C", "base", [spareL, spareR], outer
+      ? "The spare thumb on each half becomes Num: hold it for the Sofle's top row. One per half, so either half reaches every layer."
+      : "The spare key (the one by the outer column) becomes Num, held with a finger. ⌘ moves onto the first thumb key, where the Sofle's ⌘ sits.");
+    note("C", "base", ["Lt2", "Rt2", "Lt1", "Rt1", "Lb2", "Rb2"], "M1 sits on the middle thumb, next to Space, as on the Sofle. Today's thumb M2 goes away: M2 is G or right ⌥ while M1 is held, as on the Sofle.");
+    note("C", "base", ["Rt3"], "Space on both thumbs (today the right one is ↩). ↩ stays off the thumbs, which is what ended the thumb pain.");
+    note("C", "base", ["RK"], "Both knobs turn the volume and press for mute.");
+    note("C", "base", "*", "Thumb keys reshuffled to match the Sofle's order: ⌘, M1, Space.");
+    if (esc) note("SC", "nav", ["Lq0", "La0"], "Esc on M1 + Tab on both boards, a single rule for Esc that works the same everywhere. Caps Lock moves down to M1 + ↩, the Caps Lock spot on a laptop.");
+    note("C", "nav", "*", "The Cornix Nav layer becomes the Sofle Nav layer, row for row: ` and Caps on the left, arrows, Page Up/Down, Home/End, - = [ ] on the right, F1–F10 on the bottom row. The digits move to Num.");
+    note("C", "num", ["Lq0", "Lq1", "Lq2", "Lq3", "Lq4", "Lq5", "Rq5", "Rq4", "Rq3", "Rq2", "Rq1"], "Q row = the Sofle number row, so 1 is above Q and Esc above Tab, exactly one row lower than on the Sofle.");
+    note("C", "num", ["Rq0"], "\\ lives here because ⌫ took its key on the base layer. Shift gives |.");
+    note("C", "num", "*", "A row = the Sofle Nav top row: brightness, Mission Control, Launchpad, Spotlight, media and volume. On the Sofle these are M1 + number row.");
+  } else {
+    C.base = layer("C", {
+      q: "tab Q W E R T | Y U I O P bsl", a: "ent A S D F G | H J K L semi apos", z: "sft Z X C V B | N M com dot sl sft",
+      b: cBottom("esc", "bksp") }, knobs);
+    const navRows = {
+      q: "grv 1 2 3 4 5 | 6 7 8 9 0 del", a: "caps brid briu mc lp M2 | pgup home up end min eq",
+      z: "_ spot prev pp next mute | pgdn left down right lbr rbr" };
+    S.nav = layer("S", { n: "_ F1 F2 F3 F4 F5 | F6 F7 F8 F9 F10 _", ...navRows, b: "_ _ _ M1h _ | _ M1h _ M2 _" });
+    C.nav = layer("C", { ...navRows, b: cBottomHeld("M1h", "M1h", "_", "_", "M2") }, knobs);
+
+    note("C", "base", ["La0"], "↩ on the Caps Lock key, as on the Sofle.");
+    note("C", "base", [spareL], "Esc on the left spare key. On the Sofle Esc stays in the top-left corner.");
+    note("C", "base", [spareR], "⌫ on the right spare key. On the Sofle ⌫ stays in the top-right corner, so the two boards differ here.");
+    note("C", "base", ["Rt3"], "Space on both thumbs (today the right one is ↩).");
+    note("C", "base", ["RK"], "Both knobs turn the volume and press for mute.");
+    note("C", "base", "*", "Thumb keys reshuffled to match the Sofle's order: ⌘, M1, Space. Today's thumb M2 goes away: M2 is G or right ⌥ while M1 is held.");
+    note("SC", "nav", ["Lq1", "Lq2", "Lq3", "Lq4", "Lq5", "Rq5", "Rq4", "Rq3", "Rq2", "Rq1"], "Digits on the Q row of Nav, on both boards. On the Sofle they duplicate the number row, so your fingers learn one place for digits.");
+    note("SC", "nav", ["Ra5", "Ra4", "Ra3", "Ra2", "Rz5", "Rz4", "Rz3", "Rz2"], "The arrow block keeps its shape one row lower: ↑ on K, ← ↓ → on M , . with Page Up/Down and Home/End around it.");
+    note("SC", "nav", ["Ra1", "Ra0", "Rz1", "Rz0"], "- = and [ ] stay in the same two columns, one row lower. ] takes the right Shift key on this layer; the left Shift still works.");
+    note("SC", "nav", ["Lq0", "La0"], "` moves left of 1, as on a laptop. Caps Lock moves to M1 + ↩, the Caps Lock spot on a laptop.");
+    note("SC", "nav", ["Rq0"], "⌦ on M1 + the top-right key.");
+    note("SC", "nav", ["La1", "La2", "La3", "La4", "Lz1", "Lz2", "Lz3", "Lz4", "Lz5"], "Brightness, Mission Control, Launchpad, Spotlight and media keys move to the left hand. Volume comes from the knobs.");
+    note("S", "nav", "*", "F1–F10 move to the Sofle's top row of Nav (laptop order: F-keys above the digits). The Cornix has no F-keys in this proposal.");
+    note("C", "nav", "*", "The Cornix Nav layer is the Sofle Nav layer without its top row.");
+  }
+  note("C", "sys", ["Lq1", "Lq2", "Lq3", "Lq4", "Lq5", "Rq5", "Rq4", "Rq3", "Rq2", "Rq1", "Lq0", "Rq0"], "Bluetooth profiles 1–5 on the Q row of both halves, with clear on the outer key.");
+  note("C", "sys", ["La3", "La4", "Ra3", "Ra2"], "Desk switch keys go where the Sofle has them (D F and K L). Blue means: wire later.");
+  note("C", "sys", "*", "Reset, off, USB out, BT out and flash on the bottom letter row, as on the Sofle. Clear all on the ↩ key. The disconnect keys are left out on the Cornix.");
+  if (o.sys === "same") note("S", "sys", "*", "Bluetooth profiles move down to the Q row and clear all to the ↩ key, so rows Q, A and Z match the Cornix exactly. The disconnect keys move up to the number row.");
+  return { S, C, spare: { L: spareL, R: spareR }, notes };
+}
+
+/* ---------- drawing (a port of keymap-drawer/draw.py) ---------- */
+const GLYPH = /^\$\$(.+)\$\$$/;
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+function mainSize(text) { if (text.includes("\n")) return 11.5; return { 1: 22, 2: 17, 3: 15, 4: 13, 5: 12 }[text.length] || 11; }
+function legend(value, y, size, cls) {
+  const m = value.match(GLYPH);
+  if (m) return `<use href="#i-${m[1].replace(/[^a-z0-9-]/gi, "-")}" x="${U / 2 - size / 2}" y="${y - size / 2}" width="${size}" height="${size}" class="${cls}"/>`;
+  const lines = value.split("\n");
+  if (lines.length === 1) return `<text x="${U / 2}" y="${y}" class="${cls}" font-size="${size}">${esc(value)}</text>`;
+  const step = size * 1.15;
+  const spans = lines.map((l, i) => `<tspan x="${U / 2}" dy="${i === 0 ? -step * (lines.length - 1) / 2 : step}">${esc(l)}</tspan>`).join("");
+  return `<text x="${U / 2}" y="${y}" class="${cls}" font-size="${size}">${spans}</text>`;
+}
+function keyBody(sp) {
+  const types = (sp.type || "").split(" ").filter(Boolean);
+  const parts = [`<rect class="cap" x="${INSET}" y="${INSET}" width="${U - 2 * INSET}" height="${U - 2 * INSET}" rx="${RADIUS}"/>`];
+  if (!types.includes("trans")) {
+    const t = sp.t || "", s = sp.s || "", h = sp.h || "";
+    const tIcon = GLYPH.test(t), tSize = tIcon ? (h ? 22 : 25) : mainSize(t);
+    let sy = 0, ty = 32, hy = 0;
+    if (s && h) [sy, ty, hy] = [16.5, 33, 50]; else if (s) [sy, ty] = [20, 39]; else if (h) [ty, hy] = [27, 49];
+    if (s) parts.push(legend(s, sy, 14, "sub"));
+    if (t) parts.push(legend(t, ty, tSize, "main"));
+    if (h) parts.push(legend(h, hy, 10.5, "sub"));
+  }
+  return { types, body: parts.join("") };
+}
+
+function drawBoard(board, geo, lay, hl, label) {
+  const keys = board === "S" ? geo : geo.keys;
+  const out = [];
+  for (const k of keys) {
+    const tok = lay.map[k.slot] ?? "_";
+    const { types, body } = keyBody(spec(tok));
+    const h = hl[k.slot];
+    let extra = "";
+    if (h) {
+      extra += `<rect class="ring${h.diff ? " diff" : ""}" x="0.5" y="0.5" width="${U - 1}" height="${U - 1}" rx="${RADIUS + 2.5}"/>`;
+      if (h.n) extra += `<g class="bdg"><circle cx="${U - 7}" cy="7" r="9"/><text x="${U - 7}" y="7.5">${h.n}</text></g>`;
+    }
+    const tr = `translate(${(k.cx * U).toFixed(2)} ${(k.cy * U).toFixed(2)}) rotate(${k.r}) translate(${-U / 2} ${-U / 2})`;
+    const hit = h ? ` hit" tabindex="0" role="button" aria-label="${esc(label + " " + k.slot)}` : "";
+    out.push(`<g class="k ${types.join(" ")}${hit}" data-board="${board}" data-slot="${k.slot}" transform="${tr}">${body}${extra}</g>`);
+  }
+  if (board === "C") for (const kn of geo.knobs) {
+    const kind = KNOB[lay.knobs?.[kn.slot] || "vol"];
+    const h = hl[kn.slot];
+    const x = kn.cx * U, y = kn.cy * U, r = 0.4 * U;
+    out.push(`<g class="knob${h ? " k hit" : ""}" data-board="C" data-slot="${kn.slot}"${h ? ' tabindex="0" role="button" aria-label="knob"' : ""}>` +
+      `<circle class="body" cx="${x}" cy="${y}" r="${r}"/><circle class="dot" cx="${x}" cy="${y - r + 6}" r="2.2"/>` +
+      `<text x="${x}" y="${y - 2}">${kind.label}</text><text x="${x}" y="${y + 10}" style="font-size:8px;opacity:.8">${kind.press}</text>` +
+      (h ? `<circle class="ring" cx="${x}" cy="${y}" r="${r + 4}"/>` + (h.n ? `<g class="bdg"><circle cx="${x + r}" cy="${y - r}" r="9"/><text x="${x + r}" y="${y - r + 0.5}">${h.n}</text></g>` : "") : "") +
+      `</g>`);
+  }
+  // bounds from rotated corners
+  const xs = [], ys = [];
+  for (const k of keys) {
+    const a = k.r * Math.PI / 180;
+    for (const [dx, dy] of [[-0.5, -0.5], [0.5, -0.5], [-0.5, 0.5], [0.5, 0.5]]) {
+      xs.push(k.cx + dx * Math.cos(a) - dy * Math.sin(a)); ys.push(k.cy + dx * Math.sin(a) + dy * Math.cos(a));
+    }
+  }
+  const pad = 12, x0 = Math.min(...xs) * U - pad, y0 = Math.min(...ys) * U - pad;
+  const w = (Math.max(...xs) - Math.min(...xs)) * U + 2 * pad, hgt = (Math.max(...ys) - Math.min(...ys)) * U + 2 * pad;
+  return `<svg viewBox="${x0.toFixed(1)} ${y0.toFixed(1)} ${w.toFixed(1)} ${hgt.toFixed(1)}" role="img" aria-label="${esc(label)}">${out.join("")}</svg>`;
+}
+
+function defs() {
+  const grads = ["key", "trans", "held", "desk", "danger", "layer"].map(g =>
+    `<linearGradient id="g-${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color: var(--${g}-top)"/><stop offset="1" style="stop-color: var(--${g}-bottom)"/></linearGradient>`).join("");
+  const shadow = `<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.1" style="flood-color: var(--shadow)"/></filter>`;
+  const syms = Object.entries(ICONS).map(([name, body]) =>
+    `<symbol id="i-${name.replace(/[^a-z0-9-]/gi, "-")}" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${body}</g></symbol>`).join("");
+  document.getElementById("defs").innerHTML = grads + shadow + syms;
+}
+
+/* ---------- highlights ---------- */
+function bottomPairs(spare) {
+  // Sofle's five bottom keys against the Cornix's six minus its spare key, in order from the outside in.
+  const pairs = [];
+  for (const side of ["L", "R"]) {
+    const s = SOFLE_BOTTOM[side], c = CORNIX_BOTTOM[side].filter(x => x !== spare[side]);
+    s.forEach((slot, i) => pairs.push([slot, c[i]]));
+  }
+  return pairs;
+}
+function comparePairs(spare) {
+  const pairs = [];
+  for (const side of ["L", "R"]) for (const r of ["q", "a", "z"]) for (let c = 0; c < 6; c++) pairs.push([side + r + c, side + r + c]);
+  return pairs.concat(bottomPairs(spare));
+}
+
+function highlights(prop, o, layerId, P) {
+  const hl = { S: {}, C: {} }, numbered = [];
+  if (o.hl === "none" || prop === "today" && o.hl === "changes") return { hl, numbered };
+  if (o.hl === "boards") {
+    const s = P.S[layerId], c = P.C[layerId];
+    if (!s || !c) return { hl, numbered };
+    for (const [ss, cs] of comparePairs(P.spare)) {
+      if ((s.map[ss] ?? "_") !== (c.map[cs] ?? "_")) { hl.S[ss] = { diff: true }; hl.C[cs] = { diff: true }; }
+    }
+    return { hl, numbered };
+  }
+  // changes vs today
+  const changed = { S: new Set(), C: new Set() };
+  for (const b of ["S", "C"]) {
+    const now = P[b][layerId], before = TODAY[b][layerId];
+    if (!now) continue;
+    const slots = new Set([...Object.keys(now.map), ...Object.keys(before?.map || {})]);
+    for (const sl of slots) if ((now.map[sl] ?? "_") !== (before?.map[sl] ?? "_")) changed[b].add(sl);
+    if (b === "C") for (const kn of ["LK", "RK"]) if ((now.knobs?.[kn] || "vol") !== (before?.knobs?.[kn] || "vol")) changed.C.add(kn);
+  }
+  const claimed = { S: new Set(), C: new Set() };
+  let n = 0;
+  for (const nt of P.notes.filter(x => x.layer === layerId)) {
+    const boards = nt.board === "SC" ? ["S", "C"] : [nt.board];
+    let used = false;
+    const num = n + 1;
+    for (const b of boards) {
+      const slots = nt.slots === "*" ? [...changed[b]].filter(s => !claimed[b].has(s)) : nt.slots.filter(s => changed[b].has(s) && !claimed[b].has(s));
+      for (const s of slots) { hl[b][s] = { n: num }; claimed[b].add(s); used = true; }
+    }
+    if (used || nt.slots === "*") { n = num; numbered.push({ n: num, board: nt.board, text: nt.text, used }); }
+  }
+  for (const b of ["S", "C"]) for (const s of changed[b]) if (!hl[b][s]) hl[b][s] = {};
+  return { hl, numbered, notesByNum: numbered };
+}
+
+/* ---------- page ---------- */
+const state = { prop: "A", bottom: "outer", escM1: "no", sys: "keep", hl: "changes" };
+try { Object.assign(state, JSON.parse(localStorage.getItem("cornix-layout-options-v2") || "{}")); } catch (e) {}
+let current = null;
+
+const SUMMARY = {
+  today: () => `<h2>Today</h2><div class="cols">
+    <div><div class="eyebrow">Sofle</div><ul><li>Number row on top, Esc and ⌫ in its corners.</li><li>↩ on the Caps Lock key, Space on both thumbs.</li><li>Nav (M1): media on top, arrows and brackets on the right, F-keys at the bottom.</li></ul></div>
+    <div><div class="eyebrow">Cornix</div><ul><li>Caps Lock where the Sofle has ↩, and ↩ on the right thumb.</li><li>Space on the left thumb only; ⌫ on a thumb.</li><li>Layer 1 mixes digits and arrows; layer 2 (its own thumb key) holds F-keys, media and Bluetooth.</li></ul></div>
+    <div><div class="eyebrow">What hurts</div><ul><li>Switch "Sofle ≠ Cornix" on: most keys outside the letters differ.</li><li>The thumb habits differ (↩ and ⌫ on Cornix thumbs).</li></ul></div></div>`,
+  A: o => `<h2>A · Num thumb key <span class="tag rec">chosen</span></h2>
+    <p class="verdict">The Cornix gets one extra layer, Num, that brings back the Sofle's missing top row one row lower. Everything else is the Sofle, key for key, and the Sofle itself ${o.escM1 === "yes" || o.sys === "same" ? "changes only in the small ways you switched on" : "does not change at all"}.</p>
+    <div class="cols">
+    <div><div class="eyebrow">Sofle</div><ul>${o.escM1 === "yes" ? "<li>Nav: Esc on M1 + Tab, Caps Lock on M1 + ↩.</li>" : ""}${o.sys === "same" ? "<li>System: Bluetooth profiles one row lower, disconnect one row higher.</li>" : ""}${o.escM1 !== "yes" && o.sys !== "same" ? "<li>No change.</li>" : ""}</ul></div>
+    <div><div class="eyebrow">Cornix</div><ul><li>Base rows = Sofle base rows, with ⌫ in the top-right corner.</li><li>${o.bottom === "outer" ? "⌃ ⌥ ⌘ on the three outer bottom keys; thumbs: Num, M1, Space." : "⌃ ⌥ Num on the outer bottom keys; thumbs: ⌘, M1, Space, as on the Sofle."}</li><li>Num: Esc 1–0 \\ on the Q row, media on the A row.</li><li>Nav and System = the Sofle's.</li></ul></div>
+    <div><div class="eyebrow">Costs</div><ul><li>\\ needs Num on the Cornix.</li><li>Digits need a thumb held; no layout without a number row avoids that.</li>${o.bottom === "thumb" ? "<li>Num is held by a finger on the outer bottom key, awkward for long numbers.</li>" : "<li>⌘ is one key further from the thumb than on the Sofle.</li>"}</ul></div></div>`,
+  B: o => `<h2>B · Digits on Nav <span class="tag">kept for later</span></h2>
+    <p class="verdict">Both boards learn one new habit: hold M1 and the digits are on the Q row. The Cornix base layer becomes identical to the Sofle's, but the Sofle's Nav layer has to be reorganised, and Esc and ⌫ land on the Cornix thumbs.</p>
+    <div class="cols">
+    <div><div class="eyebrow">Sofle</div><ul><li>Nav: digits on the Q row, arrows one row lower, media to the left hand, F-keys on the top row.</li>${o.sys === "same" ? "<li>System: Bluetooth profiles one row lower.</li>" : ""}</ul></div>
+    <div><div class="eyebrow">Cornix</div><ul><li>Base rows identical to the Sofle, \\ included.</li><li>Spare keys: Esc (left), ⌫ (right)${o.bottom === "thumb" ? ", both on the outer bottom keys" : ", both on thumbs"}.</li><li>No F-keys.</li></ul></div>
+    <div><div class="eyebrow">Costs</div><ul><li>The Sofle Nav layer you already know changes.</li><li>⌫ is a ${o.bottom === "thumb" ? "ring-finger key" : "thumb key"} on the Cornix but a pinky key on the Sofle: two habits for the most-used key.</li><li>More thumb work on the Cornix.</li></ul></div></div>`,
+};
+
+function render() {
+  const o = state;
+  document.querySelectorAll(".seg").forEach(seg => seg.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(state[seg.dataset.key] === b.dataset.val))));
+  document.querySelectorAll(".ctl[data-for]").forEach(c => {
+    const off = !c.dataset.for.includes(o.prop);
+    c.classList.toggle("off", off);
+    c.querySelectorAll("button").forEach(b => b.disabled = off);
+  });
+  document.getElementById("lg-ring").hidden = o.hl !== "changes";
+  document.getElementById("lg-diff").hidden = o.hl !== "boards";
+  document.getElementById("summary").innerHTML = SUMMARY[o.prop === "today" ? "today" : o.prop](o);
+
+  const P = proposal(o.prop, o);
+  current = { P, hls: {} };
+  const ids = ["base", "nav", "sys", ...(P.C.num ? ["num"] : [])];
+  document.getElementById("layers").innerHTML = ids.map(id => {
+    const info = LAYER_INFO[id];
+    const { hl, numbered } = highlights(o.prop, o, id, P);
+    current.hls[id] = { hl, numbered };
+    const s = P.S[id], c = P.C[id];
+    const todayC = o.prop === "today" && info.today?.C;
+    const fig = (b, lay, title, note) => lay
+      ? `<figure><figcaption><b>${title}</b><span>${note || ""}</span></figcaption>${drawBoard(b, b === "S" ? SOFLE : CORNIX, lay, hl[b], title + " " + info.title)}</figure>`
+      : `<figure class="absent"><b>${title}</b>No ${info.title} layer: the Sofle has a real number row.</figure>`;
+    const list = numbered.length ? `<ol class="notes">${numbered.map(x => `<li><span class="badge${x.used ? "" : " plain"}">${x.n}</span><span class="who">${x.board === "SC" ? "Both" : x.board === "S" ? "Sofle" : "Cornix"}</span><p>${esc(x.text)}</p></li>`).join("")}</ol>` : "";
+    return `<section class="layer" data-layer="${id}"><div class="layer-head"><h2>Layer ${info.n} · ${info.title}</h2><p>${info.sub || ""}${todayC ? " · Cornix today: " + todayC : ""}</p></div>
+      <div class="boards">${fig("S", s, "Sofle")}${fig("C", c, "Cornix", todayC || "")}</div>${list}</section>`;
+  }).join("");
+  try { localStorage.setItem("cornix-layout-options-v2", JSON.stringify(state)); } catch (e) {}
+}
+
+document.getElementById("controls").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b || b.disabled) return;
+  state[b.closest(".seg").dataset.key] = b.dataset.val; render();
+});
+
+/* tooltip */
+const tip = document.getElementById("tip");
+let pinned = null;
+function showTip(g, x, y) {
+  const sec = g.closest("section.layer"); if (!sec) return;
+  const id = sec.dataset.layer, board = g.dataset.board, slot = g.dataset.slot;
+  const { P, hls } = current, h = hls[id].hl[board][slot]; if (!h) return;
+  const lay = P[board][id], boardName = board === "S" ? "Sofle" : "Cornix";
+  let html = `<div class="eyebrow">${boardName} · ${LAYER_INFO[id].title}</div>`;
+  if (slot.endsWith("K")) {
+    const before = KNOB[TODAY.C[id]?.knobs?.[slot] || "vol"], now = KNOB[lay.knobs?.[slot] || "vol"];
+    html += `<div><span class="from">${before.label} / ${before.press}</span> <span class="arrow">→</span> <b>${now.label} / ${now.press}</b></div>`;
+  } else if (h.diff) {
+    const other = board === "S" ? "C" : "S";
+    const pair = comparePairs(P.spare).find(p => p[board === "S" ? 0 : 1] === slot);
+    const otherSlot = pair[board === "S" ? 1 : 0];
+    html += `<div>${boardName}: <b>${esc(nameOf(lay.map[slot]))}</b></div><div class="from">${other === "S" ? "Sofle" : "Cornix"}: ${esc(nameOf(P[other][id].map[otherSlot]))}</div>`;
+  } else {
+    const before = TODAY[board][id]?.map[slot];
+    html += `<div><span class="from">${esc(nameOf(before))}</span> <span class="arrow">→</span> <b>${esc(nameOf(lay.map[slot]))}</b></div>`;
+    const nt = hls[id].numbered.find(x => x.n === h.n);
+    if (nt) html += `<p>${esc(nt.text)}</p>`;
+  }
+  tip.innerHTML = html; tip.hidden = false;
+  const r = tip.getBoundingClientRect();
+  tip.style.left = Math.max(12, Math.min(x + 14, innerWidth - r.width - 12)) + "px";
+  tip.style.top = (y + 18 + r.height > innerHeight ? y - r.height - 12 : y + 18) + "px";
+}
+const layersEl = document.getElementById("layers");
+layersEl.addEventListener("mousemove", e => { if (pinned) return; const g = e.target.closest(".hit"); g ? showTip(g, e.clientX, e.clientY) : (tip.hidden = true); });
+layersEl.addEventListener("mouseleave", () => { if (!pinned) tip.hidden = true; });
+document.addEventListener("click", e => {
+  const g = e.target.closest?.(".hit");
+  if (g && layersEl.contains(g)) { pinned = g; showTip(g, e.clientX, e.clientY); } else if (!e.target.closest("#controls")) { pinned = null; tip.hidden = true; }
+});
+layersEl.addEventListener("focusin", e => { const g = e.target.closest(".hit"); if (g) { const r = g.getBoundingClientRect(); showTip(g, r.right, r.top); } });
+layersEl.addEventListener("focusout", () => { if (!pinned) tip.hidden = true; });
+addEventListener("scroll", () => { if (pinned) { pinned = null; tip.hidden = true; } }, { passive: true });
+
+/* decision cards */
+const CARDS = [
+  { q: "Where do the digits go on the Cornix?", opts: [
+    ["A", "A held thumb key, Num, that shows the Sofle number row one row lower.", "The Sofle stays as it is and the rule is easy to remember: Num = the missing row. Esc and \\ come along on the same row."],
+    ["B", "On the Nav layer's Q row, on both boards.", "One habit for digits on both boards. But the arrows, brackets, media and F-keys on the Sofle's Nav all have to move to make room."]],
+    pick: "Chosen: A. It costs the Sofle nothing and keeps Nav as it is. B is kept to try later." },
+  { q: "How is the Nav layer organised?", opts: [
+    ["A", "Exactly the Sofle's Nav, row for row, on both boards.", "The Sofle's Nav top row (media, brightness) goes to Num on the Cornix. F1–F10 stay on the bottom row."],
+    ["B", "Slides down one row on both boards to make room for the digits.", "Arrows keep their shape (↑ on K, ← ↓ → on M , .). Media moves to the left hand, F-keys to the Sofle's top row."]],
+    pick: "Chosen: A, Nav stays as it is." },
+  { q: "How are layers switched on the Cornix?", opts: [
+    ["Both", "M1 on the middle thumb of each half, next to Space, as on the Sofle.", "Today's M2 thumb key goes away. System is M1, then G (left) or ⌥ (right), the same two-step as on the Sofle, so it stays hard to hit by accident."],
+    ["A", "Num on the spare key of each half.", "One per half keeps the rule that either half alone reaches every layer."]],
+    pick: "Same switching as the Sofle, plus Num in A." },
+  { q: "Esc, Tab, ↩, Shift, ⌫ and \\ on the base layer", opts: [
+    ["Both", "Tab, ↩ (Caps Lock key) and ⇧ on the left; ' and ⇧ on the right, as on the Sofle.", "Caps Lock lives on M1 + Tab (or M1 + ↩ with the Esc option)."],
+    ["A", "⌫ in the top-right corner; Esc and \\ on Num.", "Esc = Num + Tab key, which mirrors the Sofle (Esc sits above Tab). Optionally also M1 + Tab on both boards."],
+    ["B", "Esc and ⌫ on the two spare keys; \\ stays in the corner.", "The base rows match the Sofle exactly, but ⌫ moves from a pinky to a thumb."]],
+    pick: "Chosen: A, without Esc on M1 + Tab. The only Esc on the Cornix is Num + Tab key." },
+  { q: "The bottom row", opts: [
+    ["⌃⌥⌘ outside", "⌃ ⌥ ⌘ on the three outer keys, then the spare key, M1, Space.", "Clean modifier cluster at the edge, as you noticed. The spare key is a thumb key, which is what Num needs for typing long numbers. ⌘ is the key just outside the thumb cluster."],
+    ["⌘ on the thumb", "⌃ ⌥ spare on the outer keys, then ⌘, M1, Space.", "The first Cornix thumb key sits where the Sofle's ⌘ is, so the thumb habit (⌘, M1, Space) carries over exactly. The spare key is then a finger key, fine for Esc, poor for holding Num."]],
+    pick: "Chosen: ⌃ ⌥ ⌘ outside. They group like on a MacBook, and the six bottom keys split three and three." },
+  { q: "The System layer", opts: [
+    ["Same rows", "Bluetooth profiles on the Q row, desk keys on D F / K L, reset to flash on the bottom letter row, on both boards.", "The Sofle moves its profiles down one row and its disconnect keys up; the Cornix drops the disconnect keys, which are rarely needed."],
+    ["Sofle as today", "Only the Cornix is arranged this way.", "The profiles are one row higher on the Sofle than on the Cornix."]],
+    pick: "Chosen: Sofle as today. The layer is rarely used, and the desk-switch keys sit in the same spots on both boards." },
+];
+const OPEN = [
+  { q: "A second ↩ on the right", body: "Every free key is used in A. Candidates: the right spare key in B instead of ⌫ (puts ↩ back on a thumb, the thing that hurt); M1 + ' (a chord for a frequent key); a knob press (last resort). My suggestion: live with ↩ on the left pinky on both boards for a few weeks first. If it still bothers you, B's right thumb is the cleanest spot." },
+  { q: "⌦ Delete", body: "Neither board has ⌦ in A today (macOS uses fn + ⌫). B puts it on M1 + the top-right key. In A it could take M1 + ⌫ on the Cornix, but that key is = on the Sofle's Nav." },
+  { q: "Desk switch on the Cornix", body: "Positions are planned on D F / K L of the System layer, as on the Sofle. Whether Vial macros on the Cornix's firmware (RMK) can send F18/F19 and then switch the Bluetooth profile needs checking before wiring it." },
+  { q: "Turning the Cornix off and flashing", body: "The Sofle turns off with Q + S + Z held for 2 s. Whether the Cornix firmware supports the same combo, and what reset and flash do there, is still to check. The System layer keeps the same spots for them." },
+];
+document.getElementById("cards").innerHTML = CARDS.map(c => `<article class="card"><h3>${esc(c.q)}</h3><div class="opts">${c.opts.map(([k, a, b]) =>
+  `<div class="opt"><span class="pill${k === "A" ? " a" : ""}">${esc(k)}</span><p>${esc(a)}<small>${esc(b)}</small></p></div>`).join("")}</div><p class="pick">${esc(c.pick)}</p></article>`).join("");
+document.getElementById("open").innerHTML = OPEN.map(c => `<article class="card"><h3>${esc(c.q)}</h3><p>${esc(c.body)}</p></article>`).join("");
+
+defs();
+render();
+</script>
+</body></html>

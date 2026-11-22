@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-7.92 -6 940.64 347.989" width="940.64" height="347.989">
+<title>Cornix keymap: Base</title>
+<style>
+svg {
+  --key-top: #ffffff; --key-bottom: #f0f2f5; --key-border: #c8cdd5; --legend: #1f2328; --sub: #6e7681;
+  --trans-top: #f7f8fa; --trans-bottom: #f3f4f6; --trans-border: #e4e7eb;
+  --held-top: #fff3c4; --held-bottom: #ffe28a; --held-border: #d9b13f; --held-legend: #6b4f00;
+  --desk-top: #eef5ff; --desk-bottom: #d8e9ff; --desk-border: #79a8e6; --desk-legend: #1858a8;
+  --danger-top: #fff2f2; --danger-bottom: #fddcdc; --danger-border: #e59a9a; --danger-legend: #b42318;
+  --shadow: rgba(16, 24, 40, 0.18);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Roboto, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  svg {
+    --key-top: #3a3d43; --key-bottom: #2e3035; --key-border: #4b4f57; --legend: #eceef1; --sub: #9aa2ad;
+    --trans-top: #26282c; --trans-bottom: #232529; --trans-border: #303338;
+    --held-top: #6a5720; --held-bottom: #574716; --held-border: #9a8133; --held-legend: #ffe7a3;
+    --desk-top: #22446b; --desk-bottom: #1b3757; --desk-border: #4a86cc; --desk-legend: #b5d6ff;
+    --danger-top: #682a2a; --danger-bottom: #552222; --danger-border: #a65151; --danger-legend: #ffc2c2;
+    --shadow: rgba(0, 0, 0, 0.55);
+  }
+}
+.key { color: var(--legend); }
+.cap { fill: url(#g-key); stroke: var(--key-border); stroke-width: 1; filter: url(#shadow); }
+.trans .cap { fill: url(#g-trans); stroke: var(--trans-border); filter: none; }
+.held .cap { fill: url(#g-held); stroke: var(--held-border); }
+.held { color: var(--held-legend); }
+.desk .cap { fill: url(#g-desk); stroke: var(--desk-border); }
+.desk { color: var(--desk-legend); }
+.danger .cap { fill: url(#g-danger); stroke: var(--danger-border); }
+.danger { color: var(--danger-legend); }
+.muted { color: var(--sub); }
+text { fill: currentColor; text-anchor: middle; dominant-baseline: central; }
+.main { font-weight: 500; }
+.sub { color: var(--sub); }
+.muted .sub, .held .sub, .desk .sub, .danger .sub { color: inherit; opacity: 0.8; }
+.caption { font-weight: 500; letter-spacing: 0.01em; }
+</style>
+<defs><linearGradient id="g-key" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color: var(--key-top)"/><stop offset="1" style="stop-color: var(--key-bottom)"/></linearGradient><linearGradient id="g-trans" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color: var(--trans-top)"/><stop offset="1" style="stop-color: var(--trans-bottom)"/></linearGradient><linearGradient id="g-held" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color: var(--held-top)"/><stop offset="1" style="stop-color: var(--held-bottom)"/></linearGradient><linearGradient id="g-desk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color: var(--desk-top)"/><stop offset="1" style="stop-color: var(--desk-bottom)"/></linearGradient><linearGradient id="g-danger" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color: var(--danger-top)"/><stop offset="1" style="stop-color: var(--danger-bottom)"/></linearGradient><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.1" style="flood-color: var(--shadow)"/></filter>
+<symbol id="i-tabler-space" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" /></g></symbol></defs>
+<g class="key" transform="translate(-1.92 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⇥</text></g>
+<g class="key" transform="translate(62.08 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">Q</text></g>
+<g class="key" transform="translate(126.08 16)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">W</text></g>
+<g class="key" transform="translate(190.08 0)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">E</text></g>
+<g class="key" transform="translate(254.08 16)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">R</text></g>
+<g class="key" transform="translate(318.08 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">T</text></g>
+<g class="key" transform="translate(-1.92 96)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">↩</text></g>
+<g class="key" transform="translate(62.08 96)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">A</text></g>
+<g class="key" transform="translate(126.08 80)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">S</text></g>
+<g class="key" transform="translate(190.08 64)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">D</text></g>
+<g class="key" transform="translate(254.08 80)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">F</text></g>
+<g class="key" transform="translate(318.08 96)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">G</text></g>
+<g class="key" transform="translate(-1.92 160)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⇧</text></g>
+<g class="key" transform="translate(62.08 160)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">Z</text></g>
+<g class="key" transform="translate(126.08 144)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">X</text></g>
+<g class="key" transform="translate(190.08 128)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">C</text></g>
+<g class="key" transform="translate(254.08 144)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">V</text></g>
+<g class="key" transform="translate(318.08 160)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">B</text></g>
+<g class="key" transform="translate(-1.92 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌃</text></g>
+<g class="key" transform="translate(62.08 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌥</text></g>
+<g class="key" transform="translate(126.08 208)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌘</text></g>
+<g class="key" transform="translate(223.36 229.76)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="15">Num</text></g>
+<g class="key" transform="rotate(12 327.68 268.8) translate(295.68 236.8)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="17">M1</text></g>
+<g class="key" transform="rotate(26 394.88 291.2) translate(362.88 259.2)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><use href="#i-tabler-space" x="19.5" y="19.5" width="25" height="25" class="main"/></g>
+<g class="key" transform="translate(862.72 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌫</text></g>
+<g class="key" transform="translate(798.72 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">P</text></g>
+<g class="key" transform="translate(734.72 16)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">O</text></g>
+<g class="key" transform="translate(670.72 0)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">I</text></g>
+<g class="key" transform="translate(606.72 16)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">U</text></g>
+<g class="key" transform="translate(542.72 32)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">Y</text></g>
+<g class="key" transform="translate(862.72 96)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="20" class="sub" font-size="14">&quot;</text><text x="32" y="39" class="main" font-size="22">&#x27;</text></g>
+<g class="key" transform="translate(798.72 96)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="20" class="sub" font-size="14">:</text><text x="32" y="39" class="main" font-size="22">;</text></g>
+<g class="key" transform="translate(734.72 80)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">L</text></g>
+<g class="key" transform="translate(670.72 64)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">K</text></g>
+<g class="key" transform="translate(606.72 80)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">J</text></g>
+<g class="key" transform="translate(542.72 96)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">H</text></g>
+<g class="key" transform="translate(862.72 160)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⇧</text></g>
+<g class="key" transform="translate(798.72 160)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="20" class="sub" font-size="14">?</text><text x="32" y="39" class="main" font-size="22">/</text></g>
+<g class="key" transform="translate(734.72 144)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="20" class="sub" font-size="14">&gt;</text><text x="32" y="39" class="main" font-size="22">.</text></g>
+<g class="key" transform="translate(670.72 128)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="20" class="sub" font-size="14">&lt;</text><text x="32" y="39" class="main" font-size="22">,</text></g>
+<g class="key" transform="translate(606.72 144)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">M</text></g>
+<g class="key" transform="translate(542.72 160)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">N</text></g>
+<g class="key" transform="translate(862.72 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌃</text></g>
+<g class="key" transform="translate(798.72 224)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌥</text></g>
+<g class="key" transform="translate(734.72 208)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="22">⌘</text></g>
+<g class="key" transform="translate(637.44 229.76)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="15">Num</text></g>
+<g class="key" transform="rotate(-12 597.12 268.8) translate(565.12 236.8)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><text x="32" y="32" class="main" font-size="17">M1</text></g>
+<g class="key" transform="rotate(-26 529.92 291.2) translate(497.92 259.2)"><rect class="cap" x="3" y="3" width="58" height="58" rx="10"/><use href="#i-tabler-space" x="19.5" y="19.5" width="25" height="25" class="main"/></g>
+</svg>
