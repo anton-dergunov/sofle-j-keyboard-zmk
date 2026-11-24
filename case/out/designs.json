@@ -36,7 +36,7 @@
   ]
  },
  "lids": {
-  "grams": 102.0,
+  "grams": 101.9,
   "parts": [
    {
     "name": "lid (left)",
@@ -150,22 +150,22 @@
   ]
  },
  "clamshell-fdm": {
-  "grams": 125.5,
+  "grams": 125.8,
   "parts": [
    {
     "name": "tray (left)",
-    "grams": 63.3,
+    "grams": 63.5,
     "size_mm": [
-     164.7,
+     165.0,
      126.3,
      24.3
     ]
    },
    {
     "name": "tray (right)",
-    "grams": 62.2,
+    "grams": 62.3,
     "size_mm": [
-     164.7,
+     165.0,
      126.3,
      24.3
     ]

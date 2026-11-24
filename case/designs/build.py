@@ -143,16 +143,18 @@ def snap_tab(p, z_root, z_free, bead, width=16.0, slot=0.8, thin=1.2, fit=FIT, w
     outer face is thinned to `thin`. `bead` is a polygon in (v, z) on the tab's inner face.
     """
     lo, hi = sorted((z_root, z_free))
-    eps = 0.6 if z_free > z_root else -0.6
+    up = z_free > z_root
+    # No two cuts may share a face: the boolean leaves zero-thickness skins and unjoined vertices along
+    # a shared plane, which break the exported mesh. So the slots reach 0.2 mm past the thinning cut's
+    # root, and the thinning cut runs halfway into each slot.
     cuts = []
     for s in (-1, 1):
         u0 = s * width / 2
         u1 = s * (width / 2 + slot)
-        cuts.append(local_box(p, fit - 1.0, fit + wall + 1.0, lo if z_free > z_root else lo - 1,
-                              hi + 1 if z_free > z_root else hi, min(u0, u1), max(u0, u1)))
-    cuts.append(local_box(p, fit + thin, fit + wall + 1.0, lo + (eps if z_free < z_root else 0),
-                          hi + (0 if z_free < z_root else 1), -width / 2, width / 2))
-    del eps
+        cuts.append(local_box(p, fit - 1.0, fit + wall + 1.0, lo - 0.2 if up else lo - 1,
+                              hi + 1 if up else hi + 0.2, min(u0, u1), max(u0, u1)))
+    w = width / 2 + slot / 2
+    cuts.append(local_box(p, fit + thin, fit + wall + 1.0, lo if up else lo - 0.6, hi + 1 if up else hi, -w, w))
     return cuts, local_prism(p, bead, width - 3.0)
 
 
@@ -178,8 +180,12 @@ def ring():
     for x in STRAPS_X:
         for side_pt in ((x, -5.0), (x, 130.0)):
             for s in (-1, 1):
-                ridges.append(local_box(side_pt, outer - 0.2, outer + 1.0, z0 - RING_SKIRT, z1 + RING_SKIRT,
-                                        s * STRAP_W / 2, s * (STRAP_W / 2 + 1.2)))
+                # Each ridge is placed square to the wall at its own point: one frame for the pair put
+                # the ridges at x = 34 in mid-air past a corner of the front edge. Ends stop 0.3 mm short
+                # of the skirt ends, since faces shared between union parts split the exported mesh.
+                at = (side_pt[0] + s * (STRAP_W / 2 + 0.6), side_pt[1])
+                ridges.append(local_box(at, outer - 0.4, outer + 1.0, z0 - RING_SKIRT + 0.3,
+                                        z1 + RING_SKIRT - 0.3, -0.6, 0.6))
     return difference(union([body, *skirts, *ridges]), col_cuts)
 
 
@@ -225,7 +231,6 @@ HINGE_R = 3.5
 HINGE_Y = (27.0, 111.0)
 HINGE_N = 7  # knuckles; the ends belong to the left tray
 KNUCKLE_GAP = 0.6
-HINGE_CLEAR = 0.5  # the outermost tray wall to the pin axis
 MAGNETS_Y = (46.0, 96.0)
 MAGNET_D, MAGNET_H = 8.0, 2.0
 TRAY_TABS = [(PINKY_EDGE_X, 71.0), (70.0, 125.0), (52.0, 10.0)]
@@ -248,6 +253,7 @@ class Tray:
     bottom_round: float = 0.0  # outer bottom edge: a round (MJF) ...
     bottom_chamfer: float = 0.0  # ... or a 45° chamfer, which prints cleanly on the bed (FDM)
     min_corner: float = 1.0  # least material allowed where the bottom edge is cut back
+    hinge_clear: float = 0.5  # the outermost tray wall (the thumb cluster's corner) to the pin axis
     self_supporting: bool = False  # 45° undersides on knuckles, magnet bosses and lips (FDM, no supports)
 
     @property
@@ -256,7 +262,7 @@ class Tray:
         outside the thumb cluster's corner (x 146.3 at y 20, past the straight edge): any part of either
         tray beyond the axis would run into the other tray as soon as the hinge turns."""
         return max(INNER_EDGE_X + self.fit + self.wall + HINGE_R + 0.3,
-                   O().bounds[2] + self.fit + self.wall + HINGE_CLEAR)
+                   O().bounds[2] + self.fit + self.wall + self.hinge_clear)
 
     @property
     def magnet_x(self):
@@ -268,7 +274,7 @@ MJF = Tray("", "PA12", bottom_round=2.5)
 # FDM (PETG, ABS+): thicker walls and floor, nothing steeper than 45° overhanging, and the holes and
 # slots opened up because FDM prints them small. 0.6 mm fit: a loose fit still works, a tight one doesn't.
 FDM = Tray("-fdm", "PETG", fit=0.6, wall=2.0, floor=1.8, slot=1.0, pin_press=2.15, pin_free=2.6,
-           magnet_hole=MAGNET_D + 0.4, bottom_chamfer=2.0, min_corner=1.2, self_supporting=True)
+           magnet_hole=MAGNET_D + 0.4, bottom_chamfer=2.0, min_corner=1.2, hinge_clear=0.8, self_supporting=True)
 HINGE_AXIS_X = MJF.hinge_x
 
 
@@ -435,9 +441,41 @@ def report(name, parts, ghosts):
 
 
 def export(name, mesh):
+    """Write STL and 3MF, then read both back: a slicer must get one closed body of the same volume."""
     OUT.mkdir(parents=True, exist_ok=True)
-    mesh.export(OUT / f"{name}.stl")
-    mesh.export(OUT / f"{name}.3mf")
+    for ext in ("stl", "3mf"):
+        path = OUT / f"{name}.{ext}"
+        mesh.export(path)
+        back = trimesh.load(path, force="mesh")
+        bodies = len(back.split(only_watertight=False))
+        ok = back.is_watertight and back.is_winding_consistent and bodies == 1 \
+            and abs(back.volume - mesh.volume) < 1e-3 * mesh.volume
+        assert ok, f"{path.name} reads back broken: watertight={back.is_watertight}, bodies={bodies}"
+
+
+def hinge_gaps(left, right, t: Tray, angles=(2, 5, 10, 20, 30, 60, 90, 120, 150, 180), spacing=0.15):
+    """Smallest gap between the trays at each hinge angle, from dense surface samples near the hinge
+    (within about 0.1 mm). Closed, the trays meet at the seam by design, so 0° is left out."""
+    from scipy.spatial import cKDTree
+
+    def pts(m):
+        sub = m.submesh([np.where(m.triangles_center[:, 0] > t.hinge_x - 30)[0]], append=True)
+        return trimesh.sample.sample_surface(sub, int(2 * sub.area / spacing ** 2), seed=1)[0]
+
+    pl, pr = pts(left), pts(right)
+    tree = cKDTree(pl)
+    gaps = {}
+    for d in angles:
+        dist, _ = tree.query(trimesh.transform_points(pr, open_rotation(t, np.radians(d))),
+                             distance_upper_bound=3.0, workers=-1)
+        gaps[d] = float(dist.min())
+    return gaps
+
+
+def tab_strain(deflection, thickness=1.2, length=9.95 - 1.0):
+    """Peak bending strain at a click tab's root when its bead is pushed out by `deflection`
+    (a cantilever from the root at z 1 to the bead at z 9.95)."""
+    return 3 * deflection * (thickness / 2) / length ** 2
 
 
 def build():
@@ -468,11 +506,19 @@ def build():
                  for d in (0, 30, 60, 90, 120, 150, 180)}
         print("  tray-to-tray overlap while opening: " + ", ".join(f"{d}° {v:.2f}" for d, v in swing.items()) + " mm³")
         assert max(swing.values()) < 0.05, "the trays collide as the hinge turns"
+        gaps = hinge_gaps(left, right, t)
+        print("  smallest gap while opening: " + ", ".join(f"{d}° {g:.2f}" for d, g in gaps.items()) + " mm")
+        assert all(g > KNUCKLE_GAP - 0.1 for d, g in gaps.items() if d >= 30), "knuckles closer than designed"
+        print(f"  magnets closed: {2 * 0.3:.1f} mm apart (each sits 0.3 mm down in its pocket)")
         rim = off(t.fit).exterior  # inner corner where the floor meets the wall, against the cut-back outer edge
         pts = [[*rim.interpolate(d).coords[0], 0.0] for d in np.linspace(0, rim.length, 800, endpoint=False)]
         _, dist, _ = trimesh.proximity.closest_point(tray_body(t), pts)
         print(f"  thinnest point at the bottom edge: {dist.min():.2f} mm")
         assert dist.min() >= t.min_corner, "bottom edge leaves the corner too thin"
+
+    # Click tabs: the bead overlaps the rim by 0.5 mm, so the tab bends out 0.5 mm as a half goes in.
+    print(f"\nclick tab strain at the root: {tab_strain(0.5):.1%} nominal, {tab_strain(0.8):.1%} with 0.3 mm print error "
+          "(PETG and ABS take about 2-4 % across FDM layers, PA12 well over 5 %)")
 
     # Keycap gap check (same in all face-to-face designs).
     caps = next(p.mesh for p in gl if p.name == "keycaps")

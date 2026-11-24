@@ -74,6 +74,13 @@ uv run python designs/render.py   # renders for the page
 uv run python concepts/render.py  # the five original concepts
 ```
 
-`build.py` also checks that the trays don't touch at any hinge angle from closed to open flat, and that nothing on the FDM trays overhangs past 45°.
+Besides the fit against the keyboard, `build.py` checks:
+
+- **Hinge:** the trays don't touch at any angle from closed to open flat. From 30° open, the smallest gap is the designed 0.6 mm between knuckles.
+- **FDM overhangs:** nothing on the FDM trays overhangs past 45°.
+- **Bottom edge:** the chamfer or round leaves at least 1.0 mm of material at the floor corner (1.2 mm on the FDM trays).
+- **Exported files:** every STL and 3MF reads back as one closed body of the right volume.
+
+It also prints the strain on a click tab's root as the tab clicks over the rim: about 1.1%, or 1.8% if the print is 0.3 mm off.
 
 Model sources: the bottom case and plate come from [PandaKBLab/sofle-j-keyboard-case](https://github.com/PandaKBLab/sofle-j-keyboard-case) (CC BY-NC-SA 4.0), cloned to `~/projects/external/`.
