@@ -32,7 +32,7 @@ STACK = 2 * RIM + GAP  # closed stack, bottom to bottom (38.0)
 FIT = 0.35  # sliding fit around the case's outer wall (MJF/SLS)
 WALL = 1.6  # PA12 wall
 
-DENSITY = {"PA12": 1.01, "TPU": 1.20}  # g/cm^3, MJF
+DENSITY = {"PA12": 1.01, "TPU": 1.20, "PETG": 1.27}  # g/cm^3 of solid material (MJF; FDM PETG)
 
 
 @dataclass

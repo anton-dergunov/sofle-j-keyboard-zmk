@@ -8,6 +8,7 @@ the bottom edge a 0.45 mm x 45° chamfer, and the display column on the inner ed
 """
 
 import sys
+from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
 
@@ -135,7 +136,7 @@ def local_box(p, v0, v1, z0, z1, u0, u1):
     return local_prism(p, [(v0, z0), (v1, z0), (v1, z1), (v0, z1)], u1 - u0, du=(u0 + u1) / 2)
 
 
-def snap_tab(p, z_root, z_free, bead, width=16.0, slot=0.8, thin=1.2):
+def snap_tab(p, z_root, z_free, bead, width=16.0, slot=0.8, thin=1.2, fit=FIT, wall=WALL):
     """Cut a flexible tab into a wall and return (cuts, bead) meshes.
 
     The tab runs from z_root (attached) to z_free (free end); slots on both sides free it, and its
@@ -147,9 +148,9 @@ def snap_tab(p, z_root, z_free, bead, width=16.0, slot=0.8, thin=1.2):
     for s in (-1, 1):
         u0 = s * width / 2
         u1 = s * (width / 2 + slot)
-        cuts.append(local_box(p, FIT - 1.0, FIT + WALL + 1.0, lo if z_free > z_root else lo - 1,
+        cuts.append(local_box(p, fit - 1.0, fit + wall + 1.0, lo if z_free > z_root else lo - 1,
                               hi + 1 if z_free > z_root else hi, min(u0, u1), max(u0, u1)))
-    cuts.append(local_box(p, FIT + thin, FIT + WALL + 1.0, lo + (eps if z_free < z_root else 0),
+    cuts.append(local_box(p, fit + thin, fit + wall + 1.0, lo + (eps if z_free < z_root else 0),
                           hi + (0 if z_free < z_root else 1), -width / 2, width / 2))
     del eps
     return cuts, local_prism(p, bead, width - 3.0)
@@ -220,20 +221,55 @@ def lid_left():
 
 SHELL_GAP = 2 * (KEY - RIM + 1.0)
 Z_SPLIT = RIM + SHELL_GAP / 2  # parting plane (19.0)
-FLOOR = 1.4
 HINGE_R = 3.5
-HINGE_AXIS_X = INNER_EDGE_X + FIT + WALL + HINGE_R + 0.3
 HINGE_Y = (27.0, 111.0)
 HINGE_N = 7  # knuckles; the ends belong to the left tray
 KNUCKLE_GAP = 0.6
-PIN_PRESS, PIN_FREE = 2.05, 2.45  # hole diameters for a 2 mm rod: press fit in the left tray, free in the right
+HINGE_CLEAR = 0.5  # the outermost tray wall to the pin axis
 MAGNETS_Y = (46.0, 96.0)
 MAGNET_D, MAGNET_H = 8.0, 2.0
-MAGNET_X = PINKY_EDGE_X - (FIT + WALL) - 3.6
 TRAY_TABS = [(PINKY_EDGE_X, 71.0), (70.0, 125.0), (52.0, 10.0)]
-BOTTOM_ROUND = 2.5  # outer bottom edge; leaves about 1.1 mm where floor meets wall
 TOP_ROUND = 1.0  # outer edge at the parting plane; the two trays' rounds form a shallow groove at the seam
 LUMP_ROUND = 1.0  # thumb lips, magnet bosses and hinge ends
+
+
+@dataclass(frozen=True)
+class Tray:
+    """Clamshell parameters for one print process."""
+    suffix: str  # appended to the file names
+    material: str
+    fit: float = FIT
+    wall: float = WALL
+    floor: float = 1.4
+    slot: float = 0.8  # the two slots that free each click tab
+    pin_press: float = 2.05  # hole diameters for a 2 mm rod: press fit in the left tray,
+    pin_free: float = 2.45  # free in the right
+    magnet_hole: float = MAGNET_D + 0.2
+    bottom_round: float = 0.0  # outer bottom edge: a round (MJF) ...
+    bottom_chamfer: float = 0.0  # ... or a 45° chamfer, which prints cleanly on the bed (FDM)
+    min_corner: float = 1.0  # least material allowed where the bottom edge is cut back
+    self_supporting: bool = False  # 45° undersides on knuckles, magnet bosses and lips (FDM, no supports)
+
+    @property
+    def hinge_x(self):
+        """The pin axis. Beyond the knuckle's own clearance from the straight inner wall, it must also lie
+        outside the thumb cluster's corner (x 146.3 at y 20, past the straight edge): any part of either
+        tray beyond the axis would run into the other tray as soon as the hinge turns."""
+        return max(INNER_EDGE_X + self.fit + self.wall + HINGE_R + 0.3,
+                   O().bounds[2] + self.fit + self.wall + HINGE_CLEAR)
+
+    @property
+    def magnet_x(self):
+        return PINKY_EDGE_X - (self.fit + self.wall) - 3.6
+
+
+# MJF/SLS nylon: thin walls and soft rounds; the process needs no supports.
+MJF = Tray("", "PA12", bottom_round=2.5)
+# FDM (PETG, ABS+): thicker walls and floor, nothing steeper than 45° overhanging, and the holes and
+# slots opened up because FDM prints them small. 0.6 mm fit: a loose fit still works, a tight one doesn't.
+FDM = Tray("-fdm", "PETG", fit=0.6, wall=2.0, floor=1.8, slot=1.0, pin_press=2.15, pin_free=2.6,
+           magnet_hole=MAGNET_D + 0.4, bottom_chamfer=2.0, min_corner=1.2, self_supporting=True)
+HINGE_AXIS_X = MJF.hinge_x
 
 
 def _knuckle_cyl(y0, y1, r, x=HINGE_AXIS_X, z=Z_SPLIT):
@@ -244,19 +280,30 @@ def _knuckle_cyl(y0, y1, r, x=HINGE_AXIS_X, z=Z_SPLIT):
 
 
 @cache
-def tray_body():
-    """Floor and wall as one solid, outer bottom and top edges rounded (the cavity is cut later)."""
-    f = offset_face(FIT + WALL).moved(bd.Location((0, 0, -FLOOR)))
-    slab = bd.extrude(f, amount=Z_SPLIT + FLOOR)
-    slab = bd.fillet(slab.faces().sort_by(bd.Axis.Z)[0].edges(), BOTTOM_ROUND)
+def tray_body(t: Tray):
+    """Floor and wall as one solid, outer bottom and top edges rounded or chamfered (the cavity is cut later)."""
+    f = offset_face(t.fit + t.wall).moved(bd.Location((0, 0, -t.floor)))
+    slab = bd.extrude(f, amount=Z_SPLIT + t.floor)
+    bottom = slab.faces().sort_by(bd.Axis.Z)[0].edges()
+    slab = bd.chamfer(bottom, t.bottom_chamfer) if t.bottom_chamfer else bd.fillet(bottom, t.bottom_round)
     slab = bd.fillet(slab.faces().sort_by(bd.Axis.Z)[-1].edges(), TOP_ROUND)
     return occ_mesh(slab)
 
 
 @cache
-def magnet_boss(y):
-    """Round boss with a domed underside that runs into the wall; magnet pocket cut later."""
-    r, h, dome = MAGNET_D / 2 + 1.6, 9.0, 5.0
+def magnet_boss(y, t: Tray):
+    """Round boss on the pinky-side wall; magnet pocket cut later. MJF: a domed underside. FDM: the
+    underside slopes up at 45° from the wall, so it prints without supports."""
+    r = MAGNET_D / 2 + 1.6
+    if t.self_supporting:
+        x_out = t.magnet_x - r  # outermost point of the boss
+        z_out = Z_SPLIT - (MAGNET_H + 0.3) - 1.6  # 1.6 mm under the pocket floor there
+        boss = bd.Cylinder(r, 4 * r, align=(bd.Align.CENTER, bd.Align.CENTER, bd.Align.MAX))
+        boss = boss.moved(bd.Location((t.magnet_x, y, Z_SPLIT)))
+        boss = bd.split(boss, bisect_by=bd.Plane(origin=(x_out, y, z_out), z_dir=(1, 0, 1)), keep=bd.Keep.TOP)
+        boss = bd.fillet(boss.edges().filter_by(bd.GeomType.CIRCLE).sort_by(bd.Axis.Z)[-1], LUMP_ROUND)
+        return occ_mesh(boss)
+    h, dome = 9.0, 5.0
     with bd.BuildSketch(bd.Plane.XZ) as sk:  # profile in (radius, height), revolved about the axis
         with bd.BuildLine():
             bd.Polyline((0, -dome), (0, h), (r, h), (r, 0))
@@ -264,14 +311,19 @@ def magnet_boss(y):
         bd.make_face()
     boss = bd.revolve(sk.sketch, bd.Axis.Z)
     boss = bd.fillet(boss.edges().filter_by(bd.GeomType.CIRCLE).sort_by(bd.Axis.Z)[-1], LUMP_ROUND)
-    return occ_mesh(boss.moved(bd.Location((MAGNET_X, y, Z_SPLIT - h))))
+    return occ_mesh(boss.moved(bd.Location((t.magnet_x, y, Z_SPLIT - h))))
 
 
-def thumb_lip(x):
-    """Pull lip on the front wall, rounded on every edge that shows."""
-    v0, v1 = FIT + 0.3, FIT + WALL + 2.5  # starts inside the wall so the top round leaves no notch
-    lip = bd.Box(v1 - v0, 3.0, 12.0, align=(bd.Align.MIN, bd.Align.MIN, bd.Align.CENTER))
-    lip = lip.moved(bd.Location((v0, Z_SPLIT - 3.0, 0)))
+def thumb_lip(x, t: Tray):
+    """Pull lip on the front wall, rounded on every edge that shows; FDM gives it a 45° underside."""
+    v0, v1 = t.fit + 0.3, t.fit + t.wall + 2.5  # starts inside the wall so the top round leaves no notch
+    if t.self_supporting:
+        pts = [(v0, Z_SPLIT), (v1, Z_SPLIT), (v1, Z_SPLIT - 3.0), (v0, Z_SPLIT - 3.0 - (v1 - v0))]
+        lip = bd.extrude(bd.Face(bd.Wire.make_polygon([bd.Vector(v, z, 0) for v, z in pts], close=True)),
+                         amount=6.0, both=True)
+    else:
+        lip = bd.Box(v1 - v0, 3.0, 12.0, align=(bd.Align.MIN, bd.Align.MIN, bd.Align.CENTER))
+        lip = lip.moved(bd.Location((v0, Z_SPLIT - 3.0, 0)))
     inner = lip.faces().sort_by(bd.Axis.X)[0]
     lip = bd.fillet([e for e in lip.edges() if e not in inner.edges()], LUMP_ROUND)
     m = occ_mesh(lip)
@@ -279,12 +331,22 @@ def thumb_lip(x):
     return m
 
 
-def knuckle(y0, y1, round_ends=()):
-    """One hinge knuckle on its bridge to the wall; `round_ends` lists the free ends ('lo', 'hi') to round."""
-    x_wall = INNER_EDGE_X + FIT + 0.1  # inside the wall, so the top round leaves no notch
-    cyl = bd.Cylinder(HINGE_R, y1 - y0, rotation=(90, 0, 0)).moved(bd.Location((HINGE_AXIS_X, (y0 + y1) / 2, Z_SPLIT)))
-    box = bd.Box(HINGE_AXIS_X - x_wall, y1 - y0, HINGE_R, align=(bd.Align.MIN, bd.Align.MIN, bd.Align.MAX))
-    k = cyl + box.moved(bd.Location((x_wall, y0, Z_SPLIT)))
+def knuckle(y0, y1, t: Tray, round_ends=()):
+    """One hinge knuckle on its bridge to the wall; `round_ends` lists the free ends ('lo', 'hi') to round.
+    MJF: a flat-bottomed bridge. FDM: a teardrop, its 45° underside running down into the wall."""
+    a = t.hinge_x
+    x_wall = INNER_EDGE_X + t.fit + 0.1  # inside the wall, so the top round leaves no notch
+    cyl = bd.Cylinder(HINGE_R, y1 - y0, rotation=(90, 0, 0)).moved(bd.Location((a, (y0 + y1) / 2, Z_SPLIT)))
+    if t.self_supporting:
+        s = HINGE_R / np.sqrt(2)  # the 45° tangent point on the knuckle's lower outer side
+        tx, tz = a + s, Z_SPLIT - s
+        pts = [(x_wall, Z_SPLIT), (x_wall, tz - (tx - x_wall)), (tx, tz), (tx, Z_SPLIT)]
+        web = bd.extrude(bd.Face(bd.Wire.make_polygon([bd.Vector(x, y0, z) for x, z in pts], close=True)),
+                         amount=y1 - y0, dir=(0, 1, 0))
+    else:
+        web = bd.Box(a - x_wall, y1 - y0, HINGE_R, align=(bd.Align.MIN, bd.Align.MIN, bd.Align.MAX))
+        web = web.moved(bd.Location((x_wall, y0, Z_SPLIT)))
+    k = cyl + web
     for end in round_ends:
         face = k.faces().filter_by(bd.Axis.Y).sort_by(bd.Axis.Y)[0 if end == "lo" else -1]
         # Round the arc and the underside, not the short ledge at the parting plane or the buried edge.
@@ -294,26 +356,26 @@ def knuckle(y0, y1, round_ends=()):
     return occ_mesh(k)
 
 
-def tray_left(parity=0):
+def tray_left(t: Tray = MJF, parity=0):
     """Tray for the left half (keys up), walls to the parting plane. parity 1 makes the right tray's
     knuckle set (before mirroring)."""
-    body = [tray_body()]
+    body = [tray_body(t)]
     beads, cuts = [], []
 
     # Click tabs: bead over the rim's 1 mm chamfer holds the half in its tray.
     tip_v, tip_z = -0.5, 9.95
-    bead = [(FIT + 0.01, tip_z - (FIT - tip_v)), (tip_v, tip_z), (tip_v, tip_z + 0.2),
-            (FIT + 0.01, tip_z + 0.2 + (FIT - tip_v))]
+    bead = [(t.fit + 0.01, tip_z - (t.fit - tip_v)), (tip_v, tip_z), (tip_v, tip_z + 0.2),
+            (t.fit + 0.01, tip_z + 0.2 + (t.fit - tip_v))]
     for p in TRAY_TABS:
-        c, b = snap_tab(p, z_root=1.0, z_free=Z_SPLIT, bead=bead)
+        c, b = snap_tab(p, z_root=1.0, z_free=Z_SPLIT, bead=bead, slot=t.slot, fit=t.fit, wall=t.wall)
         cuts += c
         beads.append(b)
 
     # Magnet bosses on the pinky edge, pockets open at the parting plane.
     for y in MAGNETS_Y:
-        body.append(magnet_boss(y))
-        pocket = trimesh.creation.cylinder(radius=MAGNET_D / 2 + 0.1, height=MAGNET_H + 0.3, sections=64)
-        pocket.apply_translation([MAGNET_X, y, Z_SPLIT - (MAGNET_H + 0.3) / 2 + 0.01])
+        body.append(magnet_boss(y, t))
+        pocket = trimesh.creation.cylinder(radius=t.magnet_hole / 2, height=MAGNET_H + 0.3, sections=64)
+        pocket.apply_translation([t.magnet_x, y, Z_SPLIT - (MAGNET_H + 0.3) / 2 + 0.01])
         cuts.append(pocket)
 
     # Hinge knuckles along the inner edge.
@@ -324,22 +386,29 @@ def tray_left(parity=0):
         mine = (i % 2 == 0) if parity == 0 else (i % 2 == 1)
         if mine:
             ends = (("lo",) if i == 0 else ()) + (("hi",) if i == HINGE_N - 1 else ())
-            body.append(knuckle(y0, y1, ends))
+            body.append(knuckle(y0, y1, t, ends))
         else:
             # Clearance for the other tray's knuckle as it swings past.
-            cuts.append(_knuckle_cyl(y0 - KNUCKLE_GAP / 2, y1 + KNUCKLE_GAP / 2, HINGE_R + 0.5))
-    cuts.append(_knuckle_cyl(HINGE_Y[0] - 1, HINGE_Y[1] + 1, (PIN_PRESS if parity == 0 else PIN_FREE) / 2))
+            cuts.append(_knuckle_cyl(y0 - KNUCKLE_GAP / 2, y1 + KNUCKLE_GAP / 2, HINGE_R + 0.5, x=t.hinge_x))
+    cuts.append(_knuckle_cyl(HINGE_Y[0] - 1, HINGE_Y[1] + 1, (t.pin_press if parity == 0 else t.pin_free) / 2,
+                             x=t.hinge_x))
 
     # Thumb lips at the front edge to pull the book open (offset left/right per tray).
-    body.append(thumb_lip(70.0 if parity == 0 else 84.0))  # clear of the front click tab (x 43-61)
+    body.append(thumb_lip(70.0 if parity == 0 else 84.0, t))  # clear of the front click tab (x 43-61)
 
-    shell = difference(union(body), [prism(off(FIT), 0.0, Z_SPLIT + 5.0)])
+    shell = difference(union(body), [prism(off(t.fit), 0.0, Z_SPLIT + 5.0)])
     return difference(union([shell, *beads]), cuts)
 
-def clamshell():
-    left = tray_left(0)
-    right = mirror_z(tray_left(1), Z_SPLIT)
+
+def clamshell(t: Tray = MJF):
+    left = tray_left(t, 0)
+    right = mirror_z(tray_left(t, 1), Z_SPLIT)
     return left, right
+
+
+def open_rotation(t: Tray, angle=np.pi):
+    """Turns the right tray about the hinge pin; pi lays it open beside the left tray, keys up."""
+    return trimesh.transformations.rotation_matrix(angle, [0, 1, 0], point=[t.hinge_x, 0, Z_SPLIT])
 
 
 # ---------------------------------------------------------------- checks and export
@@ -387,18 +456,23 @@ def build():
     report("4. snap-on lids (left lid on the left half)", out["lids"][:1], gl)
     print(f"  pair: {sum(p.grams for p in out['lids']):.1f} g")
 
-    left, right = clamshell()
-    out["clamshell"] = [Part("tray (left)", left, "PA12"), Part("tray (right)", right, "PA12")]
+    trays = {}
     gpair5 = [*gl, *[Part(p.name + " (right)", mirror_z(p.mesh, Z_SPLIT), p.material) for p in gl]]
-    report("5. clamshell", out["clamshell"], gpair5)
-    print(f"  trays together: {sum(p.grams for p in out['clamshell']):.1f} g, "
-          f"closed size {np.round(trimesh.util.concatenate([left, right]).extents, 1).tolist()}")
-    print(f"  tray-to-tray overlap: {interference(left, right):.2f} mm³")
-    rim = off(FIT).exterior  # inner corner where the floor meets the wall, against the rounded outer edge
-    pts = [[*rim.interpolate(d).coords[0], 0.0] for d in np.linspace(0, rim.length, 800, endpoint=False)]
-    _, dist, _ = trimesh.proximity.closest_point(tray_body(), pts)
-    print(f"  thinnest point at the rounded bottom edge: {dist.min():.2f} mm")
-    assert dist.min() >= 1.0, "bottom round leaves the corner too thin"
+    for key, t in (("clamshell", MJF), ("clamshell-fdm", FDM)):
+        left, right = trays[key] = clamshell(t)
+        out[key] = [Part("tray (left)", left, t.material), Part("tray (right)", right, t.material)]
+        report(f"5. clamshell ({t.material})", out[key], gpair5)
+        print(f"  trays together: {sum(p.grams for p in out[key]):.1f} g, "
+              f"closed size {np.round(trimesh.util.concatenate([left, right]).extents, 1).tolist()}")
+        swing = {d: interference(left, right.copy().apply_transform(open_rotation(t, np.radians(d))))
+                 for d in (0, 30, 60, 90, 120, 150, 180)}
+        print("  tray-to-tray overlap while opening: " + ", ".join(f"{d}° {v:.2f}" for d, v in swing.items()) + " mm³")
+        assert max(swing.values()) < 0.05, "the trays collide as the hinge turns"
+        rim = off(t.fit).exterior  # inner corner where the floor meets the wall, against the cut-back outer edge
+        pts = [[*rim.interpolate(d).coords[0], 0.0] for d in np.linspace(0, rim.length, 800, endpoint=False)]
+        _, dist, _ = trimesh.proximity.closest_point(tray_body(t), pts)
+        print(f"  thinnest point at the bottom edge: {dist.min():.2f} mm")
+        assert dist.min() >= t.min_corner, "bottom edge leaves the corner too thin"
 
     # Keycap gap check (same in all face-to-face designs).
     caps = next(p.mesh for p in gl if p.name == "keycaps")
@@ -407,19 +481,37 @@ def build():
 
     # Export each part the way it is used, resting on z = 0. Only rotations and moves: a mirror here
     # would turn a left part into a right one.
-    open_rot = trimesh.transformations.rotation_matrix(np.pi, [0, 1, 0], point=[HINGE_AXIS_X, 0, Z_SPLIT])
-    right_open = right.copy()
-    right_open.apply_transform(open_rot)  # the right tray as it lies when the book is open, keys up
-    files = [("1-spacer-ring", r, None), ("4-lid-left", lid, "left"), ("4-lid-right", lid_r, "right"),
-             ("5-tray-left", left, "left"), ("5-tray-right", right_open, "right")]
+    files = [("1-spacer-ring", r, None), ("4-lid-left", lid, "left"), ("4-lid-right", lid_r, "right")]
+    for key, t in (("clamshell", MJF), ("clamshell-fdm", FDM)):
+        left, right = trays[key]
+        right_open = right.copy()
+        right_open.apply_transform(open_rotation(t))  # the right tray as it lies when the book is open, keys up
+        files += [(f"5-tray-left{t.suffix}", left, "left"), (f"5-tray-right{t.suffix}", right_open, "right")]
     print()
     for name, m, want in files:
         got = handedness(m)
         ok = want is None or got == want
-        print(f"  {name:16s} shaped for the {got} half" + ("" if want is None else ("  ok" if ok else "  WRONG")))
+        print(f"  {name:20s} shaped for the {got} half" + ("" if want is None else ("  ok" if ok else "  WRONG")))
         assert ok, name
-        export(name, placed(m))
+        m = placed(m)
+        if name.endswith("-fdm"):
+            area = unsupported_area(m, FDM)
+            print(f"  {'':20s} overhangs past 45° on the bed-down print: {area:.1f} mm²")
+            assert area < 5.0, "the FDM tray needs supports"
+        export(name, m)
     return out, gl
+
+
+def unsupported_area(m, t: Tray, limit_deg=46.0):
+    """Area facing down more steeply than `limit_deg` from vertical, for a part resting on z = 0. The tops
+    of the pin hole are left out: they are short bridges over a 2 mm bore."""
+    n, c, a = m.face_normals, m.triangles_center, m.area_faces
+    down = (n[:, 2] < -np.sin(np.radians(limit_deg))) & (c[:, 2] > 0.05)
+    # The bore runs along y at the hinge axis height; find it from the knuckle tops.
+    axis_z = m.bounds[1][2] - HINGE_R
+    knuckle_x = c[:, 0][np.argmax(c[:, 2])]
+    bore = np.hypot(c[:, 0] - knuckle_x, c[:, 2] - axis_z) < t.pin_free / 2 + 0.3
+    return float(a[down & ~bore].sum())
 
 
 def placed(m):

@@ -88,8 +88,8 @@ figcaption { font-size: 0.8rem; color: var(--muted); }
 <main>
   <section class="lede">
     <h1>Sofle carrying cases</h1>
-    <p>Three print-ready cases for the Sofle-J Choc halves, developed from the five concepts below. Each is modelled around PandaKB's newer case and your measured 18 mm keycap height, checked for fit against the keyboard, and exported as STL and 3MF files for an MJF nylon print service.</p>
-    <p>Light grey is the keyboard, teal is printed nylon (MJF PA12).</p>
+    <p>Three print-ready cases for the Sofle-J Choc halves, developed from the five concepts below. Each is modelled around PandaKB's newer case and your measured 18 mm keycap height, checked for fit against the keyboard, and exported as STL and 3MF files for an MJF nylon print service. The clamshell also comes in a thicker FDM version that prints without supports, for cheaper UK print services.</p>
+    <p>Light grey is the keyboard, teal is printed nylon (MJF PA12), slate blue is FDM PETG.</p>
   </section>
 
   <section class="table-wrap" aria-label="Comparison">
@@ -98,7 +98,8 @@ figcaption { font-size: 0.8rem; color: var(--muted); }
       <tbody>
         <tr><td><a href="#ring">Spacer ring</a></td><td class="num">45 g</td><td class="num">151 × 125 × 38</td><td>2 silicone bands</td><td>2 flat bands, 12 mm wide</td></tr>
         <tr><td><a href="#lids">Snap-on lids</a></td><td class="num">2 × 51 g</td><td class="num">150 × 125 × 23 per half</td><td>4 click tabs per lid</td><td>Nothing</td></tr>
-        <tr><td><a href="#clamshell">Hinged clamshell</a></td><td class="num">79 g</td><td class="num">162 × 125 × 41</td><td>Hinge, 2 magnet pairs, click tabs</td><td>4 magnets 8 × 2 mm, 2 mm steel rod</td></tr>
+        <tr><td><a href="#clamshell">Hinged clamshell</a></td><td class="num">79 g</td><td class="num">164 × 125 × 41</td><td>Hinge, 2 magnet pairs, click tabs</td><td>4 magnets 8 × 2 mm, 2 mm steel rod</td></tr>
+        <tr><td><a href="#clamshell-fdm">Hinged clamshell, FDM</a></td><td class="num">under 125 g</td><td class="num">165 × 126 × 42</td><td>Hinge, 2 magnet pairs, click tabs</td><td>4 magnets 8 × 2 mm, 2 mm steel rod</td></tr>
       </tbody>
     </table>
   </section>
@@ -143,7 +144,7 @@ figcaption { font-size: 0.8rem; color: var(--muted); }
     <header>
       <span class="tag">Design 5</span>
       <h2>Hinged clamshell</h2>
-      <div class="chips"><span class="chip pa12">PA12 · 79 g</span><span class="chip">162 × 125 × 41 mm</span><span class="chip">2 trays + pin + 4 magnets</span></div>
+      <div class="chips"><span class="chip pa12">PA12 · 79 g</span><span class="chip">164 × 125 × 41 mm</span><span class="chip">2 trays + pin + 4 magnets</span></div>
       <p>Each half clicks into its own tray, where three tabs catch the 1 mm chamfer on its rim. The trays turn on a 2 mm steel pin through seven knuckles along the inner edge and close with two pairs of 8 × 2 mm magnets on the pinky side. Thumb lips at the front help pull it open. Opened flat, the halves lie side by side, keys up. For carrying in a bag, every outside edge is rounded: 2.5 mm along the bottom, 1 mm along the seam, and 1 mm on the lips, magnet bosses and hinge ends.</p>
     </header>
     <div class="lead-img">
@@ -163,11 +164,31 @@ figcaption { font-size: 0.8rem; color: var(--muted); }
     </div>
   </article>
 
+  <article class="concept" id="clamshell-fdm">
+    <header>
+      <span class="tag">Design 5, FDM version</span>
+      <h2>Hinged clamshell for FDM printing</h2>
+      <div class="chips"><span class="chip">PETG · under 125 g</span><span class="chip">165 × 126 × 42 mm</span><span class="chip">no supports needed</span></div>
+      <p>The same clamshell, reworked for cheaper FDM printing in PETG or ABS+. Walls are 2.0 mm and floors 1.8 mm, for a stiffer case. Nothing overhangs more than 45°: the hinge knuckles are teardrops that run into the wall, the magnet bosses and thumb lips have sloped undersides, and the bottom edge is chamfered rather than rounded. Each tray prints floor-down with no supports. The fits are looser because FDM prints holes small: 0.6 mm around the keyboard, 8.4 mm magnet pockets, 1.0 mm tab slots and a 2.15 mm tight pin hole, which can be opened with a 2 mm drill bit.</p>
+    </header>
+    <div class="lead-img">
+      <figure><img src="renders/d5f-closed.png" alt="FDM clamshell closed"><figcaption>Closed</figcaption></figure>
+      <figure><img src="renders/d5f-open.png" alt="FDM clamshell opened flat, empty"><figcaption>Opened flat, empty</figcaption></figure>
+    </div>
+    <div class="close-ups">
+      <figure><img src="renders/d5f-below.png" alt="From below the hinge: teardrop knuckles"><figcaption>From below the hinge: each knuckle runs into the wall at 45°</figcaption></figure>
+      <figure><img src="renders/d5f-corner.png" alt="From below a corner: chamfered bottom and sloped magnet boss"><figcaption>From below a corner: the chamfered bottom, and the magnet boss and thumb lip with 45° undersides</figcaption></figure>
+      <figure><img src="renders/d5f-hinge-section.png" alt="Hinge close-up: teardrop knuckle"><figcaption>Hinge close-up: a teardrop knuckle</figcaption></figure>
+      <figure><img src="renders/d5f-edges.png" alt="Edges: 2 mm chamfer at the bottom, 1 mm round at the seam"><figcaption>Edges: 2 mm chamfer at the bottom, 1 mm round at the seam</figcaption></figure>
+    </div>
+  </article>
+
   <section class="notes">
     <h2>Ordering</h2>
     <ul>
-      <li>Print in MJF PA12 nylon (grey, or dyed black to hide scuffs) at JLC3DP, PCBWay or Craftcloud. Upload the STL files for an instant quote; no supports or settings are needed.</li>
-      <li>Clamshell hardware: four 8 × 2 mm N52 disc magnets, glued in pairs that attract, and a 2 mm stainless or carbon-fibre rod cut to 84 mm for the hinge.</li>
+      <li>FDM clamshell: PETG at Surface Scan, or ABS+ at MakeitQuick, in black, at the lowest infill (20%) and standard 0.2 mm layers. Print each tray as the file lies, floor on the bed; no supports are needed. The README has the details for each service.</li>
+      <li>Nylon: MJF or SLS PA12 (grey, or dyed black to hide scuffs) at JLC3DP, PCBWay or Craftcloud. Upload the STL files for an instant quote; no supports or settings are needed.</li>
+      <li>Clamshell hardware: four 8 × 2 mm N52 disc magnets, glued with epoxy in pairs that attract, and a 2 mm stainless or carbon-fibre rod cut to 84 mm for the hinge.</li>
       <li>Spacer ring: two flat silicone bands about 12 mm wide, with a relaxed circumference of 230–260 mm.</li>
       <li>Fits allow 0.5 mm clearance to the case walls, and the click beads overlap the case's chamfers by 0.35–0.5 mm. For an extra check before a full order, a small test piece with one tab can be printed first.</li>
     </ul>

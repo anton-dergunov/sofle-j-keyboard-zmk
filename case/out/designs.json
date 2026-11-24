@@ -81,22 +81,22 @@
   ]
  },
  "clamshell": {
-  "grams": 78.8,
+  "grams": 79.3,
   "parts": [
    {
     "name": "tray (left)",
-    "grams": 39.6,
+    "grams": 40.0,
     "size_mm": [
-     161.8,
+     163.7,
      125.3,
      23.9
     ]
    },
    {
     "name": "tray (right)",
-    "grams": 39.1,
+    "grams": 39.4,
     "size_mm": [
-     161.8,
+     163.7,
      125.3,
      23.9
     ]
@@ -146,6 +146,55 @@
    [
     "d5-hinge-section.png",
     "Close-up: hinge knuckle and pin hole"
+   ]
+  ]
+ },
+ "clamshell-fdm": {
+  "grams": 125.5,
+  "parts": [
+   {
+    "name": "tray (left)",
+    "grams": 63.3,
+    "size_mm": [
+     164.7,
+     126.3,
+     24.3
+    ]
+   },
+   {
+    "name": "tray (right)",
+    "grams": 62.2,
+    "size_mm": [
+     164.7,
+     126.3,
+     24.3
+    ]
+   }
+  ],
+  "images": [
+   [
+    "d5f-closed.png",
+    "Closed"
+   ],
+   [
+    "d5f-below.png",
+    "From below the hinge: each knuckle runs into the wall at 45°, so nothing needs supports"
+   ],
+   [
+    "d5f-corner.png",
+    "From below the pinky-side corner: chamfered bottom, magnet boss and lip with 45° undersides"
+   ],
+   [
+    "d5f-open.png",
+    "Opened flat, empty"
+   ],
+   [
+    "d5f-hinge-section.png",
+    "Close-up: a teardrop knuckle"
+   ],
+   [
+    "d5f-edges.png",
+    "Close-up: chamfered bottom edges"
    ]
   ]
  }

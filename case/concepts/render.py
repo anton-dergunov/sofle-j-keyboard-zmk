@@ -30,6 +30,7 @@ COLORS = {
     "ghost-dark": "#2f3236",
     "ghost-keys": "#f4f4f2",
     "PA12": "#2a8c82",
+    "PETG": "#4d6584",
     "TPU": "#e07a4f",
     "silicone": "#2b3a47",
     "magnet": "#a9adb3",

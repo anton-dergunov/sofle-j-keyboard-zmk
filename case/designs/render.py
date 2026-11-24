@@ -58,7 +58,7 @@ def section(parts, path, title, axis="x", at=66.7, lim=None, notes=(), size=(12,
     normal = {"x": [1, 0, 0], "y": [0, 1, 0]}[axis]
     keep = [1, 2] if axis == "x" else [0, 2]
     fig, ax = plt.subplots(figsize=size)
-    order = ["ghost-case", "ghost-plate", "ghost-dark", "ghost-keys", "PA12", "TPU", "silicone", "magnet"]
+    order = ["ghost-case", "ghost-plate", "ghost-dark", "ghost-keys", "PA12", "PETG", "TPU", "silicone", "magnet"]
     for mat in order:
         for p in parts:
             if p.material != mat:
@@ -113,8 +113,8 @@ def lifted(parts, dz):
     return out
 
 
-def rotated_open(parts):
-    rot = trimesh.transformations.rotation_matrix(np.pi, [0, 1, 0], point=[B.HINGE_AXIS_X, 0, B.Z_SPLIT])
+def rotated_open(parts, t=B.MJF):
+    rot = B.open_rotation(t)
     out = []
     for p in parts:
         m = p.mesh.copy()
@@ -228,6 +228,32 @@ def main():
     section(g5 + [left, right], f, "Hinge close-up (y = 33, through a knuckle)", axis="y", at=33.0,
             lim=((134, 156), (8, 30)), size=(6.4, 6.4), notes=["2 mm steel pin", "knuckles Ø7 mm"])
     imgs["clamshell"].append((f.name, "Close-up: hinge knuckle and pin hole"))
+
+    # ---- 5. clamshell, FDM version
+    t = B.FDM
+    left, right = out["clamshell-fdm"]
+    imgs["clamshell-fdm"] = []
+    f = OUT / "d5f-closed.png"
+    shot(g5 + [left, right], f, ISO)
+    imgs["clamshell-fdm"].append((f.name, "Closed"))
+    f = OUT / "d5f-below.png"
+    shot([left, right], f, (0.9, 0.35, -0.55), focus=(150.0, 60.0, 12.0), span=95)
+    imgs["clamshell-fdm"].append((f.name, "From below the hinge: each knuckle runs into the wall at 45°, so nothing needs supports"))
+    f = OUT / "d5f-corner.png"
+    shot([left, right], f, (-0.9, -0.6, -0.35), focus=(2.0, 30.0, 12.0), span=60)
+    imgs["clamshell-fdm"].append((f.name, "From below the pinky-side corner: chamfered bottom, magnet boss and lip with 45° undersides"))
+    f = OUT / "d5f-open.png"
+    shot([left] + rotated_open([right], t), f, (-0.35, -1.0, 1.1))
+    imgs["clamshell-fdm"].append((f.name, "Opened flat, empty"))
+    f = OUT / "d5f-hinge-section.png"
+    section(g5 + [left, right], f, "FDM hinge close-up (y = 33, through a knuckle)", axis="y", at=33.0,
+            lim=((134, 158), (4, 34)), size=(6.4, 7.6), notes=["teardrop knuckle: 45° underside", "2 mm pin"])
+    imgs["clamshell-fdm"].append((f.name, "Close-up: a teardrop knuckle"))
+    f = OUT / "d5f-edges.png"
+    section(g5 + [left, right], f, "FDM edges (pinky edge, y = 60)", axis="y", at=60.0,
+            lim=((-16, 5), (-3, 42)), size=(6.2, 9.0),
+            notes=["walls 2.0 mm, floors 1.8 mm", "bottom chamfer 2 mm × 45°,", "1.26 mm at the thinnest"])
+    imgs["clamshell-fdm"].append((f.name, "Close-up: chamfered bottom edges"))
 
     summary = {k: {"grams": round(sum(p.grams for p in v), 1),
                    "parts": [{"name": p.name, "grams": round(p.grams, 1),
