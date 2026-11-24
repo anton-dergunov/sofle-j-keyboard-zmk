@@ -150,11 +150,11 @@
   ]
  },
  "clamshell-fdm": {
-  "grams": 125.8,
+  "grams": 125.6,
   "parts": [
    {
     "name": "tray (left)",
-    "grams": 63.5,
+    "grams": 63.4,
     "size_mm": [
      165.0,
      126.3,
@@ -163,7 +163,7 @@
    },
    {
     "name": "tray (right)",
-    "grams": 62.3,
+    "grams": 62.2,
     "size_mm": [
      165.0,
      126.3,
@@ -182,7 +182,7 @@
    ],
    [
     "d5f-corner.png",
-    "From below the pinky-side corner: chamfered bottom, magnet boss and lip with 45° undersides"
+    "From below the pinky-side corner: rounded bottom edge, magnet boss and lip with 45° undersides"
    ],
    [
     "d5f-open.png",
@@ -194,7 +194,7 @@
    ],
    [
     "d5f-edges.png",
-    "Close-up: chamfered bottom edges"
+    "Close-up: the rounded bottom edge, built on a 45° chamfer"
    ]
   ]
  }

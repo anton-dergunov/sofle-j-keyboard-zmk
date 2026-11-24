@@ -241,7 +241,7 @@ def main():
     imgs["clamshell-fdm"].append((f.name, "From below the hinge: each knuckle runs into the wall at 45°, so nothing needs supports"))
     f = OUT / "d5f-corner.png"
     shot([left, right], f, (-0.9, -0.6, -0.35), focus=(2.0, 30.0, 12.0), span=60)
-    imgs["clamshell-fdm"].append((f.name, "From below the pinky-side corner: chamfered bottom, magnet boss and lip with 45° undersides"))
+    imgs["clamshell-fdm"].append((f.name, "From below the pinky-side corner: rounded bottom edge, magnet boss and lip with 45° undersides"))
     f = OUT / "d5f-open.png"
     shot([left] + rotated_open([right], t), f, (-0.35, -1.0, 1.1))
     imgs["clamshell-fdm"].append((f.name, "Opened flat, empty"))
@@ -252,8 +252,8 @@ def main():
     f = OUT / "d5f-edges.png"
     section(g5 + [left, right], f, "FDM edges (pinky edge, y = 60)", axis="y", at=60.0,
             lim=((-16, 5), (-3, 42)), size=(6.2, 9.0),
-            notes=["walls 2.0 mm, floors 1.8 mm", "bottom chamfer 2 mm × 45°,", "1.26 mm at the thinnest"])
-    imgs["clamshell-fdm"].append((f.name, "Close-up: chamfered bottom edges"))
+            notes=["walls 2.0 mm, floors 1.8 mm", "bottom: 2 mm 45° chamfer, creases", "rounded R 3 and R 1;", "1.27 mm at the thinnest"])
+    imgs["clamshell-fdm"].append((f.name, "Close-up: the rounded bottom edge, built on a 45° chamfer"))
 
     summary = {k: {"grams": round(sum(p.grams for p in v), 1),
                    "parts": [{"name": p.name, "grams": round(p.grams, 1),

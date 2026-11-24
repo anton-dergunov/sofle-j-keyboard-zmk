@@ -18,7 +18,7 @@ This is the cheapest way to get the clamshell made, and UK services print it in 
 The FDM files differ from the nylon ones:
 
 - **Thicker:** walls are 2.0 mm instead of 1.6 mm and floors 1.8 mm instead of 1.4 mm, for a stiffer, harder-wearing case.
-- **No supports needed:** every downward-facing surface slopes at 45° or less. This covers the undersides of the hinge knuckles, the magnet bosses and the thumb lips, and the bottom edge, which is chamfered instead of rounded. Each tray prints as the file lies: floor on the bed, open side up.
+- **No supports needed:** every downward-facing surface slopes at 45° or less. This covers the undersides of the hinge knuckles, the magnet bosses and the thumb lips. The bottom edge is a 45° chamfer with both its creases rounded (3 mm at the wall, 1 mm at the bed). It looks and wears like the nylon version's round, but a plain round would sag where it meets the bed. Each tray prints as the file lies: floor on the bed, open side up.
 - **More clearance:** FDM prints holes and gaps slightly small, so they are opened up. The keyboard gets 0.6 mm of clearance per side instead of 0.5 mm, the magnet pockets are 8.4 mm across, and the tab slots are 1.0 mm wide. The pin holes are 2.15 mm in the left tray and 2.6 mm in the right.
 
 **Settings, at either service:**

@@ -251,7 +251,8 @@ class Tray:
     pin_free: float = 2.45  # free in the right
     magnet_hole: float = MAGNET_D + 0.2
     bottom_round: float = 0.0  # outer bottom edge: a round (MJF) ...
-    bottom_chamfer: float = 0.0  # ... or a 45° chamfer, which prints cleanly on the bed (FDM)
+    bottom_chamfer: float = 0.0  # ... or a 45° chamfer, which prints cleanly on the bed (FDM),
+    chamfer_rounds: tuple = ()  # with its creases rounded: (at the side wall, at the bed)
     min_corner: float = 1.0  # least material allowed where the bottom edge is cut back
     hinge_clear: float = 0.5  # the outermost tray wall (the thumb cluster's corner) to the pin axis
     self_supporting: bool = False  # 45° undersides on knuckles, magnet bosses and lips (FDM, no supports)
@@ -274,7 +275,7 @@ MJF = Tray("", "PA12", bottom_round=2.5)
 # FDM (PETG, ABS+): thicker walls and floor, nothing steeper than 45° overhanging, and the holes and
 # slots opened up because FDM prints them small. 0.6 mm fit: a loose fit still works, a tight one doesn't.
 FDM = Tray("-fdm", "PETG", fit=0.6, wall=2.0, floor=1.8, slot=1.0, pin_press=2.15, pin_free=2.6,
-           magnet_hole=MAGNET_D + 0.4, bottom_chamfer=2.0, min_corner=1.2, hinge_clear=0.8, self_supporting=True)
+           magnet_hole=MAGNET_D + 0.4, bottom_chamfer=2.0, chamfer_rounds=(3.0, 1.0), min_corner=1.2, hinge_clear=0.8, self_supporting=True)
 HINGE_AXIS_X = MJF.hinge_x
 
 
@@ -291,7 +292,17 @@ def tray_body(t: Tray):
     f = offset_face(t.fit + t.wall).moved(bd.Location((0, 0, -t.floor)))
     slab = bd.extrude(f, amount=Z_SPLIT + t.floor)
     bottom = slab.faces().sort_by(bd.Axis.Z)[0].edges()
-    slab = bd.chamfer(bottom, t.bottom_chamfer) if t.bottom_chamfer else bd.fillet(bottom, t.bottom_round)
+    if t.bottom_chamfer:
+        slab = bd.chamfer(bottom, t.bottom_chamfer)
+        # Rounding the chamfer's creases keeps every face within 45° of vertical, except the bed-side
+        # round, which only spans the first layer or two; the edge then looks and wears like a round.
+        z_bed, z_top = -t.floor, -t.floor + t.bottom_chamfer
+        for z, r in zip((z_top, z_bed), t.chamfer_rounds):
+            crease = [e for e in slab.edges() if abs(e.bounding_box().min.Z - z) < 1e-3
+                      and abs(e.bounding_box().max.Z - z) < 1e-3]
+            slab = bd.fillet(crease, r)
+    else:
+        slab = bd.fillet(bottom, t.bottom_round)
     slab = bd.fillet(slab.faces().sort_by(bd.Axis.Z)[-1].edges(), TOP_ROUND)
     return occ_mesh(slab)
 
@@ -550,9 +561,10 @@ def build():
 
 def unsupported_area(m, t: Tray, limit_deg=46.0):
     """Area facing down more steeply than `limit_deg` from vertical, for a part resting on z = 0. The tops
-    of the pin hole are left out: they are short bridges over a 2 mm bore."""
+    of the pin hole are left out: they are short bridges over a 2 mm bore. So is the first 0.3 mm, the
+    first layer or two, where the round at the foot of the bottom chamfer lies on the bed."""
     n, c, a = m.face_normals, m.triangles_center, m.area_faces
-    down = (n[:, 2] < -np.sin(np.radians(limit_deg))) & (c[:, 2] > 0.05)
+    down = (n[:, 2] < -np.sin(np.radians(limit_deg))) & (c[:, 2] > 0.3)
     # The bore runs along y at the hinge axis height; find it from the knuckle tops.
     axis_z = m.bounds[1][2] - HINGE_R
     knuckle_x = c[:, 0][np.argmax(c[:, 2])]
