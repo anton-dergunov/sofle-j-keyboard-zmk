@@ -77,7 +77,7 @@ uv run python concepts/render.py  # the five original concepts
 Besides the fit against the keyboard, `build.py` checks:
 
 - **Hinge:** the trays don't touch at any angle from closed to open flat. From 30° open, the smallest gap is the designed 0.6 mm between knuckles.
-- **FDM overhangs:** nothing on the FDM trays overhangs past 45°.
+- **FDM overhangs:** the FDM trays need no supports. Only a narrow strip, where each magnet boss's rounded underside meets the wall, leans past 45° (about 16 mm² per tray), and almost nothing leans past 60°.
 - **Bottom edge:** the chamfer or round leaves at least 1.0 mm of material at the floor corner (1.2 mm on the FDM trays).
 - **Exported files:** every STL and 3MF reads back as one closed body of the right volume.
 
